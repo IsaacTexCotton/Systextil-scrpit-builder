@@ -56,7 +56,7 @@ O primeiro npm install gera package-lock.json. Esse arquivo deve ser versionado.
 6. Abra um Pull Request com evidências de validação e limitações conhecidas.
 7. Faça revisão humana antes de integrar.
 
-Consulte CONTRIBUTING.md e docs/AI_WORKFLOW.md.
+Consulte CONTRIBUTING.md, docs/AI_WORKFLOW.md e docs/GITHUB_GOVERNANCE.md.
 
 ## Licença
 
