@@ -1,0 +1,20 @@
+{
+  "name": "systextil-script-builder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ferramenta local para investigar telas Systextil e gerar especificações e pacotes de contexto para automações.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/core/schema-validation.js && node --check src/cli/validate-json.js",
+    "validate:evidence": "node src/cli/validate-json.js schemas/screen-evidence.schema.json examples/evidence.sample.json",
+    "validate:spec": "node src/cli/validate-json.js schemas/automation-spec.schema.json examples/automation-spec.sample.json",
+    "validate:examples": "npm run validate:evidence && npm run validate:spec"
+  },
+  "dependencies": {
+    "ajv": "8.20.0"
+  }
+}

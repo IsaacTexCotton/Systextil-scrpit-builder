@@ -1,0 +1,61 @@
+name: "Solicitar automação"
+description: "Descrever uma necessidade operacional para análise e especificação."
+title: "[AUTOMAÇÃO] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Descreva o processo. Não anexe dados reais de clientes ou transações."
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo operacional
+      description: "Qual trabalho deve ser reduzido ou padronizado?"
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Processo atual
+      description: "Descreva as etapas feitas manualmente hoje."
+    validations:
+      required: true
+  - type: textarea
+    id: rules
+    attributes:
+      label: Regras de negócio confirmadas
+      description: "Liste regras, exceções e responsáveis. Separe dúvidas."
+    validations:
+      required: true
+  - type: textarea
+    id: screens
+    attributes:
+      label: Telas e visões do Systextil
+      description: "Informe os nomes conhecidos. Não invente nomes se não souber."
+    validations:
+      required: false
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Operação pretendida
+      options:
+        - Somente inspeção
+        - Consulta/leitura
+        - Preenchimento sem gravação
+        - Gravação/alteração no ERP
+        - Ainda não definido
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      description: "Como uma pessoa confirmará que a automação funcionou corretamente?"
+    validations:
+      required: true
+  - type: textarea
+    id: unknowns
+    attributes:
+      label: Dúvidas e exceções conhecidas
+    validations:
+      required: false

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/IsaacTexCotton/Systextil-scrpit-builder/schemas/prompt-package.schema.json",
+  "title": "AI Prompt Package",
+  "description": "Pacote de contexto rastreável preparado para uma ferramenta de IA.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "packageId", "createdAt", "automationSpecRef", "contextFiles", "prompt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "packageId": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "createdAt": { "type": "string", "minLength": 10, "maxLength": 40 },
+    "automationSpecRef": { "type": "string", "minLength": 1, "maxLength": 300 },
+    "contextFiles": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "purpose", "trustLevel"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "purpose": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "trustLevel": { "type": "string", "enum": ["normative", "verified-evidence", "example", "informational"] }
+        }
+      }
+    },
+    "prompt": { "type": "string", "minLength": 1, "maxLength": 50000 },
+    "limitations": { "type": "array", "items": { "type": "string", "maxLength": 1000 } }
+  }
+}

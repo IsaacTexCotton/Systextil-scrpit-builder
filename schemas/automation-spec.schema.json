@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/IsaacTexCotton/Systextil-scrpit-builder/schemas/automation-spec.schema.json",
+  "title": "Systextil Automation Specification",
+  "description": "Especificação declarativa e revisável de uma automação. Não é código executável.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "automationId", "title", "objective", "riskLevel", "executionMode", "preconditions", "inputs", "steps", "successCriteria", "failureHandling", "safety", "unknowns"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "automationId": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "objective": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "riskLevel": { "type": "string", "enum": ["L0", "L1", "L2", "L3"] },
+    "executionMode": { "type": "string", "enum": ["inspection", "read-only", "assisted", "write"] },
+    "evidenceRefs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "maxLength": 120 } },
+    "preconditions": { "type": "array", "items": { "type": "string", "maxLength": 1000 } },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "source", "required"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "description": { "type": "string", "maxLength": 1000 },
+          "source": { "type": "string", "maxLength": 300 },
+          "required": { "type": "boolean" },
+          "sensitive": { "type": "boolean" }
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "action", "description", "expectedResult"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "action": { "type": "string", "enum": ["inspect", "navigate", "fill", "trigger-command", "wait", "verify", "manual-confirm", "export"] },
+          "description": { "type": "string", "minLength": 1, "maxLength": 2000 },
+          "expectedResult": { "type": "string", "minLength": 1, "maxLength": 1000 },
+          "evidenceRefs": { "type": "array", "items": { "type": "string", "maxLength": 120 } }
+        }
+      }
+    },
+    "successCriteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 1000 } },
+    "failureHandling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stopConditions", "timeoutMs", "maxRetries", "recovery"],
+      "properties": {
+        "stopConditions": { "type": "array", "minItems": 1, "items": { "type": "string", "maxLength": 1000 } },
+        "timeoutMs": { "type": "integer", "minimum": 100, "maximum": 600000 },
+        "maxRetries": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "recovery": { "type": "string", "minLength": 1, "maxLength": 2000 }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["writesData", "requiresHumanConfirmation", "rollbackPlan"],
+      "properties": {
+        "writesData": { "type": "boolean" },
+        "requiresHumanConfirmation": { "type": "boolean" },
+        "rollbackPlan": { "type": "string", "minLength": 1, "maxLength": 2000 }
+      }
+    },
+    "unknowns": { "type": "array", "items": { "type": "string", "maxLength": 1000 } }
+  }
+}
