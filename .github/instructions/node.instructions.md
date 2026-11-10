@@ -1,5 +1,5 @@
 ---
-applyTo: "src/**/*.js,tests/**/*.js,scripts/**/*.js"
+applyTo: "src/**/*.js"
 ---
 
 # Regras para JavaScript executado em Node.js
