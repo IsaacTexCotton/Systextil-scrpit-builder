@@ -82,5 +82,28 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 ## ADR-014 — Escopo reduzido ao método de mapeamento de telas
 
 **Status:** aceita.  
-**Decisão:** priorizar o mapeamento manual de telas (`docs/telas/`) antes de CLI, schemas e validadores. A fundação técnica (E0 e E1) permanece adiada até decisão explícita do mantenedor.  
+**Decisão:** produzir e revisar primeiro um único mapa funcional da consulta de títulos em `docs/telas/` como teste do método. E0 e E1 não precedem esse mapa; CLI, schemas e validadores só serão retomados se o mapa revelar fricção concreta que essa infraestrutura resolva e houver decisão explícita do mantenedor.  
 **Motivo:** a dificuldade central é entender a tela do Systêxtil antes de escrever código, e a infraestrutura técnica ainda não tem consumidor real.
+
+
+## ADR-015 — Mapeamento de sequência de comandos/eventos NXJ e confirmação por ação
+
+**Status:** aceita.  
+**Decisão:** cada mapa de tela deve registrar, por ação e em ordem temporal, a sequência observável de eventos de interface, comandos/eventos NXJ, respostas, mudanças de estado e sinais independentes de confirmação. Quando necessário, a observação de rede será manual nas ferramentas do navegador, fora do Inspector, conforme ADR-012; somente metadados mínimos e sanitizados poderão ser documentados.  
+**Motivo:** o comportamento necessário à automação não se limita aos campos e teclas visíveis; depende também da ordem dos eventos/comandos e de como o ERP confirma cada etapa.  
+**Limites:** não introduzir interceptação automática, não ampliar o Inspector, não registrar payloads, credenciais, valores reais ou artefatos brutos. Comando enviado ou resposta genérica não equivalem a sucesso.
+
+## ADR-016 — Piloto de consulta read-only em ambiente de produção
+
+**Status:** aceita com condições.  
+**Decisão:** como não há ambiente de teste/homologação disponível, o piloto de consulta em lote de títulos poderá ser executado somente em produção, estritamente read-only, um título por vez e com pausa entre consultas. O intervalo operacional, a autorização aplicável, o escopo e o responsável pela autorização devem ser registrados na PR antes da execução.  
+**Motivo:** viabilizar a validação do método e da consulta sem introduzir operações de escrita no ERP.  
+**Controles:** interromper no primeiro timeout, resposta ambígua, divergência, perda de sincronismo ou estado incerto; não repetir automaticamente; exigir conferência manual antes de retomar. Nenhum dado real será incluído no repositório, em logs versionados ou evidências compartilhadas.
+
+## ADR-017 — Prorrogação como segunda automação, após o piloto
+
+**Status:** aceita como direção futura; autorização para títulos vencidos pendente.  
+**Decisão:** prorrogação será tratada como segunda automação, somente após conclusão e avaliação do piloto. O desenho deverá prever modo de simulação sem persistência, lista de títulos aprovada pelo mantenedor antes da execução e log local mínimo por título efetivamente alterado.  
+**Motivo:** separar o piloto read-only de uma operação de escrita e exigir revisão explícita do conjunto de registros antes de qualquer alteração.  
+**Ponto em aberto obrigatório:** quem tem autoridade para autorizar a prorrogação de títulos vencidos e como essa autorização será comprovada/registrada ainda não foi definido. Não implementar nem executar prorrogação de título vencido até essa regra ser esclarecida e registrada. A regra operacional vigente de que títulos vencidos não são prorrogados no fluxo de cobrança deve ser respeitada.
+
