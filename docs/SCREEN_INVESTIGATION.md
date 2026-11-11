@@ -6,7 +6,7 @@ Apoiar o mantenedor a entender a tela do Systêxtil antes de escrever código. A
 
 Este guia descreve um procedimento manual. O resultado é **um arquivo Markdown por tela** em `docs/telas/`, preenchido pelo mantenedor com apoio da IA a partir do que ele descrever ou colar, sempre depois do mascaramento. Não implementa automação, não autoriza escrita no ERP e não amplia o escopo atual do Inspector.
 
-Use [docs/telas/README.md](telas/README.md) para regras de preenchimento e [_modelo.md](telas/_modelo.md) como base obrigatória. Cada linha de cada tabela do mapa precisa de Status (confirmado, inferido ou desconhecido) e Origem (captura, teste manual ou dedução).
+Use [docs/telas/README.md](telas/README.md) para regras de preenchimento e [_modelo.md](telas/_modelo.md) como base obrigatória. Cada linha de cada tabela do mapa precisa de Status (confirmado, inferido ou desconhecido) e Origem (captura, captura de rede manual, teste manual ou dedução).
 
 ## Pré-condições
 
