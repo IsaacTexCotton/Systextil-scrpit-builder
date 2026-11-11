@@ -11,11 +11,11 @@
 
 ## Campos
 
-Registre cada campo ou controle de entrada separadamente. Em **Tipo**, identifique a função no fluxo (consulta, inserção ou seleção/lista) e o tipo de controle observado (texto, número, data, autocomplete, checkbox, radio, grade etc.). Não registre o valor real; use apenas marcador mascarado.
+Registre cada campo ou controle de entrada separadamente. Em **Tipo**, identifique a função no fluxo (consulta, inserção ou seleção/lista) e o tipo de controle observado (texto, número, data/hora, autocomplete, lista suspensa, checkbox, radio, botão, célula/coluna de grade, somente leitura, desabilitado, diálogo etc.). A lista é exemplificativa: todo tipo que aparecer deve receber uma linha própria, mesmo que não esteja nomeado aqui. Não registre o valor real; use o marcador da categoria (por exemplo, [CLIENTE], [TITULO], [CODIGO_BARRAS] ou [DADO_SENSIVEL]).
 
 | Campo | Tipo | Obrigatório | Valor de exemplo mascarado | Dependências | Status | Origem |
 |---|---|---|---|---|---|---|
-| [CAMPO_SANITIZADO] | [consulta/inserção/seleção-lista + tipo do controle] | [sim/não/condicional/desconhecido] | [VALOR_MASCARADO] | [campo/ação que influencia ou desconhecido] | desconhecido | dedução |
+| [CAMPO_SANITIZADO] | [consulta/inserção/seleção-lista + tipo do controle] | [sim/não/condicional/desconhecido] | [DADO_SENSIVEL] | [campo/ação que influencia ou desconhecido] | desconhecido | dedução |
 
 ### Cobertura de campos e controles
 
@@ -26,8 +26,10 @@ Verifique quais categorias existem nesta tela. Registre cada ocorrência na tabe
 | Campo de consulta/pesquisa | [CAMPO_SANITIZADO] | [tipo e comportamento] | desconhecido | dedução |
 | Campo de inserção/digitação | [CAMPO_SANITIZADO] | [tipo e comportamento] | desconhecido | dedução |
 | Campo de seleção/lista | [CAMPO_SANITIZADO] | [lista, combo, autocomplete ou outro] | desconhecido | dedução |
-| Controle de texto/número/data | [CONTROLE_SANITIZADO] | [tipo técnico observado] | desconhecido | dedução |
+| Controle de texto/número/data/hora | [CONTROLE_SANITIZADO] | [tipo técnico observado] | desconhecido | dedução |
+| Autocomplete/lista suspensa | [CONTROLE_SANITIZADO] | [origem das opções e seleção] | desconhecido | dedução |
 | Checkbox/radio/outro controle | [CONTROLE_SANITIZADO] | [opção e efeito] | desconhecido | dedução |
+| Controle somente leitura/desabilitado | [CONTROLE_SANITIZADO] | [estado e condição] | desconhecido | dedução |
 | Campo/coluna de grade ou lista | [COLUNA_SANITIZADA] | [edição, foco e navegação] | desconhecido | dedução |
 | Botão/ação visível | [BOTAO_SANITIZADO] | [ação a confirmar] | desconhecido | dedução |
 | Atalho de teclado | [TECLA] | [função a confirmar] | desconhecido | dedução |

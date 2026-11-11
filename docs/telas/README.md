@@ -11,6 +11,8 @@ Para iniciar o mapa de uma tela:
 4. Preencha o status e a origem de cada linha de tabela. Mantenha os itens não observados como desconhecidos.
 5. Revise o arquivo inteiro e confirme a sanitização antes de qualquer commit.
 
+A matriz de cobertura do modelo é mínima, não fechada. Registre todos os tipos encontrados, inclusive os que não aparecem como exemplo no modelo. Considere, entre outros, controles de texto, numéricos, monetários (sem registrar valores), data/hora, autocomplete, seleção/lista suspensa, checkbox, radio, botões, links, células/colunas de grade, campos somente leitura ou desabilitados, diálogos e controles específicos do Systêxtil.
+
 O arquivo de uma tela é um **registro de investigação em andamento**. Ele não é uma especificação de automação aprovada, não comprova autorização operacional e não autoriza escrever código ou executar ações no ERP. A especificação formal só pode ser construída depois da revisão do mapeamento, com critérios de aceite, risco, pré-condições e sinais independentes de sucesso.
 
 ## Regra obrigatória de mascaramento
