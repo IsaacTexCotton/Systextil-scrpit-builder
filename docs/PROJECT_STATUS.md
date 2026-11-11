@@ -21,8 +21,8 @@
 | Fase | Estado | Evidência para concluir |
 |---|---|---|
 | Fundação organizacional | Concluída | PR #1 integrada à main |
-| Planejamento e decisões de escopo | Registrados nesta branch de documentação | PR revisada e aceite do mantenedor |
-| Fundação executável | Pendente | lockfile, npm ci e testes em Node 24+ |
+| Planejamento e decisões de escopo | Concluído: PR #3 mesclada na main | PR revisada e aceite do mantenedor |
+| Fundação executável | Adiada | Retomada somente após decisão explícita do mantenedor |
 | Solicitação operacional | Não iniciada | schema, CLI e fixtures |
 | Guia de investigação de tela | Documentado | revisão do mantenedor e aplicação ao piloto |
 | Inspector | Não iniciado | ferramenta read-only homologada conforme escopo aprovado |
@@ -38,7 +38,7 @@
 2. Aplicar o guia de investigação à consulta em lote e mapear campos/tipos, inserções, dependências e navegação.
 3. Concluir a verificação de dados sensíveis antes de qualquer commit futuro que adicione evidência de tela ou dado.
 4. Decidir se a proposta ADR-013 é necessária antes de alterar o escopo do Inspector.
-5. Retomar a sequência técnica do backlog, começando pela Fase 0 e avançando conforme os Quality Gates.
+5. Decidir a retomada da fase técnica (E0) após o piloto
 
 ## Papéis
 
