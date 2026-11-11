@@ -42,6 +42,26 @@ Proibido por padrão:
 
 Se a evidência ficar ambígua após sanitização, não exporte até revisão manual.
 
+## Mascaramento obrigatório por marcadores
+
+Antes de qualquer tela, captura, texto, observação ou dado operacional entrar no repositório, substitua integralmente os valores reais por marcadores de categoria. A regra vale para telas descritas ou capturadas, campos preenchidos, texto colado para a IA, mensagens, tabelas, listas, anexos e requisições/respostas de rede.
+
+| Categoria de dado | Marcador obrigatório |
+|---|---|
+| CPF/CNPJ | `[CPF_CNPJ]` |
+| Nome de cliente | `[CLIENTE]` |
+| Título/duplicata/documento | `[TITULO]` |
+| Código de barras | `[CODIGO_BARRAS]` |
+| Linha digitável | `[LINHA_DIGITAVEL]` |
+| Valor monetário | `[VALOR_MONETARIO]` |
+| Dados de contato | `[DADO_CONTATO]` |
+| Pessoa/operador | `[PESSOA]` |
+| Credencial/token/cookie/sessão | `[CREDENCIAL]`, `[TOKEN]`, `[COOKIE]`, `[SESSAO]`, conforme a categoria |
+
+Os marcadores substituem o valor completo: não conservar prefixos, sufixos, dígitos parciais, nomes incompletos ou qualquer fragmento que permita reconstrução. Se a categoria não estiver listada, use `[DADO_SENSIVEL]` ou um marcador mais específico sem incorporar partes do dado original.
+
+A mesma regra vale para material encaminhado à IA: o mantenedor deve mascarar os valores antes de colar ou descrever a evidência. A IA não deve receber valores reais para depois mascará-los.
+
 ## Captura manual de rede — procedimento separado do Inspector
 
 O Inspector permanece estritamente read-only conforme a ADR-008. Ele não intercepta XHR/fetch, não observa payloads e não captura requisições. A captura de rede descrita aqui é uma atividade manual e independente, executada pelo mantenedor/investigador somente quando necessária e autorizada, conforme ADR-012.
@@ -49,7 +69,7 @@ O Inspector permanece estritamente read-only conforme a ADR-008. Ele não interc
 1. **Autorizar e limitar:** confirmar autorização para investigar o fluxo e usar ambiente de teste/homologação ou outro ambiente expressamente autorizado. Identificar a operação e a requisição mínima necessária.
 2. **Capturar manualmente:** abrir as ferramentas de desenvolvimento do navegador, acessar a aba de rede e observar a requisição escolhida durante a execução manual do fluxo. Não usar o Inspector, outro userscript, extensão, script ou serviço para capturar automaticamente. Não ativar coleta contínua.
 3. **Evitar exportação bruta:** não salvar nem anexar HAR, request/response bruto, screenshot ou arquivo de rede ao repositório, à PR ou ao pacote de IA. Se um arquivo temporário for indispensável à análise, mantê-lo localmente fora da pasta do repositório e não compartilhá-lo.
-4. **Mascarar valores antes de registrar:** substituir integralmente valores de CPF/CNPJ, números de títulos/duplicatas/documentos reais, nomes de pessoas ou clientes, códigos de barras e linhas digitáveis. Mascarar também senhas, tokens, cookies, identificadores de sessão, dados de contato, valores financeiros e identificadores de registros. Não manter prefixos/sufixos que permitam reconstrução ou identificação.
+4. **Mascarar valores antes de registrar:** substituir integralmente CPF/CNPJ por `[CPF_CNPJ]`, nomes de clientes por `[CLIENTE]`, títulos/duplicatas/documentos por `[TITULO]`, códigos de barras por `[CODIGO_BARRAS]`, linhas digitáveis por `[LINHA_DIGITAVEL]` e valores monetários por `[VALOR_MONETARIO]`. Usar também marcadores específicos para dados de contato, pessoas, credenciais, tokens, cookies e sessões. Não manter prefixos, sufixos ou fragmentos que permitam reconstrução.
 5. **Registrar somente o necessário:** após a máscara, registrar apenas metadados técnicos úteis, como método, tipo de conteúdo, nomes de parâmetros, estrutura genérica do payload e sequência de chamadas. Revisar se a rota ou outro metadado também revela informação interna que não deve ser publicada.
 6. **Revisar manualmente:** conferir o resultado mascarado campo a campo antes de copiar qualquer trecho para documentação, issue, PR ou pacote. A revisão é humana e não pode ser substituída por ferramenta automática.
 7. **Descartar em caso de dúvida:** se não for possível garantir a remoção de valores reais, não exportar nem compartilhar a captura. Descartar o material temporário conforme a política aplicável e registrar somente que a evidência ficou indisponível.
@@ -60,14 +80,20 @@ O Inspector permanece estritamente read-only conforme a ADR-008. Ele não interc
 
 Capturas de tela são manuais e não fazem parte da coleta automatizada do Inspector. Uma tela que exiba campos preenchidos deve ser considerada sensível mesmo quando o objetivo da captura for demonstrar apenas estrutura, sequência ou navegação.
 
-Antes de registrar, anexar ou compartilhar qualquer imagem ou observação derivada dela:
-- mascarar integralmente CPF/CNPJ, nomes de clientes/pessoas/operadores, números de títulos/duplicatas/documentos, códigos de barras, linhas digitáveis, dados de contato, valores financeiros, credenciais, tokens, cookies e identificadores de sessão;
+Antes de registrar, anexar ou compartilhar qualquer imagem ou observação derivada dela, substituir os valores completos por marcadores:
+- CPF/CNPJ por `[CPF_CNPJ]`;
+- nomes de clientes por `[CLIENTE]` e pessoas/operadores por `[PESSOA]`;
+- títulos/duplicatas/documentos por `[TITULO]`;
+- códigos de barras por `[CODIGO_BARRAS]`;
+- linhas digitáveis por `[LINHA_DIGITAVEL]`;
+- valores financeiros por `[VALOR_MONETARIO]`;
+- dados de contato, credenciais, tokens, cookies e identificadores de sessão por marcadores de sua categoria;
 - ocultar também conteúdo em cabeçalhos, rodapés, tabelas, listas suspensas, mensagens, abas, URL e outros elementos visíveis;
 - usar tarja opaca que não permita recuperar o conteúdo; não usar desfoque fraco, pixelização reversível ou máscara que preserve prefixos/sufixos;
 - achatar a imagem sanitizada e remover metadados desnecessários antes de compartilhar;
 - revisar a imagem final em tamanho integral e verificar que não restaram valores sensíveis.
 
-Não anexar capturas brutas ao repositório, PR, issue, fixture ou pacote de IA. Não registrar valores reais dos campos em texto. Para documentar inserções e dependências, registrar a ação e o efeito observado, não o conteúdo digitado. Se a máscara não puder ser garantida, não compartilhar o artefato; descartá-lo ou mantê-lo temporariamente fora do repositório em local autorizado.
+Não anexar capturas brutas ao repositório, PR, issue, fixture ou pacote de IA. Não registrar valores reais dos campos em texto. Para documentar inserções e dependências, registrar a ação e o efeito observado, não o conteúdo digitado. Os mesmos marcadores definidos em “Mascaramento obrigatório por marcadores” se aplicam a capturas de tela, campos preenchidos e capturas de rede (ADR-012). Se a máscara não puder ser garantida, não compartilhar o artefato; descartá-lo ou mantê-lo temporariamente fora do repositório em local autorizado.
 
 ## Verificação de dados sensíveis
 
