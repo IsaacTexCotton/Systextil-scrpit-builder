@@ -1,25 +1,25 @@
 # Manifesto de contexto para IA
 
-O manifesto de contexto deverá determinar quais documentos são incluídos em cada pacote gerado.
+A especificação de geração está em [CONTEXT_PACKAGE_SPEC.md](CONTEXT_PACKAGE_SPEC.md).
 
 ## Regras
-
-- Incluir AGENTS.md e instruções de caminho aplicáveis.
-- Incluir a especificação da automação e somente as evidências referenciadas.
-- Selecionar documentação NXJ por tela, formulário e funcionalidade.
-- Priorizar documentação normativa e código existente homologado.
-- Marcar exemplos como exemplos; nunca tratá-los como evidência da instalação atual.
+- Incluir AGENTS.md e instruções aplicáveis.
+- Incluir a especificação e somente evidências referenciadas.
+- Selecionar documentação NXJ por view/form/funcionalidade.
+- Priorizar fontes normativas e código homologado.
+- Marcar exemplos como fictícios.
 - Excluir segredos, dados reais, arquivos privados, logs brutos e capturas não sanitizadas.
-- Preservar caminho, versão/commit e finalidade de cada documento.
-- Quando a fonte estiver ausente, declarar a lacuna no prompt em vez de inventar uma solução.
+- Preservar caminho, versão/commit, hash e finalidade.
+- Usar allowlist; nunca incluir o repositório inteiro automaticamente.
+- Rejeitar traversal, symlinks fora da raiz, binários e referências inexistentes.
+- Limitar tamanho/quantidade e deduplicar por hash.
+- Declarar lacunas quando fonte estiver ausente.
 
-## Categorias de confiança
-
-- normative: regra do repositório ou documentação técnica oficial.
+## Confiança
+- normative: regra do repositório ou documentação oficial.
 - verified-evidence: observação confirmada no ambiente identificado.
-- example: fixture ou exemplo fictício.
-- informational: referência contextual que não prova o comportamento atual.
+- example: fixture fictícia.
+- informational: contexto que não prova o comportamento atual.
 
 ## Estado
-
-A geração automática do pacote ainda não foi implementada. Este documento define as regras que a implementação deverá seguir.
+Geração ainda não implementada. Este documento define os requisitos.
