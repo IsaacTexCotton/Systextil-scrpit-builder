@@ -1,6 +1,6 @@
 # Mapa de tela — consulta de títulos
 
-> Estado inicial do mapa, elaborado a partir de uma captura estática fornecida pelo mantenedor em 2026-11-11. A captura original não deve ser versionada. Os valores visíveis nos campos de data, hora e empresa foram omitidos deste documento. Nenhuma consulta ou interação foi executada para produzir este mapa.
+> Estado inicial do mapa, elaborado a partir de duas capturas estáticas fornecidas pelo mantenedor em 2026-11-11. As imagens originais não devem ser versionadas. Os valores visíveis nos campos de data, hora e empresa da primeira captura foram omitidos deste documento. Nenhuma consulta ou interação foi executada para produzir este mapa.
 
 ## Identificação
 
@@ -8,8 +8,8 @@
 - **Como chegar nela:** desconhecido. A captura mostra o menu lateral, mas não registra o caminho usado para abrir a tela.
 - **Data da observação:** 2026-11-11.
 - **Responsável pela captura/observação:** [RESPONSAVEL].
-- **Escopo observado:** cabeçalho da tela, formulário visível na primeira área da página, mensagem inferior e ação Buscar.
-- **Limite da evidência:** a barra de rolagem indica conteúdo adicional fora da área capturada. Não foram observados resultados de consulta, navegação por grade ou interações.
+- **Escopo observado:** cabeçalho, campos das áreas superior e inferior do formulário, botões visíveis no rodapé e mensagem informativa inferior.
+- **Limite da evidência:** as duas capturas cobrem as áreas superior e inferior visíveis do formulário, mas não demonstram todos os estados possíveis, resultados de consulta, navegação por grade ou interações. Rótulos abreviados/truncados foram preservados como aparecem.
 
 ## Campos
 
@@ -61,6 +61,20 @@ Os rótulos abaixo foram transcritos da captura. “Controle de entrada aparente
 | Num.contábil | Controle de entrada aparente | desconhecido | [DADO_SENSIVEL] | Formato e dependências desconhecidos | confirmado | captura |
 | Docto reneg. | Controle de entrada aparente | desconhecido | [DADO_SENSIVEL] | Significado e dependências desconhecidos | confirmado | captura |
 | Tem informação | Controle pequeno; aparência de indicador/seleção, tipo não confirmado | desconhecido | [ESTADO] | Condição de habilitação e efeito desconhecidos | inferido | captura |
+| Num.cupom | Controle curto de entrada aparente | desconhecido | [DADO_SENSIVEL] | Formato e dependências desconhecidos | confirmado | captura |
+| Forma pagto. | Controle de entrada aparente | desconhecido | [DADO_SENSIVEL] | Opções e dependências desconhecidas | confirmado | captura |
+| Adiantamen.: | Controle pequeno de entrada aparente; rótulo abreviado/truncado na captura | desconhecido | [ESTADO] | Significado e efeito desconhecidos | confirmado | captura |
+| Nr. remessa scpc | Controle curto de entrada aparente | desconhecido | [DADO_SENSIVEL] | Relação com Sit. remessa scpc desconhecida | confirmado | captura |
+| Sit. remessa scpc | Controle pequeno de entrada aparente | desconhecido | [ESTADO] | Opções, significado e dependências desconhecidos | confirmado | captura |
+| Situação renegociação | Grupo com controle pequeno e controle longo | desconhecido | [DADO_SENSIVEL] | Relação entre segmentos desconhecida | confirmado | captura |
+| Número da renegociação | Controle de entrada aparente | desconhecido | [DADO_SENSIVEL] | Relação com Situação renegociação desconhecida | confirmado | captura |
+| Codigos de barras | Controle longo de entrada aparente | desconhecido | [CODIGO_BARRAS] | Formato, máscara e uso como filtro desconhecidos | confirmado | captura |
+| Linha digitável | Controle longo de entrada aparente | desconhecido | [LINHA_DIGITAVEL] | Formato, máscara e uso como filtro desconhecidos | confirmado | captura |
+| Pix copia e cola | Controle longo de entrada aparente | desconhecido | [DADO_SENSIVEL] | Formato, máscara e uso como filtro desconhecidos | confirmado | captura |
+| Num. remessa fdc | Controle curto de entrada aparente | desconhecido | [DADO_SENSIVEL] | Relação com Situação fdc desconhecida | confirmado | captura |
+| Situação fdc | Controle pequeno de entrada aparente | desconhecido | [ESTADO] | Opções, significado e dependências desconhecidos | confirmado | captura |
+| Data remessa fdc | Controle de entrada aparente | desconhecido | [DATA] | Formato e dependências desconhecidos | confirmado | captura |
+| Num. ident. fdc | Controle de entrada aparente | desconhecido | [DADO_SENSIVEL] | Significado e dependências desconhecidos | confirmado | captura |
 
 ### Cobertura de campos e controles
 
@@ -77,6 +91,7 @@ Os rótulos abaixo foram transcritos da captura. “Controle de entrada aparente
 | Botão/ação visível | Buscar | Rótulo visível; efeito não executado | confirmado | captura |
 | Atalho de teclado | F2, F7, F9, Enter, Tab, Esc e outros | Nenhuma tecla foi testada nesta observação | desconhecido | dedução |
 | Mensagem de erro/confirmação | Mensagem informativa inferior | Há uma mensagem informativa inicial; mensagens após pesquisa são desconhecidas | confirmado | captura |
+| Botões adicionais | Manut. títulos; Histórico título; Imagem do título; Emite boleto; Emite nota fiscal | Rótulos visíveis na parte inferior; funções, pré-condições e efeitos não foram executados | confirmado | captura |
 
 ## Ações e atalhos
 
@@ -89,7 +104,12 @@ Os rótulos abaixo foram transcritos da captura. “Controle de entrada aparente
 | Enter | desconhecido | desconhecida | desconhecido | desconhecida | desconhecido | dedução |
 | Tab / Shift+Tab | Ordem de foco desconhecida | Controle com foco | Próximo/anterior controle ainda não observado | desconhecida | desconhecido | dedução |
 | Esc | desconhecido | desconhecida | desconhecido | desconhecida | desconhecido | dedução |
-| Ícones da barra superior | Há vários ícones visíveis, sem descrição textual na captura | desconhecida | desconhecido | desconhecida | desconhecido | captura |
+| Manut. títulos | Rótulo visível; função e efeito não executados | desconhecida | desconhecido | desconhecida | confirmado | captura |
+| Histórico título | Rótulo visível; função e efeito não executados | desconhecida | desconhecido | desconhecida | confirmado | captura |
+| Imagem do título | Rótulo visível; função e efeito não executados | desconhecida | desconhecido | desconhecida | confirmado | captura |
+| Emite boleto | Rótulo visível; função e efeito não executados; tratar como ação potencialmente operacional até esclarecer | desconhecida | desconhecido | desconhecida | confirmado | captura |
+| Emite nota fiscal | Rótulo visível; função e efeito não executados; tratar como ação potencialmente operacional até esclarecer | desconhecida | desconhecido | desconhecida | confirmado | captura |
+| Ícones da barra superior | Há vários ícones visíveis, sem descrição textual nas capturas | desconhecida | desconhecido | desconhecida | desconhecido | captura |
 
 ### Navegação por colunas
 
@@ -158,15 +178,15 @@ Ainda não existe sinal de sucesso confirmado para a consulta. O rótulo Buscar,
 
 ## Revisão antes de salvar
 
-- [x] Rótulos e controles aparentes foram registrados a partir da captura.
-- [x] Valores exibidos em Data, Hora e Empresa foram omitidos do documento.
-- [x] Captura original não será incluída no repositório.
+- [x] Rótulos e controles aparentes das áreas superior e inferior foram registrados a partir de duas capturas.
+- [x] Valores exibidos em Data, Hora e Empresa na primeira captura foram omitidos do documento.
+- [x] Imagens originais não serão incluídas no repositório.
 - [x] Status e Origem foram preenchidos nas linhas registradas.
 - [x] Itens não observados permanecem desconhecidos.
 - [x] Nenhuma consulta, tecla ou ação de ERP foi executada nesta etapa.
-- [ ] Completar a área abaixo da rolagem.
+- [ ] Verificar se ainda há campos ou ações abaixo do trecho final capturado.
 - [ ] Confirmar caminho de acesso e metadados técnicos.
 - [ ] Investigar sequência NXJ e sinal independente de confirmação somente após autorização aplicável.
 - [ ] Revisão final do mantenedor antes de considerar o mapa completo.
 
-**Estado do mapa:** inicial e incompleto. A captura confirma apenas rótulos, disposição aparente e uma mensagem informativa; não comprova tipo técnico, comportamento, obrigatoriedade, consulta, resposta NXJ ou sucesso operacional.
+**Estado do mapa:** inicial e incompleto. As capturas confirmam rótulos, disposição aparente, campos adicionais e presença de botões; não comprovam tipo técnico, comportamento, obrigatoriedade, efeito de ações, consulta, resposta NXJ ou sucesso operacional. Os botões “Emite boleto” e “Emite nota fiscal” foram apenas inventariados; não foram acionados.
