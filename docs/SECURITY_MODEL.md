@@ -79,7 +79,7 @@ Não alterar a visibilidade, tornar o repositório privado ou reescrever o hist�
 
 ### Status da verificação
 
-<badge-placeholder>**PENDENTE**</badge-placeholder> A verificação de dados sensíveis deve ser executada **antes de qualquer novo commit que inclua evidência de tela, captura, nome/identificador técnico derivado da tela, valor de campo ou dado operacional**.
+**Status: PENDENTE.** A verificação de dados sensíveis deve ser executada **antes de qualquer novo commit que inclua evidência de tela, captura, nome/identificador técnico derivado da tela, valor de campo ou dado operacional**.
 
 A revisão pontual registrada em 2026-11-11 descreve apenas o estado então examinado. Ela é um registro histórico e **não quita a verificação exigida antes do próximo commit com evidências**. Atualizar este documento ou outros documentos de método sem adicionar evidência real não substitui nem dispara essa verificação.
 
@@ -97,7 +97,7 @@ Antes de criar o commit que adicionará evidência, revisar os arquivos atuais, 
 
 Combinar busca por padrões com revisão manual do contexto. Registrar no relatório da PR somente categorias e caminhos dos achados, sem reproduzir valores ou dados sensíveis. Se houver achados, removê-los da proposta antes de criar o commit, após decisão do mantenedor; não publicar valores para explicar o problema.
 
-**Condição de parada:** se a revisão identificar dados reais ou outros dados operacionais sensíveis no histórico ou nos arquivos atuais, interromper a preparação do commit com evidência e reportar ao mantenedor antes de prosseguir com essa alteração. Não apagar arquivos, reescrever histórico, remover branches ou alterar a visibilidade como resposta automática. A remediação requer decisão explícita.
+**Condição de parada:** se a revisão identificar dados reais ou outros dados operacionais sensíveis no histórico ou nos arquivos atuais, interromper a preparação do commit com evidência e reportar ao mantenedor antes de prosseguir com essa alteração. Não apagar arquivos, reescrever histórico, remover branches ou alterar visibilidade como resposta automática. A remediação requer decisão explícita.
 
 ### Checklist por commit com evidência
 
