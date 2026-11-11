@@ -13,22 +13,24 @@ Nenhuma fase é concluída apenas porque arquivos foram criados. Os gates define
 ## G1 — Solicitação completa
 - [ ] Schema de solicitação aprovado.
 - [ ] Processo atual e resultado desejado descritos.
-- [ ] Dificuldade observada separada de sua hipótese de causa.
+- [ ] Necessidade de mapear a tela antes de codificar confirmada.
 - [ ] Regras confirmadas separadas de hipóteses.
 - [ ] Inputs, outputs, exceções e responsáveis identificados.
 - [ ] Critérios de aceite mensuráveis.
 - [ ] Risco preliminar justificado.
 
-## G2 — Evidência Inspector
-- [ ] Metadados limitados por allowlist.
-- [ ] Nenhum valor de campo coletado.
+## G2 — Mapeamento de tela e evidência
+- [ ] Telas relevantes e fluxo de navegação identificados.
+- [ ] Campos relevantes e tipos documentados ou marcados como unknown.
+- [ ] Ações e sequência de inserção descritas sem valores reais.
+- [ ] Dependências entre campos e efeitos observados documentados.
+- [ ] Transições registram tela de origem, ação, tecla/botão e destino.
+- [ ] Metadados do Inspector limitados à allowlist aprovada pela ADR-008.
+- [ ] Nenhum valor de campo coletado pelo Inspector.
 - [ ] Nenhuma requisição/payload interceptado pelo Inspector.
-- [ ] @match/@grant revisados.
-- [ ] Idempotência e limpeza de listeners.
-- [ ] Exportação explícita pelo operador.
-- [ ] JSON validado e privacidade revisada.
-- [ ] Homologação Chrome/Tampermonkey autorizada.
-- [ ] Captura manual de rede, se necessária, separada do Inspector e sanitizada conforme ADR-012.
+- [ ] Capturas de tela, campos com valores e capturas manuais de rede mascarados.
+- [ ] Verificação de dados sensíveis concluída antes de qualquer commit que adicione evidência de tela ou dado.
+- [ ] Unknowns e inferências explicitamente identificados.
 
 ## G3 — Especificação aprovada
 - [ ] Referências resolvidas.

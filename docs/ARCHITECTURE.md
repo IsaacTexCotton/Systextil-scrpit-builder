@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Manter neste repositório o método, os modelos, schemas, checklists e ferramentas locais de apoio à criação de automações no Systêxtil. O problema central é a dificuldade de criar essas automações; a etapa e a causa específicas ainda estão pendentes de identificação.
+Manter neste repositório o método, os modelos, schemas, checklists e ferramentas locais de apoio à criação de automações no Systêxtil. O problema central é entender a tela antes de escrever código: campos e tipos, ações de inserção, dependências entre campos e navegação entre telas.
 
 MVP local-first, CLI-first e sem serviço remoto.
 
@@ -19,11 +19,11 @@ Este repositório não é o repositório de código de produção. Ele guarda os
 
 ### Inspector (ferramenta de apoio futura)
 
-Identifica metadados allowlisted de views, formulários e controles, registra observações confirmadas/inferidas/desconhecidas e exporta JSON sanitizado após ação explícita.
+O Inspector aprovado pela ADR-008 identifica metadados allowlisted de views, formulários e controles, registra observações confirmadas/inferidas/desconhecidas e exporta JSON sanitizado após ação explícita.
 
-É estritamente read-only: não lê valores de campos, intercepta XHR/fetch, coleta requisições de rede, aciona F7/Find, preenche filtros, navega registros, grava dados ou executa código recebido do Studio.
+Seu escopo permanece estritamente read-only: não lê valores de campos, intercepta XHR/fetch, coleta requisições de rede, aciona F7/Find, preenche filtros, executa inserções, dispara teclas/botões, navega registros, grava dados ou executa código recebido do Studio.
 
-A investigação pode incluir captura manual de rede pelo mantenedor, separada do Inspector e sujeita ao procedimento de [SECURITY_MODEL.md](SECURITY_MODEL.md) e à ADR-012.
+O mapeamento de ações de inserção, dependências e navegação é realizado por observação manual documentada em [SCREEN_INVESTIGATION.md](SCREEN_INVESTIGATION.md). A ADR-013 é apenas proposta para avaliar eventual ampliação da allowlist de metadados de controles editáveis. Até ser aprovada, não altera o Inspector.
 
 ### Núcleo local (Node.js)
 
@@ -36,7 +36,7 @@ Criar módulos somente quando houver consumidores reais. Sem servidor ou rede no
 
 ### Solicitação e especificador
 
-Representam problema, processo, regras, exceções, inputs/outputs e critérios de aceite. Cada passo técnico aponta evidência ou declara unknown. A ferramenta não deve assumir antecipadamente qual etapa do trabalho causa a dificuldade central.
+Representam o problema, processo, regras, exceções, inputs/outputs e critérios de aceite. A especificação recebe o mapeamento de tela: campos e tipos, ações e sequência de inserção, dependências observadas e transições de navegação. Cada afirmação técnica aponta evidência ou declara unknown.
 
 ### Gerador de pacote
 
@@ -48,11 +48,11 @@ São desenvolvidos e mantidos fora deste repositório, em arquivos independentes
 
 ## Fluxo
 
-Solicitação → compreensão da dificuldade real → modelo/regras → checklist → investigação manual e Inspector read-only → evidências sanitizadas → especificação → manifesto/pacote local → IA/revisão e aceite do mantenedor → desenvolvimento no repositório de produção → testes/homologação/PR.
+Solicitação → delimitação da tela e do fluxo → investigação manual e Inspector read-only → mapa de campos/inserções/dependências/navegação → evidências sanitizadas → especificação → manifesto/pacote local → IA/revisão e aceite do mantenedor → desenvolvimento no repositório de produção → testes/homologação/PR.
 
 ## Fronteiras de confiança
 
-DOM e Systêxtil são fontes externas não confiáveis; arquivos importados são validados; núcleo não executa conteúdo; IA propõe código mas não homologa; GitHub versiona documentação e ferramentas de apoio sem upload automático de evidências privadas. Capturas manuais de rede não são coletadas pelo Inspector e nunca entram no repositório em formato real.
+DOM e Systêxtil são fontes externas não confiáveis; arquivos importados são validados; núcleo não executa conteúdo; IA propõe código mas não homologa; GitHub versiona documentação e ferramentas de apoio sem upload automático de evidências privadas. Capturas de tela, valores de campos e capturas manuais de rede devem ser mascarados antes de qualquer registro; os artefatos brutos nunca entram no repositório.
 
 ## Dependências
 
