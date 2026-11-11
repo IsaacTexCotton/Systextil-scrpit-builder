@@ -68,20 +68,24 @@ O projeto deve facilitar o caminho entre uma necessidade operacional e uma autom
 ## Estrutura de apoio
 
 - `userscripts/`: ferramentas de apoio do projeto, incluindo o Inspector read-only; nunca código de automações de produção.
-- `src/core/`: modelos, validações e regras puras.
-- `src/cli/`: comandos locais.
-- `schemas/`: contratos JSON versionados.
+- `src/core/` (adiado): modelos, validações e regras puras.
+- `src/cli/` (adiado): comandos locais.
+- `schemas/` (adiado): contratos JSON versionados.
 - `docs/`: método, investigação, planejamento, segurança e decisões.
 - `examples/`: fixtures fictícias.
 - `tests/`: testes locais sem acesso ao ERP/rede.
 
+Os componentes `src/core/`, `src/cli/`, `schemas/` e a dependência Ajv estão adiados. Criar somente quando houver consumidor real e decisão do mantenedor.
+
 ## Ferramentas previstas
 
-Node.js 24+, npm, Ajv 8.20.0, node:test, Tampermonkey, Chrome, Git/GitHub e Context7 para consulta de documentação atualizada.
+Node.js 24+, npm, Ajv 8.20.0 (adiado), node:test, Tampermonkey, Chrome, Git/GitHub e Context7 para consulta de documentação atualizada.
 
 React, Electron, Playwright, SQLite, backend e API paga de IA ficam adiados até necessidade comprovada e decisão registrada.
 
 ## Preparação local
+
+**Status:** preparação da fundação técnica adiada com E0. Retomar os comandos abaixo somente após decisão explícita do mantenedor.
 
     npm install
     npm test
