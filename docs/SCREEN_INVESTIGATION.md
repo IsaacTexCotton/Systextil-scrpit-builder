@@ -99,9 +99,7 @@ Antes de qualquer registro ou compartilhamento, substituir integralmente os valo
 - dados de contato por `[DADO_CONTATO]`;
 - senhas, tokens, cookies e identificadores de sessão por marcadores de categoria que não revelem nenhum trecho do valor.
 
-Não manter prefixos, sufixos ou qualquer parte que permita reconstruir o conteúdo.
-
-Não manter prefixos/sufixos que permitam reconstrução. Não colocar capturas brutas, HARs ou imagens não sanitizadas no repositório, PR, issue, fixture ou pacote de IA. A verificação de dados sensíveis deve estar concluída antes de qualquer commit que adicione evidência de tela ou dado operacional, conforme [SECURITY_MODEL.md](SECURITY_MODEL.md#verificação-de-dados-sensíveis).
+Não manter prefixos, sufixos ou qualquer parte que permita reconstruir o conteúdo. Não colocar capturas brutas, HARs ou imagens não sanitizadas no repositório, PR, issue, fixture ou pacote de IA. A verificação de dados sensíveis deve estar concluída antes de qualquer commit que adicione evidência de tela ou dado operacional, conforme [SECURITY_MODEL.md](SECURITY_MODEL.md#verificação-de-dados-sensíveis).
 
 Se não for possível garantir a máscara, não compartilhar o artefato. Descartar a captura ou mantê-la fora do repositório, em local autorizado, somente pelo tempo estritamente necessário.
 
