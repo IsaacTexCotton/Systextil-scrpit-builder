@@ -2,6 +2,14 @@
 
 Os itens abaixo são propostas de entrega, não funcionalidades já implementadas. Cada item precisa de critérios de aceite, testes e PR própria ou escopo pequeno.
 
+## Decisão de piloto
+
+**Estado:** pendente de decisão do mantenedor. Nenhum piloto está aprovado ou escolhido.
+
+**Candidato em avaliação, sem aprovação:** consulta em lote de títulos, somente leitura, limitada aos dados necessários para exibir título, cliente, código de barras e linha digitável. O candidato exige confirmação de autorização, ambiente e tratamento dos dados operacionais antes de virar piloto.
+
+Prorrogação e emissão de boleto ficam fora do piloto. Baixa, exclusão e outras operações de escrita também ficam fora.
+
 ## E0 — Fundação executável
 
 | ID | Prioridade | Entrega | Aceite |
@@ -27,12 +35,12 @@ Os itens abaixo são propostas de entrega, não funcionalidades já implementada
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
 | E2-01 | P0 | Allowlist de metadados | valores de campos excluídos |
-| E2-02 | P0 | Userscript Inspector | @match/@grant mínimos, idempotente |
+| E2-02 | P0 | Userscript Inspector | @match/@grant mínimos, idempotente e estritamente read-only |
 | E2-03 | P0 | Inventário de views/forms/controles | metadados limitados |
 | E2-04 | P1 | Observações e certeza | confirmed/inferred/unknown |
 | E2-05 | P0 | Sanitização e revisão | dados sensíveis bloqueados |
 | E2-06 | P1 | Exportação JSON | contrato válido |
-| E2-07 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite humano |
+| E2-07 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite do mantenedor |
 
 ## E3 — Especificador
 
@@ -68,16 +76,16 @@ Os itens abaixo são propostas de entrega, não funcionalidades já implementada
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
-| E6-01 | P0 | Checklist de revisão | segurança e risco NXJ cobertos |
-| E6-02 | P0 | Checklist de homologação | critérios por L0–L3 |
-| E6-03 | P1 | Piloto L0/L1 | fluxo ponta a ponta |
-| E6-04 | P1 | Medir retrabalho/tempo | baseline e resultado |
-| E6-05 | P2 | Revisar roadmap | ADR após piloto |
+| E6-01 | P0 | Checklist de auto-revisão do mantenedor | segurança, risco NXJ e diff cobertos |
+| E6-02 | P0 | Checklist de homologação | critérios por L0–L3; resultado registrado na PR |
+| E6-03 | P1 | Decidir e executar piloto L0/L1 | candidato selecionado e aprovado pelo mantenedor; escopo, linha de base, testes e homologação registrados |
+| E6-04 | P1 | Medir dificuldade e resultado | medidas comparáveis do processo anterior e do fluxo apoiado |
+| E6-05 | P2 | Revisar roadmap | decisão registrada após evidência do piloto |
 
 ## Ordem
 
-E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade.
+E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A escolha do piloto permanece pendente e não deve ser presumida durante a execução dessas fases.
 
 ## Definition of Done
 
-Critérios atendidos; testes executados e reportados; docs/fixtures atualizados; diff revisado; nenhum dado real/segredo; limitações declaradas; PR focada; sem merge automático.
+Critérios atendidos; testes locais executados e reportados; docs/fixtures atualizados; diff auto-revisado pelo mantenedor; nenhum dado real/segredo; limitações declaradas; PR focada; homologação pelo mantenedor em Systêxtil autorizado quando aplicável, com resultado registrado na PR; sem merge automático.
