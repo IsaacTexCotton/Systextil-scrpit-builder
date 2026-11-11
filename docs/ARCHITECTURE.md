@@ -1,87 +1,35 @@
 # Arquitetura
 
-## Objetivo arquitetural
-
-Separar a investigação dentro do Systextil da preparação local de especificações e pacotes para IA. O Studio não deve depender de um servidor para a primeira versão.
+## Objetivo
+Separar investigação dentro do Systextil da preparação local de especificações e pacotes para IA. MVP local-first, CLI-first e sem serviço remoto.
 
 ## Componentes
 
-### 1. Inspector (futuro)
+### Inspector (userscript futuro)
+Identifica view/forms e metadados de controles, registra observações confirmadas/inferidas/desconhecidas e exporta JSON sanitizado após ação explícita.
+Não lê valores de campos, intercepta XHR/fetch, aciona F7/Find, preenche filtros, navega registros, grava dados ou executa código recebido do Studio.
 
-Userscript Tampermonkey independente, restrito ao Systextil.
+### Núcleo local (Node.js)
+- core/: modelos, regras puras, validação e transições.
+- cli/: comandos locais.
+- context/: allowlist e resolução segura.
+- generators/: geração determinística Markdown/JSON.
+Criar módulos somente quando houver consumidores reais. Sem servidor/rede no MVP.
 
-Responsabilidades planejadas:
-- identificar visão, formulário e metadados de controles;
-- inspecionar DOM e contexto da página com escopo mínimo;
-- registrar observações como confirmadas, inferidas ou desconhecidas;
-- exportar evidências JSON sanitizadas após ação explícita do operador.
+### Solicitação e especificador
+Representam problema, processo, regras, exceções, inputs/outputs e critérios de aceite. Cada passo técnico aponta evidência ou declara unknown.
 
-Fora do escopo:
-- executar consultas ou comandos de negócio;
-- preencher filtros automaticamente;
-- navegar registros em lote;
-- gravar, emitir, baixar, prorrogar ou excluir dados;
-- coletar valores de campos ou payloads de requisições por padrão.
+### Gerador de pacote
+Monta especificação, evidências sanitizadas, documentação selecionada, prompt e manifesto com fonte, versão, confiança, hash e finalidade. Não envia automaticamente.
 
-### 2. Núcleo local (em construção)
+### Userscripts finais
+Cada automação será arquivo independente em userscripts/. Não compartilhar runtime universal com o ERP.
 
-Executado em Node.js. Valida evidências e especificações, aplica regras de consistência e prepara artefatos locais.
+## Fluxo
+Solicitação → modelo/regras → checklist → Inspector read-only → evidências sanitizadas → especificação → manifesto/pacote local → IA/revisão humana → userscript específico → testes/homologação/PR.
 
-Não deve iniciar servidor, chamar APIs de IA ou enviar arquivos para a rede sem decisão arquitetural explícita.
+## Fronteiras de confiança
+DOM e Systextil são fontes externas não confiáveis; arquivos importados são validados; núcleo não executa conteúdo; IA propõe código mas não homologa; GitHub versiona sem upload automático de evidências privadas.
 
-### 3. Especificador (futuro)
-
-Transforma uma necessidade operacional em uma especificação declarativa: objetivo, entradas, pré-condições, passos, evidências, riscos, falhas, sucesso e pontos desconhecidos.
-
-### 4. Gerador de pacote (futuro)
-
-Produz Markdown/JSON com instruções para a IA; especificação aprovada; evidências relevantes e sanitizadas; arquivos técnicos selecionados pelo manifesto de contexto; critérios de teste e homologação.
-
-O pacote deve manter a origem dos fatos e não converter hipóteses em certezas.
-
-### 5. Userscripts de produção
-
-Cada automação final será um arquivo independente em userscripts/. O Inspector/Studio não substituirá scripts específicos já homologados.
-
-## Fluxo de dados
-
-    Necessidade operacional
-             |
-             v
-    Especificação do processo
-             |
-             v
-    Inspector no Systextil ----> Evidências JSON sanitizadas
-             |                               |
-             +---------------+---------------+
-                             v
-                      Validação local
-                             |
-                             v
-                   Especificação técnica
-                             |
-                             v
-                  Pacote contextualizado
-                             |
-                             v
-                       IA + revisão
-                             |
-                             v
-                  Userscript específico
-                             |
-                             v
-             Testes locais + homologação
-                             |
-                             v
-                      Pull Request
-
-## Dependências e fronteiras
-
-- Node.js: execução local e testes.
-- Ajv: validação dos contratos JSON.
-- Tampermonkey: execução futura do Inspector.
-- GitHub: versionamento e revisão.
-- Chrome DevTools: investigação e diagnóstico.
-- Ferramenta de IA: desenvolvimento assistido com pacote explícito.
-
-Não há banco remoto, backend, framework de frontend ou integração paga de IA no escopo inicial.
+## Dependências
+Node.js 24+, Ajv 8.20.0, node:test, Tampermonkey, Chrome, Git/GitHub e Context7. Sem backend, banco remoto, framework ou API paga no MVP. Ver docs/TOOLING.md e docs/DECISIONS.md.
