@@ -7,12 +7,17 @@ Resumo do [plano mestre](IMPLEMENTATION_PLAN.md); tarefas detalhadas em [DELIVER
 - [x] Fundação organizacional integrada à main.
 - [ ] Fundação executável validada em Node 24+.
 - [ ] Solicitação operacional.
-- [ ] Inspector read-only.
+- [ ] Guia de investigação e mapeamento de tela.
+- [ ] Inspector read-only conforme ADR-008.
 - [ ] Especificador técnico.
 - [ ] Gerador de contexto.
-- [ ] Decisão e aprovação do piloto — **pendente de decisão do mantenedor**.
+- [x] Piloto definido: consulta em lote de títulos, somente leitura.
 
-**Candidato registrado, sem aprovação:** consulta em lote de títulos, somente leitura, com título, cliente, código de barras e linha digitável. É apenas uma opção a avaliar; não representa piloto escolhido.
+## Piloto escolhido
+
+Consulta em lote de títulos, somente leitura, contemplando título, cliente, código de barras e linha digitável.
+
+A investigação que antecede a codificação deve mapear campos e tipos, ações e sequência de inserção, dependências entre campos e navegação (ação, tecla/botão e tela de destino). O piloto depende de ambiente e massa autorizados.
 
 **Fora do piloto:** prorrogação, emissão de boleto, baixa, exclusão e demais operações de escrita.
 
@@ -29,15 +34,18 @@ Resumo do [plano mestre](IMPLEMENTATION_PLAN.md); tarefas detalhadas em [DELIVER
 - [ ] Validação de completude e relatório de lacunas.
 - [ ] Checklist de investigação da dificuldade percebida.
 
-## Fase 2 — Inspector
+## Fase 2 — Investigação de tela e Inspector
 
-- [ ] Allowlist de metadados DOM.
-- [ ] Userscript de apoio independente e estritamente read-only.
-- [ ] Inventário de views/forms/controles.
-- [ ] Sanitização, revisão e exportação JSON.
+- [ ] Guia para inventário de telas, campos e tipos.
+- [ ] Mapa de ações e sequência de inserção.
+- [ ] Mapa de dependências entre campos.
+- [ ] Mapa de navegação com origem, ação, tecla/botão e destino.
+- [ ] Userscript de apoio estritamente read-only dentro da ADR-008.
+- [ ] Avaliar ADR-013 antes de qualquer eventual ampliação da allowlist.
+- [ ] Sanitização, revisão e exportação de evidências.
 - [ ] Homologação Chrome/Tampermonkey autorizada.
 
-A captura manual de rede, quando necessária, permanece separada do Inspector, nunca é automática e segue a ADR-012.
+A captura manual de rede continua separada do Inspector, nunca é automática e segue a ADR-012. Capturas de tela e campos com valores seguem o mesmo mascaramento.
 
 ## Fase 3 — Especificador
 
@@ -62,9 +70,9 @@ A captura manual de rede, quando necessária, permanece separada do Inspector, n
 ## Fase 6 — Validação assistida
 
 - [ ] Auto-revisão do mantenedor e checklists de homologação.
-- [ ] Selecionar e aprovar um piloto L0/L1.
+- [ ] Executar piloto read-only de consulta em lote de títulos.
 - [ ] Registrar linha de base.
-- [ ] Medir esforço, lacunas, retrabalho e defeitos após executar o piloto.
+- [ ] Medir esforço, lacunas de mapeamento, retrabalho e defeitos após executar o piloto.
 
 ## Fora do escopo
 

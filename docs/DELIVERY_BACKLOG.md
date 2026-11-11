@@ -2,13 +2,21 @@
 
 Os itens abaixo são propostas de entrega, não funcionalidades já implementadas. Cada item precisa de critérios de aceite, testes e PR própria ou escopo pequeno.
 
-## Decisão de piloto
+## Piloto escolhido
 
-**Estado:** pendente de decisão do mantenedor. Nenhum piloto está aprovado ou escolhido.
+**Estado:** escolhido e confirmado pelo mantenedor.
 
-**Candidato em avaliação, sem aprovação:** consulta em lote de títulos, somente leitura, limitada aos dados necessários para exibir título, cliente, código de barras e linha digitável. O candidato exige confirmação de autorização, ambiente e tratamento dos dados operacionais antes de virar piloto.
+**Escopo:** consulta em lote de títulos, somente leitura, contemplando:
+- título;
+- cliente;
+- código de barras;
+- linha digitável.
 
-Prorrogação e emissão de boleto ficam fora do piloto. Baixa, exclusão e outras operações de escrita também ficam fora.
+O piloto também deve validar o método de investigação e mapeamento da tela antes da codificação: campos e tipos, ações e sequência de inserção, dependências entre campos e navegação com o gatilho de tecla/botão. O piloto não autoriza escrita no ERP nem amplia automaticamente o escopo do Inspector.
+
+**Fora do piloto:** prorrogação, emissão de boleto, baixa, exclusão e qualquer outra operação de escrita.
+
+Antes de executar, confirmar ambiente e massa de dados autorizados. A verificação de dados sensíveis deve ser concluída antes de qualquer commit que adicione evidência de tela ou dado operacional. Nenhum valor real ou captura não sanitizada entra neste repositório.
 
 ## E0 — Fundação executável
 
@@ -30,16 +38,16 @@ Prorrogação e emissão de boleto ficam fora do piloto. Baixa, exclusão e outr
 | E1-04 | P1 | Relatório de completude | lacunas listadas sem inventar |
 | E1-05 | P1 | Checklist de investigação | itens rastreiam a solicitação |
 
-## E2 — Inspector
+## E2 — Investigação de tela e Inspector
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
-| E2-01 | P0 | Allowlist de metadados | valores de campos excluídos |
-| E2-02 | P0 | Userscript Inspector | @match/@grant mínimos, idempotente e estritamente read-only |
-| E2-03 | P0 | Inventário de views/forms/controles | metadados limitados |
+| E2-01 | P0 | Guia e checklist de mapeamento | campos/tipos, inserções, dependências e navegação cobertos |
+| E2-02 | P0 | Allowlist do Inspector atual | respeita ADR-008; sem valores de campos |
+| E2-03 | P1 | Avaliar proposta ADR-013 | decisão explícita antes de qualquer ampliação |
 | E2-04 | P1 | Observações e certeza | confirmed/inferred/unknown |
 | E2-05 | P0 | Sanitização e revisão | dados sensíveis bloqueados |
-| E2-06 | P1 | Exportação JSON | contrato válido |
+| E2-06 | P1 | Exportação de evidências aprovadas | contrato vigente validado |
 | E2-07 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite do mantenedor |
 
 ## E3 — Especificador
@@ -78,14 +86,14 @@ Prorrogação e emissão de boleto ficam fora do piloto. Baixa, exclusão e outr
 |---|---|---|---|
 | E6-01 | P0 | Checklist de auto-revisão do mantenedor | segurança, risco NXJ e diff cobertos |
 | E6-02 | P0 | Checklist de homologação | critérios por L0–L3; resultado registrado na PR |
-| E6-03 | P1 | Decidir e executar piloto L0/L1 | candidato selecionado e aprovado pelo mantenedor; escopo, linha de base, testes e homologação registrados |
-| E6-04 | P1 | Medir dificuldade e resultado | medidas comparáveis do processo anterior e do fluxo apoiado |
+| E6-03 | P1 | Executar piloto escolhido | consulta em lote read-only dos quatro dados; ambiente e massa autorizados; PR e homologação registradas |
+| E6-04 | P1 | Medir dificuldade e resultado | linha de base e medidas comparáveis do processo apoiado |
 | E6-05 | P2 | Revisar roadmap | decisão registrada após evidência do piloto |
 
 ## Ordem
 
-E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A escolha do piloto permanece pendente e não deve ser presumida durante a execução dessas fases.
+E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A execução do piloto depende de ambiente autorizado e da investigação/mapa de tela necessários ao desenvolvimento seguro.
 
 ## Definition of Done
 
-Critérios atendidos; testes locais executados e reportados; docs/fixtures atualizados; diff auto-revisado pelo mantenedor; nenhum dado real/segredo; limitações declaradas; PR focada; homologação pelo mantenedor em Systêxtil autorizado quando aplicável, com resultado registrado na PR; sem merge automático.
+Critérios atendidos; testes locais executados e reportados; docs/fixtures atualizados; diff auto-revisado pelo mantenedor; nenhum dado real/segredo; verificação de dados sensíveis concluída antes de commit com evidência de tela ou dado; limitações declaradas; PR focada; homologação pelo mantenedor em Systêxtil autorizado quando aplicável, com resultado registrado na PR; sem merge automático.
