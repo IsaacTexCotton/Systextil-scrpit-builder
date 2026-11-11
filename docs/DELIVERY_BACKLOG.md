@@ -18,7 +18,7 @@ O piloto também deve validar o método de investigação e mapeamento da tela a
 
 Antes de executar, confirmar ambiente e massa de dados autorizados. A verificação de dados sensíveis deve ser concluída antes de qualquer commit que adicione evidência de tela ou dado operacional. Nenhum valor real ou captura não sanitizada entra neste repositório.
 
-## E0 — Fundação executável
+## E0 — Fundação executável (adiado)
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
@@ -28,7 +28,7 @@ Antes de executar, confirmar ambiente e massa de dados autorizados. A verificaç
 | E0-04 | P1 | Testar schema do prompt | fixture passa e casos inválidos falham |
 | E0-05 | P1 | Rever formatos | decisão sobre formatos documentada |
 
-## E1 — Solicitação
+## E1 — Solicitação (adiado)
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
@@ -98,7 +98,7 @@ Pré-condição: um arquivo por tela relevante em `docs/telas/`, derivado de `_m
 
 ## Ordem
 
-E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A execução do piloto depende de ambiente autorizado e da investigação/mapa de tela necessários ao desenvolvimento seguro.
+E2 → E3 → E4 → E6, com E0 e E1 adiados até decisão do mantenedor. E5 só após evidência de necessidade. A execução do piloto depende de ambiente autorizado e da investigação/mapa de tela necessários ao desenvolvimento seguro.
 
 ## Definition of Done
 
