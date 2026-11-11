@@ -77,3 +77,10 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 **Proposta:** avaliar uma ampliação controlada da allowlist para identificar metadados de controles editáveis relevantes ao mapeamento (por exemplo, rótulo, tipo, editabilidade, obrigatoriedade e atributos declarativos). A proposta não inclui leitura de valores digitados, captura de conteúdo pessoal/financeiro, preenchimento, seleção, acionamento de teclas/botões, navegação automatizada ou interceptação de rede. Dependências e transições continuam sendo observações manuais, a menos que uma decisão futura aprove expressamente outra abordagem.  
 **Restrições:** não implementar nem alterar o Inspector por causa desta proposta. Antes de qualquer implementação, o mantenedor deve avaliar necessidade, minimização, risco de exposição em repositório público, mascaramento, testes e compatibilidade com a ADR-008. Uma eventual aceitação deve delimitar precisamente metadados permitidos e atualizar a decisão de forma explícita.  
 **Motivo:** estudar se o inventário de metadados pode reduzir o esforço de mapear campos sem comprometer a natureza read-only do Inspector.
+
+
+## ADR-014 — Escopo reduzido ao método de mapeamento de telas
+
+**Status:** aceita.  
+**Decisão:** priorizar o mapeamento manual de telas (`docs/telas/`) antes de CLI, schemas e validadores. A fundação técnica (E0 e E1) permanece adiada até decisão explícita do mantenedor.  
+**Motivo:** a dificuldade central é entender a tela do Systêxtil antes de escrever código, e a infraestrutura técnica ainda não tem consumidor real.
