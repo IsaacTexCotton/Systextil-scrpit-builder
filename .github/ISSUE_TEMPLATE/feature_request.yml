@@ -1,0 +1,31 @@
+name: "Propor melhoria no Studio"
+description: "Solicitar melhoria na investigação, especificação ou geração de pacotes."
+title: "[MELHORIA] "
+labels: []
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: "Qual dificuldade existe hoje?"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+      description: "Como a melhoria deveria funcionar?"
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas e impactos
+    validations:
+      required: false

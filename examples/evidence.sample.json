@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "evidenceId": "sample-screen-001",
+  "capturedAt": "2026-11-10T09:00:00-03:00",
+  "purpose": "Exemplo fictício de inventário de metadados de uma tela.",
+  "source": {
+    "system": "Systextil NXJ",
+    "environment": "unknown",
+    "viewName": "forms.demo.example",
+    "pagePath": "/demo/example",
+    "formNames": ["demoForm"]
+  },
+  "elements": [
+    {
+      "elementId": "demo-search",
+      "name": "CAMPO_EXEMPLO",
+      "tagName": "INPUT",
+      "type": "text",
+      "label": "Campo de exemplo",
+      "visible": true,
+      "disabled": false,
+      "readOnly": false,
+      "required": false,
+      "multiple": false
+    }
+  ],
+  "observations": [
+    {
+      "topic": "nome-da-visao",
+      "status": "confirmed",
+      "details": "Nome fictício usado somente para demonstrar o formato do arquivo."
+    },
+    {
+      "topic": "comando-de-consulta",
+      "status": "unknown",
+      "details": "Nenhum comando NXJ foi observado neste exemplo."
+    }
+  ],
+  "privacy": {
+    "sanitized": true,
+    "operatorReviewed": true,
+    "excludedCategories": ["credentials", "personal-data", "customer-data", "financial-data", "transaction-values", "session-data", "request-payloads"]
+  },
+  "limitations": ["Exemplo fictício; não representa uma tela real do ERP."]
+}

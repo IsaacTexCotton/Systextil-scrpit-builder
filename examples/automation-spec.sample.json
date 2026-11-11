@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "automationId": "inventario-metadados-tela",
+  "title": "Inventário de metadados de uma tela fictícia",
+  "objective": "Demonstrar uma especificação de inspeção que não altera dados do ERP.",
+  "riskLevel": "L0",
+  "executionMode": "inspection",
+  "evidenceRefs": ["sample-screen-001"],
+  "preconditions": ["A tela de demonstração está aberta.", "O operador confirmou que está no ambiente esperado."],
+  "inputs": [],
+  "steps": [
+    {
+      "id": "step-01",
+      "action": "inspect",
+      "description": "Identificar a visão e os metadados dos controles visíveis sem ler valores digitados.",
+      "expectedResult": "Lista sanitizada de metadados dos controles."
+    },
+    {
+      "id": "step-02",
+      "action": "verify",
+      "description": "Conferir se a captura não contém dados de clientes ou transações.",
+      "expectedResult": "Evidência revisada e marcada como sanitizada."
+    },
+    {
+      "id": "step-03",
+      "action": "export",
+      "description": "Exportar a evidência em JSON para análise posterior.",
+      "expectedResult": "Arquivo JSON validável pelo schema de evidências."
+    }
+  ],
+  "successCriteria": ["A visão é identificada sem suposições.", "A evidência não contém valores operacionais.", "O JSON passa na validação do schema."],
+  "failureHandling": {
+    "stopConditions": ["A visão não pode ser identificada.", "A captura contém conteúdo sensível.", "A estrutura da tela é ambígua."],
+    "timeoutMs": 15000,
+    "maxRetries": 0,
+    "recovery": "Interromper a captura, descartar o arquivo e solicitar inspeção manual."
+  },
+  "safety": {
+    "writesData": false,
+    "requiresHumanConfirmation": false,
+    "rollbackPlan": "Nenhuma alteração persistente é realizada; remover o arquivo exportado caso esteja incorreto."
+  },
+  "unknowns": ["A sequência de comandos NXJ não foi investigada.", "O comportamento em telas reais precisa ser homologado."]
+}

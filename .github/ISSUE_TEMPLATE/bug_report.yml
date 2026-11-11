@@ -1,0 +1,68 @@
+name: "Relatar defeito"
+description: "Registrar um comportamento incorreto ou regressão."
+title: "[BUG] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Não inclua dados reais de clientes, credenciais, tokens, boletos ou conteúdo financeiro."
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto
+      description: "Qual processo ou componente está envolvido?"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento esperado
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamento observado
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Abra a tela de teste...
+        2. Execute a ação...
+        3. Observe o resultado...
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risco operacional
+      options:
+        - L0 - inspeção/metadados
+        - L1 - leitura
+        - L2 - preparação/preenchimento
+        - L3 - alteração persistente
+        - Não sei
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidência sanitizada
+      description: "Inclua somente metadados, logs e screenshots sem dados sensíveis."
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Ambiente
+      placeholder: |
+        - Windows:
+        - Chrome:
+        - Tampermonkey:
+        - Node.js:
+        - Versão/commit:
+    validations:
+      required: false
