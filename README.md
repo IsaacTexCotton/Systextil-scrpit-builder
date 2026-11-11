@@ -10,7 +10,8 @@ O mapeamento prévio deve documentar:
 - campos, tipos e metadados relevantes;
 - ações e sequência de inserção de dados;
 - dependências e efeitos entre campos;
-- navegação entre telas: tela de origem, ação que dispara a transição, tecla ou botão utilizado e tela de destino.
+- navegação entre telas: tela de origem, ação que dispara a transição, tecla ou botão utilizado e tela de destino;
+- sequência temporal de comandos/eventos NXJ e sinal independente de confirmação para cada ação, quando observáveis.
 
 O objetivo do projeto é apoiar esse mapeamento antes da automação, reduzindo tentativa e erro durante a implementação. Cada tela terá seu próprio arquivo em `docs/telas/`, copiado do modelo padrão e preenchido com ajuda da IA a partir do relato do mantenedor, sempre com valores já mascarados. Consulte o [Guia de investigação de telas](docs/SCREEN_INVESTIGATION.md) e as [regras e modelos de docs/telas](docs/telas/README.md).
 
@@ -20,7 +21,7 @@ O objetivo do projeto é apoiar esse mapeamento antes da automação, reduzindo 
 
 Este repositório guarda exclusivamente o método de trabalho, modelos, schemas, checklists, documentação e ferramentas de apoio ao processo de criação de automações.
 
-**Userscripts de produção não pertencem a este repositório.** O código de produção continua no [Systextil-envio-mensagem](https://github.com/IsaacTexCotton/Systextil-envio-mensagem) ou em outro repositório indicado explicitamente pelo mantenedor. Não copiar, espelhar ou manter aqui cópias do código de produção. A pasta `userscripts/` deste repositório é reservada a ferramentas de apoio do próprio projeto, como o Inspector read-only.
+**Userscripts de produção não pertencem a este repositório.** O userscript do piloto e o núcleo compartilhado ficam no [Systextil-envio-mensagem](https://github.com/IsaacTexCotton/Systextil-envio-mensagem). Este repositório mantém o conhecimento das telas e o método; cada mapa em `docs/telas/` é o contrato entre os dois repositórios. Não copiar, espelhar ou manter aqui cópias do código de produção. A pasta `userscripts/` deste repositório é reservada a ferramentas de apoio do próprio projeto, como o Inspector read-only.
 
 ## Visibilidade e risco
 
@@ -30,9 +31,9 @@ A verificação de dados sensíveis está **pendente** e deve ser executada ante
 
 ## Piloto escolhido
 
-**Consulta em lote de títulos, somente leitura**, limitada à consulta de título, cliente, código de barras e linha digitável. O escopo é de leitura; a autorização do ambiente, a proteção dos dados e a homologação precisam ser registradas antes do uso. Nenhum valor real deve ser incluído neste repositório.
+**Consulta em lote de títulos, somente leitura**, limitada à consulta de título, cliente, código de barras e linha digitável. Não há ambiente de teste/homologação; a execução será somente em produção, após autorização operacional e intervalo entre consultas registrados na PR. Consultar um título por vez, com pausa, sem paralelismo; interromper no primeiro estado incerto e não repetir automaticamente. Nenhum valor real deve ser incluído neste repositório.
 
-Prorrogação e emissão de boleto ficam fora do piloto. Baixa, exclusão e outras operações de escrita também ficam fora.
+Prorrogação fica fora do piloto e é a segunda automação pretendida, após avaliação do piloto. Seu desenho deverá prever simulação sem persistência, lista de títulos aprovada previamente pelo mantenedor e log local mínimo por título alterado. A autoridade para autorizar a prorrogação de títulos vencidos ainda está pendente. Emissão de boleto, baixa, exclusão e outras operações de escrita também ficam fora do piloto.
 
 ## Objetivo e princípios
 
