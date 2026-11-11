@@ -92,14 +92,15 @@ Cada automação final permanece um userscript independente no repositório de p
 5. Marcar cada observação como confirmada, inferida ou desconhecida e associar evidências sanitizadas.
 6. Usar o Inspector apenas dentro do escopo read-only da ADR-008; registrar manualmente ações, dependências e transições.
 7. Quando necessário, capturar requisições manualmente e em separado, seguindo ADR-012; capturas de tela e campos com valores seguem as mesmas regras de mascaramento.
-8. Revisar e validar o mapeamento e as evidências antes da especificação.
-9. Completar e aprovar a especificação.
-10. Gerar pacote local rastreável e enviar manualmente à IA escolhida.
-11. Desenvolver o userscript específico no repositório de produção indicado pelo mantenedor.
-12. Executar testes locais e revisar o diff.
-13. Homologar no Systêxtil autorizado.
-14. Abrir PR, registrar o auto-aceite do mantenedor e o resultado da homologação.
-15. Integrar somente por ação explícita do mantenedor.
+8. Criar um arquivo Markdown por tela em `docs/telas/`, usando `docs/telas/_modelo.md`. A IA pode organizar o relato do mantenedor ou o conteúdo que ele colar, desde que já esteja sanitizado.
+9. Revisar os mapas, garantindo Status e Origem em cada linha de tabela, antes de iniciar a especificação.
+10. Completar e aprovar a especificação.
+11. Gerar pacote local rastreável e enviar manualmente à IA escolhida.
+12. Desenvolver o userscript específico no repositório de produção indicado pelo mantenedor.
+13. Executar testes locais e revisar o diff.
+14. Homologar no Systêxtil autorizado.
+15. Abrir PR, registrar o auto-aceite do mantenedor e o resultado da homologação.
+16. Integrar somente por ação explícita do mantenedor.
 
 ## 8. Fases e critérios de aceite
 
@@ -109,15 +110,17 @@ Entregas: lockfile, Node 24+, Ajv estrito, node:test, schemas, fixtures e CLI.
 Aceite: npm ci, npm test, npm run check e npm run validate:examples passam; CLI cobre arquivo inválido, caminho inexistente e argumentos incorretos; erros não imprimem conteúdo sensível.  
 Bloqueio: não iniciar features antes de validar em Node 24+.
 
-### Fase 1 — Solicitação operacional (P0)
+### Fase 1 — Solicitação operacional e modelos de tela (P0)
 
-Entregas: schema da solicitação, fixture fictícia, validação de completude, relatório de lacunas e checklist de investigação.  
-Aceite: solicitação incompleta informa o que falta; dificuldade de mapeamento é descrita; fatos e hipóteses ficam separados; risco é justificável; nenhum código é gerado.
+Entregas: schema da solicitação, fixture fictícia, validação de completude, relatório de lacunas, checklist de investigação, `docs/telas/README.md` e `docs/telas/_modelo.md`. O modelo estabelece um arquivo Markdown por tela, com status e origem rastreáveis em todas as linhas de tabela.
+
+Aceite: solicitação incompleta informa o que falta; dificuldade de mapeamento é descrita; fatos e hipóteses ficam separados; o mantenedor consegue copiar o modelo para criar um arquivo por tela e preenchê-lo com ajuda da IA a partir de relato já sanitizado; nenhum código é gerado.
 
 ### Fase 2 — Investigação de tela e Inspector (P0)
 
-Entregas: guia de investigação; procedimento para mapear campos e tipos, ações de inserção, dependências e navegação; userscript de apoio read-only dentro da ADR-008; proposta ADR-013 avaliada separadamente.  
-Aceite: o mapeamento registra tela de origem/destino, campos/tipos relevantes, sequência e gatilhos de inserção, dependências observadas, tecla/botão e transição; desconhecidos ficam explícitos; evidências e capturas seguem mascaramento; nenhum valor real entra no repositório. Qualquer alteração de escopo do Inspector exige decisão explícita sobre ADR-013 antes de codificar.
+Entregas: guia de investigação; um arquivo em `docs/telas/` para cada tela investigada, derivado de `_modelo.md`; procedimento para mapear campos e tipos, ações de inserção, dependências, atalhos, navegação por colunas e entre telas, mensagens e sinais de sucesso; userscript de apoio read-only dentro da ADR-008; proposta ADR-013 avaliada separadamente.
+
+Aceite: cada tela relevante do fluxo tem seu arquivo de mapeamento revisado antes da especificação; cada linha de tabela tem Status (confirmado, inferido ou desconhecido) e Origem (captura, teste manual ou dedução); o mapeamento cobre campos de consulta/inserção/seleção, controles, atalhos, navegação por colunas, mensagens e sinal independente de sucesso; desconhecidos ficam explícitos; evidências e capturas seguem mascaramento; nenhum valor real entra no repositório. Qualquer alteração de escopo do Inspector exige decisão explícita sobre ADR-013 antes de codificar.
 
 ### Fase 3 — Especificador (P0)
 

@@ -12,7 +12,7 @@ O mapeamento prévio deve documentar:
 - dependências e efeitos entre campos;
 - navegação entre telas: tela de origem, ação que dispara a transição, tecla ou botão utilizado e tela de destino.
 
-O objetivo do projeto é apoiar esse mapeamento antes da automação, reduzindo tentativa e erro durante a implementação. Consulte o [Guia de investigação de telas](docs/SCREEN_INVESTIGATION.md).
+O objetivo do projeto é apoiar esse mapeamento antes da automação, reduzindo tentativa e erro durante a implementação. Cada tela terá seu próprio arquivo em `docs/telas/`, copiado do modelo padrão e preenchido com ajuda da IA a partir do relato do mantenedor, sempre com valores já mascarados. Consulte o [Guia de investigação de telas](docs/SCREEN_INVESTIGATION.md) e as [regras e modelos de docs/telas](docs/telas/README.md).
 
 > **Estado em 2026-11-11:** planejamento e método de investigação em documentação. O piloto escolhido é consulta em lote de títulos, somente leitura. A implementação do fluxo completo e do Inspector ainda não foi iniciada.
 
@@ -63,6 +63,7 @@ O projeto deve facilitar o caminho entre uma necessidade operacional e uma autom
 12. [Governança do GitHub](docs/GITHUB_GOVERNANCE.md)
 13. [Estado do projeto](docs/PROJECT_STATUS.md)
 14. [Roadmap resumido](docs/ROADMAP.md)
+15. [Mapas de tela: regras e modelo](docs/telas/README.md)
 
 ## Estrutura de apoio
 

@@ -23,7 +23,7 @@ O Inspector aprovado pela ADR-008 identifica metadados allowlisted de views, for
 
 Seu escopo permanece estritamente read-only: não lê valores de campos, intercepta XHR/fetch, coleta requisições de rede, aciona F7/Find, preenche filtros, executa inserções, dispara teclas/botões, navega registros, grava dados ou executa código recebido do Studio.
 
-O mapeamento de ações de inserção, dependências e navegação é realizado por observação manual documentada em [SCREEN_INVESTIGATION.md](SCREEN_INVESTIGATION.md). A ADR-013 é apenas proposta para avaliar eventual ampliação da allowlist de metadados de controles editáveis. Até ser aprovada, não altera o Inspector.
+O mapeamento de ações de inserção, dependências e navegação é realizado por observação manual documentada em [SCREEN_INVESTIGATION.md](SCREEN_INVESTIGATION.md), com um arquivo Markdown por tela em `docs/telas/` derivado do modelo padrão. A IA pode organizar o relato já sanitizado do mantenedor, sem completar lacunas por suposição. A ADR-013 é apenas proposta para avaliar eventual ampliação da allowlist de metadados de controles editáveis. Até ser aprovada, não altera o Inspector.
 
 ### Núcleo local (Node.js)
 
@@ -36,7 +36,7 @@ Criar módulos somente quando houver consumidores reais. Sem servidor ou rede no
 
 ### Solicitação e especificador
 
-Representam o problema, processo, regras, exceções, inputs/outputs e critérios de aceite. A especificação recebe o mapeamento de tela: campos e tipos, ações e sequência de inserção, dependências observadas e transições de navegação. Cada afirmação técnica aponta evidência ou declara unknown.
+Representam o problema, processo, regras, exceções, inputs/outputs e critérios de aceite. A especificação só é iniciada após a revisão de um mapa por tela relevante em `docs/telas/`. Ela recebe campos e tipos, ações e sequência de inserção, dependências, navegação por colunas/telas, atalhos, mensagens e sinais independentes de sucesso. Cada linha de tabela do mapa preserva Status e Origem; cada afirmação técnica aponta evidência ou declara unknown.
 
 ### Gerador de pacote
 
@@ -48,7 +48,7 @@ São desenvolvidos e mantidos fora deste repositório, em arquivos independentes
 
 ## Fluxo
 
-Solicitação → delimitação da tela e do fluxo → investigação manual e Inspector read-only → mapa de campos/inserções/dependências/navegação → evidências sanitizadas → especificação → manifesto/pacote local → IA/revisão e aceite do mantenedor → desenvolvimento no repositório de produção → testes/homologação/PR.
+Solicitação → delimitação da tela e do fluxo → investigação manual e Inspector read-only → um arquivo de mapa por tela em docs/telas/ → revisão de Status/Origem e evidências sanitizadas → especificação → manifesto/pacote local → IA/revisão e aceite do mantenedor → desenvolvimento no repositório de produção → testes/homologação/PR.
 
 ## Fronteiras de confiança
 

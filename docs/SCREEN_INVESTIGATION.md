@@ -4,7 +4,9 @@
 
 Apoiar o mantenedor a entender a tela do Systêxtil antes de escrever código. A investigação deve produzir um mapa verificável do que existe na tela, como os dados são inseridos, quais campos dependem uns dos outros e como a navegação acontece.
 
-Este guia descreve um procedimento manual. Não implementa automação, não autoriza escrita no ERP e não amplia o escopo atual do Inspector.
+Este guia descreve um procedimento manual. O resultado é **um arquivo Markdown por tela** em `docs/telas/`, preenchido pelo mantenedor com apoio da IA a partir do que ele descrever ou colar, sempre depois do mascaramento. Não implementa automação, não autoriza escrita no ERP e não amplia o escopo atual do Inspector.
+
+Use [docs/telas/README.md](telas/README.md) para regras de preenchimento e [_modelo.md](telas/_modelo.md) como base obrigatória. Cada linha de cada tabela do mapa precisa de Status (confirmado, inferido ou desconhecido) e Origem (captura, teste manual ou dedução).
 
 ## Pré-condições
 
@@ -29,6 +31,8 @@ Para cada tela relevante, registrar:
 - origem da informação e resultado esperado.
 
 Use identificadores genéricos em documentação pública quando o nome interno do ERP não puder ser divulgado. Não registrar URL, endpoint ou metadado interno automaticamente sem avaliação de exposição.
+
+Crie um arquivo separado por tela investigada, copiando `docs/telas/_modelo.md`. Não agrupe telas diferentes em um mesmo arquivo; isso mantém a origem, os atalhos e as transições de cada tela rastreáveis.
 
 ## 2. Mapear campos e tipos
 
@@ -85,14 +89,17 @@ Exemplo abstrato: "Tela A — botão de consulta — Tela B". Não substituir um
 
 Preferir notas estruturadas e diagramas simples sem valores reais. Capturas de tela são manuais e opcionais; podem conter campos preenchidos e, por isso, devem ser tratadas como dados sensíveis até serem sanitizadas.
 
-Antes de qualquer registro ou compartilhamento, mascarar integralmente:
-- CPF/CNPJ e dados de contato;
-- nomes de clientes, pessoas e operadores;
-- números de títulos, duplicatas e documentos;
-- códigos de barras e linhas digitáveis;
-- valores financeiros;
-- senhas, tokens, cookies e identificadores de sessão;
-- qualquer outro conteúdo que permita identificar pessoa, cliente ou transação.
+Antes de qualquer registro ou compartilhamento, substituir integralmente os valores por marcadores, por exemplo:
+- CPF/CNPJ por `[CPF_CNPJ]`;
+- nomes de clientes por `[CLIENTE]` e nomes de pessoas/operadores por `[PESSOA]`;
+- números de títulos, duplicatas e documentos por `[TITULO]`;
+- códigos de barras por `[CODIGO_BARRAS]`;
+- linhas digitáveis por `[LINHA_DIGITAVEL]`;
+- valores monetários por `[VALOR_MONETARIO]`;
+- dados de contato por `[DADO_CONTATO]`;
+- senhas, tokens, cookies e identificadores de sessão por marcadores de categoria que não revelem nenhum trecho do valor.
+
+Não manter prefixos, sufixos ou qualquer parte que permita reconstruir o conteúdo.
 
 Não manter prefixos/sufixos que permitam reconstrução. Não colocar capturas brutas, HARs ou imagens não sanitizadas no repositório, PR, issue, fixture ou pacote de IA. A verificação de dados sensíveis deve estar concluída antes de qualquer commit que adicione evidência de tela ou dado operacional, conforme [SECURITY_MODEL.md](SECURITY_MODEL.md#verificação-de-dados-sensíveis).
 
@@ -114,6 +121,8 @@ O mapa está pronto para revisão quando:
 - transições identificam origem, ação, tecla/botão e destino, ou marcam a lacuna;
 - evidências foram revisadas e sanitizadas;
 - nenhum valor real foi incluído;
-- o mantenedor revisou o mapa antes da especificação e da codificação.
+- existe um arquivo em `docs/telas/` para cada tela relevante;
+- todas as tabelas possuem Status e Origem preenchidos em cada linha;
+- o mantenedor revisou os mapas antes da especificação e da codificação.
 
 Mapeamento incompleto não deve ser disfarçado como confirmado. Registrar a lacuna e decidir se ela bloqueia a automação.

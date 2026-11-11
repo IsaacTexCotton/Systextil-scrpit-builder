@@ -14,6 +14,8 @@ Registrar problema, resultado esperado, processo manual, regras, exceções, ent
 
 Gerar checklist de investigação. O mantenedor abre o Systêxtil autorizado e observa a tela, usando o Inspector somente para metadados dentro da ADR-008.
 
+Deve existir um arquivo Markdown por tela em `docs/telas/`, copiado de `_modelo.md`. O mantenedor descreve ou cola informações já sanitizadas e a IA ajuda a organizá-las nesse formato. Cada linha de tabela recebe Status e Origem; a IA não presume funções de teclas nem marca fatos como confirmados sem evidência.
+
 O mapa da tela deve apresentar quatro áreas:
 
 1. **Campos e tipos:** campo/identificador técnico quando permitido, rótulo sanitizado, tipo, editabilidade, obrigatoriedade e restrições observáveis.
@@ -25,7 +27,7 @@ O fluxo distingue metadado do Inspector, observação manual, inferência e desc
 
 ## Revisão de evidências
 
-Mostrar views, formulários, controles, mapa de inserção, dependências, transições e observações. Permitir remover/editar itens e revisar sanitização antes da exportação. Não mostrar nem persistir valores dos campos via Inspector. Antes de compartilhar evidências, o mantenedor revisa telas e dados sensíveis.
+Revisar um arquivo por tela em `docs/telas/` antes da especificação. Mostrar views, formulários, controles, mapa de inserção, dependências, transições, atalhos, mensagens, sinais de sucesso e observações. Permitir remover/editar itens e revisar sanitização antes da exportação. Não mostrar nem persistir valores dos campos via Inspector. Antes de compartilhar evidências, o mantenedor revisa telas e dados sensíveis.
 
 ## Especificação
 

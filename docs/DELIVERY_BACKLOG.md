@@ -42,15 +42,21 @@ Antes de executar, confirmar ambiente e massa de dados autorizados. A verificaç
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
-| E2-01 | P0 | Guia e checklist de mapeamento | campos/tipos, inserções, dependências e navegação cobertos |
-| E2-02 | P0 | Allowlist do Inspector atual | respeita ADR-008; sem valores de campos |
-| E2-03 | P1 | Avaliar proposta ADR-013 | decisão explícita antes de qualquer ampliação |
-| E2-04 | P1 | Observações e certeza | confirmed/inferred/unknown |
-| E2-05 | P0 | Sanitização e revisão | dados sensíveis bloqueados |
-| E2-06 | P1 | Exportação de evidências aprovadas | contrato vigente validado |
-| E2-07 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite do mantenedor |
+| E2-01 | P0 | Criar `docs/telas/README.md` e `docs/telas/_modelo.md` | regra de um arquivo por tela; status/origem em todas as tabelas; mascaramento documentado |
+| E2-02 | P0 | Guia de preenchimento assistido por IA | IA organiza apenas relato já sanitizado do mantenedor; não inventa evidências |
+| E2-03 | P0 | Mapa individual de cada tela relevante | campos/controles, inserções, dependências, atalhos, navegação por colunas/telas, mensagens e sinais de sucesso documentados |
+| E2-04 | P0 | Revisão dos mapas antes da especificação | todos os arquivos por tela revisados; cada linha tem Status e Origem |
+| E2-05 | P0 | Allowlist do Inspector atual | respeita ADR-008; sem valores de campos ou captura de rede |
+| E2-06 | P1 | Avaliar proposta ADR-013 | decisão explícita antes de qualquer ampliação |
+| E2-07 | P0 | Sanitização e revisão | valores reais substituídos por marcadores antes de qualquer commit com evidência |
+| E2-08 | P1 | Exportação de evidências aprovadas | contrato vigente validado |
+| E2-09 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite do mantenedor |
+
+**Dependência de E3:** a especificação só começa após existir um arquivo revisado em `docs/telas/` para cada tela relevante do fluxo. Os mapas são registros de investigação, não especificações aprovadas.
 
 ## E3 — Especificador
+
+Pré-condição: um arquivo por tela relevante em `docs/telas/`, derivado de `_modelo.md`, revisado pelo mantenedor. Itens desconhecidos permanecem visíveis e são avaliados como lacunas; não bloqueiam automaticamente quando explicitamente aceitos como fora do escopo.
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
@@ -96,4 +102,4 @@ E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A
 
 ## Definition of Done
 
-Critérios atendidos; testes locais executados e reportados; docs/fixtures atualizados; diff auto-revisado pelo mantenedor; nenhum dado real/segredo; verificação de dados sensíveis concluída antes de commit com evidência de tela ou dado; limitações declaradas; PR focada; homologação pelo mantenedor em Systêxtil autorizado quando aplicável, com resultado registrado na PR; sem merge automático.
+Critérios atendidos; testes locais executados e reportados; docs/fixtures atualizados; um arquivo de mapeamento revisado por tela relevante antes da especificação; cada linha das tabelas dos mapas com Status e Origem; diff auto-revisado pelo mantenedor; nenhum dado real/segredo; verificação de dados sensíveis concluída antes de commit com evidência de tela ou dado; limitações declaradas; PR focada; homologação pelo mantenedor em Systêxtil autorizado quando aplicável, com resultado registrado na PR; sem merge automático.

@@ -16,6 +16,8 @@ O mapa deve cobrir:
 
 Registrar cada observação como confirmada, inferida ou desconhecida. Não presumir comportamento que não foi observado.
 
+**Registro obrigatório:** criar um arquivo Markdown por tela em `docs/telas/`, copiando `docs/telas/_modelo.md`. O mantenedor pode descrever o que observou ou colar texto já sanitizado para que a IA organize o arquivo. A IA não pode inventar comportamentos, preencher lacunas como fatos ou marcar uma linha como confirmada sem evidência direta. Todas as linhas de tabela devem ter Status (confirmado, inferido ou desconhecido) e Origem (captura, teste manual ou dedução). Consulte [docs/telas/README.md](telas/README.md).
+
 O Inspector coleta somente metadados allowlisted, permanece read-only e não lê valores de campos nem intercepta requisições de rede (ADR-008). Inserções, dependências e transições são observadas manualmente. A proposta ADR-013 não foi aceita e não autoriza mudanças no Inspector.
 
 ### Captura manual de rede, quando necessária
@@ -30,7 +32,9 @@ A captura de tela também é manual e separada do Inspector. Qualquer imagem que
 
 ## 3. Especificação
 
-Definir objetivo e escopo; risco L0–L3; pré-condições e entradas; campos/tipos; sequência e ações de inserção; dependências; transições; evidências associadas; critérios de sucesso; falhas, timeout e recuperação; pontos desconhecidos; confirmação humana necessária.
+**Pré-condição obrigatória:** não iniciar a especificação até que exista um arquivo de mapeamento revisado para cada tela relevante do fluxo em `docs/telas/`. Lacunas podem permanecer como desconhecidas, mas devem estar registradas e avaliadas quanto ao impacto.
+
+Definir objetivo e escopo; risco L0–L3; pré-condições e entradas; campos/tipos; sequência e ações de inserção; dependências; transições; atalhos e navegação por colunas; mensagens; sinais independentes de sucesso; evidências associadas; critérios de sucesso; falhas, timeout e recuperação; pontos desconhecidos; confirmação humana necessária.
 
 ## 4. Pacote para IA
 
