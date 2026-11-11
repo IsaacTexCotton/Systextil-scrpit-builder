@@ -55,3 +55,17 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 **Status:** aceita como requisito de projeto.  
 **Decisão:** incluir somente arquivos autorizados, com finalidade, confiança, versão/commit, hash e tamanho.  
 **Motivo:** reduzir vazamento, prompt injection por conteúdo externo e contexto excessivo.
+
+## Risco aberto — visibilidade pública do repositório
+
+**Status:** aberto.  
+**Fato:** o repositório está público em 2026-11-11. A decisão atual do mantenedor é mantê-lo público até nova orientação explícita.  
+**Risco:** documentação e metadados técnicos podem revelar detalhes internos mesmo sem conter dados de clientes. A verificação de dados sensíveis e o procedimento de captura segura estão descritos em [SECURITY_MODEL.md](SECURITY_MODEL.md).  
+**Controle:** não incluir dados reais do ERP, capturas brutas ou conteúdo identificável. Não alterar a visibilidade nem reescrever o histórico sem autorização explícita do mantenedor.
+
+## ADR-012 — Captura manual de requisições de rede, separada do Inspector
+
+**Status:** aceita.  
+**Decisão:** quando a investigação exigir observar uma requisição de rede, a captura será feita manualmente pelo mantenedor/investigador autorizado nas ferramentas de desenvolvimento do navegador, fora do Inspector. A captura nunca será automática e não será incorporada ao Inspector. Valores sensíveis devem ser mascarados antes de qualquer registro; nenhum dado real, arquivo bruto ou payload identificável pode entrar no repositório, em uma PR ou em pacote de contexto.  
+**Motivo:** permitir análise técnica pontual sem transformar o Inspector em coletor de tráfego nem ampliar a coleta automática de dados sensíveis.  
+**Procedimento:** seguir a seção "Captura manual de rede" de [SECURITY_MODEL.md](SECURITY_MODEL.md). Em caso de dúvida sobre a eficácia da máscara, descartar a captura e registrar a lacuna sem anexar o material original.
