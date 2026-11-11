@@ -67,6 +67,21 @@ Descreva o passo a passo da inserção/seleção sem registrar o conteúdo digit
 | 1 | [CAMPO_SANITIZADO] | [digitar/selecionar/consultar/outra] | [TECLA_BOTAO_EVENTO] | [pré-condição ou desconhecido] | [resultado sem valor real] | desconhecido | dedução |
 | 2 | [CAMPO_SANITIZADO] | [digitar/selecionar/consultar/outra] | [TECLA_BOTAO_EVENTO] | [pré-condição ou desconhecido] | [resultado sem valor real] | desconhecido | dedução |
 
+## Sequência de comandos/eventos NXJ e confirmação por ação
+
+Para cada ação relevante (por exemplo, uma consulta), registre a sequência técnica observada que conecta a interação visível ao processamento do Systêxtil. Relacione esta seção à linha correspondente em **Inserções** ou **Ações e atalhos**.
+
+Registre somente o que foi observado: eventos de foco/blur, tecla ou botão, comando/evento NXJ, chamada de rede observada manualmente, resposta/retorno, mudança de estado e sinal posterior de confirmação. Separe os passos em linhas distintas e preserve a ordem temporal. Não deduza comandos, parâmetros, tempos ou respostas que não tenham evidência.
+
+A inspeção de rede, quando necessária e autorizada, é manual nas ferramentas do navegador e segue a ADR-012. Ela não é feita pelo Inspector, userscript, extensão ou coletor automático. Registre apenas metadados técnicos mínimos, já sanitizados; nunca copie payloads brutos, valores de campos, cabeçalhos com credenciais, cookies, tokens, sessões, HARs ou respostas que contenham dados operacionais.
+
+| Ação associada | Ordem | Evento/comando observado (sem payload) | Estado/pré-condição | Resposta/efeito observado | Sinal independente de confirmação | Timeout/condição de parada | Status | Origem |
+|---|---|---|---|---|---|---|---|---|
+| [AÇÃO_ID_OU_DESCRIÇÃO] | 1 | [foco/blur/tecla/botão/comando/evento] | [estado inicial] | [efeito observado, sem valores] | [sinal ou desconhecido] | [limite observado ou não definido] | desconhecido | dedução |
+| [AÇÃO_ID_OU_DESCRIÇÃO] | 2 | [evento/comando/resposta seguinte] | [estado necessário] | [efeito observado, sem valores] | [sinal ou desconhecido] | [limite observado ou não definido] | desconhecido | dedução |
+
+**Critérios de confirmação:** enviar um comando, observar uma requisição, receber uma resposta genérica, preencher visualmente um campo ou pressionar uma tecla não comprovam, isoladamente, que a ação foi concluída. Identifique o sinal independente que confirma o estado esperado. Se houver timeout, resposta ambígua, perda de sincronismo ou qualquer estado incerto, registre a interrupção e a conferência manual necessária; não presuma que uma repetição seja segura.
+
 ## Navegação
 
 Registre uma linha para cada transição. O gatilho deve identificar qual ação leva da tela de origem à tela de destino e qual tecla ou botão a dispara, quando houver.
@@ -110,5 +125,8 @@ Liste explicitamente tudo que falta confirmar. Cada item deve indicar a pergunta
 - [ ] Navegação por colunas e controles de grade foi avaliada.
 - [ ] Mensagens de erro e confirmação foram descritas por padrão sanitizado.
 - [ ] O sinal de sucesso é independente da tecla/botão/entrada que iniciou a operação.
+- [ ] A sequência de comandos/eventos NXJ foi registrada por ação, em ordem temporal, ou marcada como desconhecida.
+- [ ] Quando usada, a observação de rede foi manual conforme ADR-012 e contém somente metadados mínimos sanitizados.
+- [ ] Cada ação tem sinal independente de confirmação ou lacuna explícita; timeout/estado incerto interrompe a sequência.
 - [ ] Todos os valores reais foram substituídos por marcadores antes de salvar.
 - [ ] O mantenedor revisou o arquivo. Este mapa continua sendo material de investigação, não especificação aprovada.
