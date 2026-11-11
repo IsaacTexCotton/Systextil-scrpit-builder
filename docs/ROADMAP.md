@@ -38,7 +38,7 @@ Começar pelo mapeamento manual de telas em `docs/telas/`, com um arquivo por te
 - [ ] Userscript de apoio estritamente read-only dentro da ADR-008.
 - [ ] Avaliar ADR-013 antes de qualquer eventual ampliação da allowlist.
 - [ ] Sanitização, revisão e exportação de evidências.
-- [ ] Homologação Chrome/Tampermonkey autorizada.
+- [ ] Autorização e condições de execução em produção registradas na PR; homologação limitada ao escopo read-only aprovado.
 
 A captura manual de rede continua separada do Inspector, nunca é automática e segue a ADR-012. Capturas de tela e campos com valores seguem o mesmo mascaramento. A verificação de dados sensíveis é obrigatória antes de qualquer commit que inclua evidência de tela ou dado operacional.
 
