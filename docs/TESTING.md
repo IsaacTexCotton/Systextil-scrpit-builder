@@ -1,16 +1,15 @@
 # Estratégia de testes
 
-## Objetivo
-
-Manter testes locais simples, reproduzíveis e sem dependência de CI/CD.
+Manter testes locais, reproduzíveis e sem dependência de CI/CD. Os critérios completos estão em [QUALITY_GATES.md](QUALITY_GATES.md).
 
 ## Camadas
-
-1. **Schema:** validação de contratos JSON e exemplos.
-2. **Unitário:** regras puras do núcleo local.
-3. **Integração local:** leitura de fixtures e geração de arquivos em diretório temporário.
-4. **Browser:** comportamento do Inspector em DOM controlado.
-5. **Homologação Systextil:** teste manual em ambiente autorizado.
+1. Schema e fixtures.
+2. Unitários de regras puras.
+3. CLI: argumentos, caminhos, permissões, erros e exit codes.
+4. Integração local em diretório temporário.
+5. Segurança: traversal, symlink, allowlist, tamanho, segredo e conteúdo não confiável.
+6. Browser: Inspector em DOM controlado.
+7. Homologação Systextil em ambiente autorizado.
 
 ## Comandos
 
@@ -18,17 +17,16 @@ Manter testes locais simples, reproduzíveis e sem dependência de CI/CD.
     npm run check
     npm run validate:examples
 
+Após existir lockfile, usar npm ci em instalação limpa.
+
 ## Regras
+- Fixtures fictícias e determinísticas.
+- Sem conexão com produção em testes automatizados.
+- Sem dados reais em snapshots.
+- Cobrir schema incompatível, ausências, propriedades extras e limites.
+- Cobrir timeout, cancelamento, repetição e estado incerto.
+- Verificar que erros não vazam conteúdo sensível.
+- Documentar o que não foi testado.
 
-- Fixtures devem ser fictícias e determinísticas.
-- Não usar conexão de produção em testes automatizados.
-- Não inserir dados reais em snapshots.
-- Testar caminhos inválidos, schema incompatível, campos ausentes e propriedades extras.
-- Testar timeout, cancelamento, repetição e estado incerto nas automações de browser.
-- Documentar explicitamente o que não foi testado.
-
-## Homologação manual
-
-Para cada userscript, registrar browser e versão, versão do userscript, ambiente Systextil, visão/formulário, pré-condições, passos executados, resultado observado, evidência sanitizada e responsável pelo aceite.
-
-A homologação manual não deve ser substituída por um teste de DOM ou por uma resposta de IA.
+## Homologação
+Registrar browser, Tampermonkey, versão do script, ambiente Systextil, views/forms, pré-condições, passos, resultados, evidências sanitizadas e responsável. Teste DOM/unitário não substitui homologação.

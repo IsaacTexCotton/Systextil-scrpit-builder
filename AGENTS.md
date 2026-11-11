@@ -1,87 +1,57 @@
 # Instruções para agentes de IA
 
-Estas regras se aplicam a qualquer agente ou assistente que trabalhe neste repositório. Leia este arquivo antes de planejar ou modificar código.
+Leia estas regras antes de planejar ou modificar código.
 
-## 1. Missão e limites
+## Missão e limites
+O Systextil Script Builder transforma necessidades operacionais em especificações e pacotes de contexto para desenvolver userscripts específicos do Systextil NXJ.
+- Não criar executor universal de comandos NXJ.
+- Não implementar operação sem evidência, regra confirmada e critérios observáveis.
+- Código gerado por IA não é automaticamente validado.
+- Não alterar automações de produção fora do escopo.
+- Não avançar fase sem dependências e Quality Gates.
 
-O Systextil Script Builder transforma necessidades operacionais em especificações técnicas e pacotes de contexto para desenvolver userscripts específicos do Systextil NXJ.
+## Leitura obrigatória
+1. AGENTS.md, README.md e CONTRIBUTING.md.
+2. docs/IMPLEMENTATION_PLAN.md e docs/PROJECT_STATUS.md.
+3. docs/DELIVERY_BACKLOG.md; identificar item e dependências.
+4. docs/ARCHITECTURE.md, docs/SECURITY_MODEL.md e docs/QUALITY_GATES.md.
+5. Documentação da área e instruções em .github/instructions/.
+6. Código, decisões e testes existentes.
 
-- Não transforme o projeto em um executor universal de comandos do ERP.
-- Não implemente uma operação de negócio sem evidência da tela, regra confirmada e critérios observáveis.
-- Não considere código gerado por IA como validado ou pronto para produção.
-- Não altere automações de produção fora do escopo solicitado.
+## Antes de codificar
+Resumir objetivo, comportamento atual/esperado, item do backlog, risco, evidências, hipóteses, desconhecidos, arquivos afetados, critérios de aceite e testes. Consultar Context7/documentação oficial para APIs e ferramentas sujeitas a mudança. Perguntar quando faltar decisão que altere arquitetura, privacidade, risco ou comportamento.
 
-## 2. Processo obrigatório antes de codificar
+## Evidências
+- Nunca inventar campos, formulários, seletores, eventos, endpoints ou comandos NXJ.
+- Classificar fatos como confirmados, inferidos ou desconhecidos.
+- Registrar origem, tela/visão e contexto.
+- Campo preenchido ou request enviado não comprovam sucesso.
+- Escrita exige sinal posterior confiável e independente.
+- Diferenciar testes executados, não executados e impossíveis.
 
-1. Leia este arquivo, README.md, CONTRIBUTING.md e os documentos relevantes de docs/.
-2. Inspecione os arquivos e padrões existentes antes de propor substituições.
-3. Resuma objetivo, comportamento atual, comportamento esperado e critérios de aceite.
-4. Classifique o risco da alteração e identifique se ela lê ou grava dados no ERP.
-5. Liste hipóteses, evidências disponíveis, lacunas e dependências externas.
-6. Proponha a menor solução que preserve compatibilidade e funcionalidades existentes.
-7. Consulte documentação oficial atualizada (Context7 ou documentação do fornecedor) quando usar APIs, bibliotecas, ferramentas ou recursos sujeitos a mudança.
+## Implementação
+- Node.js em ES Modules.
+- Userscripts independentes, nativos e específicos.
+- Sem @require/CDN/host novo sem aprovação.
+- Justificar unsafeWindow.
+- Funções pequenas, módulos coesos e dependências mínimas.
+- Validar entradas e arquivos com schemas.
+- Proibidos eval, new Function e execução de JSON importado.
+- Não armazenar segredos em código, logs ou histórico.
+- Não coletar valores de campos por padrão.
+- Não introduzir UI/framework/backend sem ADR aprovada.
 
-Não faça perguntas repetidas quando a resposta já estiver no contexto. Quando faltar informação não essencial, declare uma hipótese conservadora e marque-a para validação.
+## Segurança
+Classificar L0–L3 conforme docs/SECURITY_MODEL.md. L2/L3 exigem revisão específica. L3 exige confirmação humana no momento da operação, sucesso verificável, timeout, parada segura e recuperação.
 
-## 3. Veracidade e evidências
+## GitHub
+- Nunca desenvolver em main.
+- Branch curta feat/fix/docs/test/chore.
+- Commits focados Conventional Commits.
+- Sem force push, merge automático ou reescrita sem autorização.
+- Sem GitHub Actions/CI/CD.
+- Dependência nova precisa de justificativa.
+- Nunca incluir dados reais do ERP.
 
-- Nunca invente nomes de formulários, campos, seletores, eventos, endpoints ou comandos NXJ.
-- Marque cada informação técnica como confirmada, inferida ou desconhecida.
-- A evidência deve apontar como foi obtida, em qual tela/visão e em qual contexto.
-- Não conclua que uma operação funcionou somente porque um campo recebeu texto ou porque uma requisição foi enviada.
-- Sucesso de operação de escrita exige confirmação posterior por um sinal de estado confiável e independente.
-- Diferencie testes executados, testes não executados e testes impossíveis no ambiente disponível.
-
-## 4. Regras de implementação
-
-- Use JavaScript moderno e módulos ES no código executado por Node.js.
-- Userscripts Tampermonkey devem ser independentes, nativos e específicos da funcionalidade.
-- Não adicione @require, bibliotecas remotas ou novos hosts sem justificativa e aprovação.
-- Justifique qualquer uso de unsafeWindow; não o use apenas por conveniência.
-- Prefira funções pequenas, nomes explícitos, módulos coesos e dependências mínimas.
-- Valide entradas externas e arquivos importados com schemas versionados.
-- Não use eval, new Function ou execução de código recebido em JSON.
-- Não armazene segredos no código, nos exemplos, nos logs ou no histórico Git.
-- Não capture valores de campos do ERP por padrão. Inspecione metadados; leitura de valores deve ser explícita, justificada e minimizada.
-- Não use dependências de runtime no userscript sem aprovação arquitetural.
-
-## 5. Segurança e risco operacional
-
-Use a classificação definida em docs/SECURITY_MODEL.md:
-
-- L0: inspeção estática e leitura de metadados.
-- L1: leitura de dados operacionais sem alteração.
-- L2: preenchimento/preparação de campos sem confirmação de gravação.
-- L3: gravação, emissão, baixa, exclusão, prorrogação ou outra alteração persistente.
-
-L2 e L3 precisam de revisão específica. L3 exige confirmação humana no momento da operação, critérios de sucesso verificáveis, timeout, tratamento de falha e procedimento de recuperação. Nunca remova a confirmação humana por conveniência.
-
-## 6. Git e GitHub
-
-- Nunca trabalhe diretamente em main.
-- Crie branch curta e descritiva: feat/, fix/, docs/, test/ ou chore/.
-- Faça commits pequenos, focados e com mensagem no padrão Conventional Commits.
-- Não reescreva histórico compartilhado nem force push sem autorização explícita.
-- Não faça merge de Pull Request sem autorização explícita do responsável.
-- Não crie workflows do GitHub Actions, CI/CD ou publicação automática.
-- Não adicione dependências sem explicar necessidade, impacto e alternativa.
-- Nunca inclua dados reais do Systextil em commits, issues, exemplos ou screenshots.
-
-## 7. Testes e validação
-
-Antes de concluir uma alteração, execute os testes locais aplicáveis e informe o comando e resultado real.
-
-Comandos padrão:
-- npm test
-- npm run check
-- npm run validate:examples
-
-Se não puder executar algo, declare o bloqueio. Não simule resultados nem afirme que homologou no ERP sem fazê-lo.
-
-Para userscripts, testes unitários não substituem homologação em Chrome/Tampermonkey e ambiente Systextil adequado.
-
-## 8. Entrega
-
-Toda entrega deve informar arquivos criados ou alterados, decisões técnicas e compatibilidade, testes realmente executados, riscos e passos de homologação manual.
-
-Consulte também .github/copilot-instructions.md e as instruções específicas em .github/instructions/.
+## Testes e entrega
+Executar npm test, npm run check e npm run validate:examples quando aplicável. Consultar docs/TESTING.md e docs/QUALITY_GATES.md. Relatar item, arquivos, decisões, testes reais, riscos e homologação pendente. Teste unitário não substitui homologação NXJ.

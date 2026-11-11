@@ -1,54 +1,55 @@
 # Roadmap
 
-O roadmap é incremental. Cada fase precisa de critérios de aceite antes de iniciar a seguinte.
+Resumo do [plano mestre](IMPLEMENTATION_PLAN.md); tarefas detalhadas em [DELIVERY_BACKLOG.md](DELIVERY_BACKLOG.md).
 
-## Fase 0 — Fundação do repositório
+## Estado
+- [x] Fundação organizacional integrada à main.
+- [ ] Fundação executável validada em Node 24+.
+- [ ] Solicitação operacional.
+- [ ] Inspector read-only.
+- [ ] Especificador técnico.
+- [ ] Gerador de contexto/prompt.
+- [ ] Piloto L0/L1.
 
-- [x] Estrutura inicial e governança.
-- [x] Instruções para agentes de IA.
-- [x] Contratos JSON iniciais.
-- [x] Validador local inicial e fixtures fictícias.
-- [ ] Instalar dependências e versionar package-lock.json.
-- [ ] Executar testes no ambiente Node.js 24+.
+## Fase 0 — Fundação executável
+- [ ] Gerar/versionar package-lock.json.
+- [ ] npm ci em Node 24+.
+- [ ] npm test, npm run check e npm run validate:examples.
+- [ ] Testar CLI com entradas inválidas.
 
-## Fase 1 — Modelo de necessidade e especificação
+## Fase 1 — Solicitação
+- [ ] Schema e fixture fictícia.
+- [ ] Validação de completude e relatório de lacunas.
+- [ ] Checklist de investigação.
 
-- [ ] Definir formulário de solicitação operacional.
-- [ ] Definir catálogo de riscos e critérios de aceite.
-- [ ] Evoluir schema da especificação com versionamento e exemplos.
-- [ ] Validar uma automação somente de leitura ponta a ponta.
+## Fase 2 — Inspector
+- [ ] Allowlist de metadados DOM.
+- [ ] Userscript independente e restrito.
+- [ ] Inventário de views/forms/controles.
+- [ ] Sanitização, revisão e exportação JSON.
+- [ ] Homologação Chrome/Tampermonkey.
 
-## Fase 2 — Inspector Systextil
+## Fase 3 — Especificador
+- [ ] Schema completo.
+- [ ] Referências e regras de risco.
+- [ ] Relatório de unknowns/bloqueios.
+- [ ] Exportação Markdown.
 
-- [ ] Investigar telas e visões reais com operador.
-- [ ] Implementar inventário de metadados sem leitura de valores.
-- [ ] Exportar evidências sanitizadas.
-- [ ] Validar comportamento em Chrome/Tampermonkey.
+## Fase 4 — Gerador
+- [ ] Manifesto allowlist.
+- [ ] Resolução segura de arquivos e versões.
+- [ ] Limites, deduplicação e sanitização.
+- [ ] Pacote Markdown/JSON determinístico.
 
-## Fase 3 — Gerador de contexto e prompt
+## Fase 5 — Interface
+- [ ] Avaliar CLI com usuários.
+- [ ] ADR antes de framework/servidor.
+- [ ] UI somente com ganho demonstrável.
 
-- [ ] Criar manifesto de documentos por tipo de automação.
-- [ ] Resolver referências e versões dos documentos.
-- [ ] Gerar Markdown e JSON com rastreabilidade.
-- [ ] Fazer revisão de privacidade antes da exportação.
+## Fase 6 — Validação assistida
+- [ ] Checklists de revisão/homologação.
+- [ ] Piloto L0/L1.
+- [ ] Medir tempo, lacunas, retrabalho e defeitos.
 
-## Fase 4 — Interface local do Studio
-
-- [ ] Definir necessidade real de interface após validar o fluxo CLI.
-- [ ] Escolher tecnologia somente com critério demonstrado.
-- [ ] Não adicionar servidor remoto no MVP.
-
-## Fase 5 — Validação assistida
-
-- [ ] Integrar testes de browser locais, se justificável.
-- [ ] Padronizar checklist de revisão de código gerado.
-- [ ] Homologar automações específicas em ambiente controlado.
-- [ ] Documentar rollback e manutenção.
-
-## Fora do escopo inicial
-
-- Executor genérico de comandos NXJ.
-- Gravação automática sem aprovação humana.
-- Integração paga de IA/API.
-- Backend, banco de dados remoto ou autenticação própria.
-- GitHub Actions, CI/CD e publicação automática.
+## Fora do escopo
+Executor universal; escrita autônoma; API paga/upload automático; backend/banco remoto; GitHub Actions/CI/CD/publicação automática.
