@@ -1,13 +1,15 @@
 # Instruções para GitHub Copilot
 
-Siga primeiro as regras compartilhadas em /AGENTS.md. Estas instruções complementam o arquivo, não o substituem.
+Siga primeiro /AGENTS.md.
 
-- Entenda o fluxo existente antes de propor mudanças.
-- Apresente plano curto e critérios de aceite antes de alterações com múltiplos arquivos.
-- Prefira mudanças pequenas, reversíveis e cobertas por testes.
-- Não invente detalhes do Systextil NXJ; exija evidência ou registre a lacuna.
-- Não execute operações de escrita no ERP nem gere código que as execute sem confirmação humana prevista na especificação.
-- Não adicione workflow, CI/CD, serviço remoto, framework ou dependência sem justificativa e autorização.
-- Não atualize dependências em massa durante uma tarefa funcional.
-- Nunca exponha valores reais, credenciais, tokens ou conteúdo de transações em logs, fixtures ou documentação.
-- Ao concluir, liste validações executadas e pendentes.
+- Leia docs/IMPLEMENTATION_PLAN.md, docs/PROJECT_STATUS.md e o item aplicável do backlog.
+- Não avance fases sem dependências e Quality Gates.
+- Apresente plano e aceite antes de mudanças com múltiplos arquivos.
+- Prefira mudanças pequenas, reversíveis e testadas.
+- Não invente comportamento NXJ; exija evidência ou registre lacuna.
+- Não execute escrita no ERP sem confirmação humana definida na especificação.
+- Consulte Context7 e documentação oficial atualizada para APIs e ferramentas sujeitas a mudança.
+- Não adicione Actions, CI/CD, serviço remoto, framework ou dependência sem justificativa e autorização.
+- Não atualize dependências em massa durante feature.
+- Nunca exponha dados reais, credenciais, tokens ou transações.
+- Ao concluir, liste item do backlog, arquivos, testes executados e pendências.
