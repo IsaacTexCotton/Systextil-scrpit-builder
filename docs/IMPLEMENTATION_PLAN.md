@@ -104,46 +104,52 @@ Cada automação final permanece um userscript independente no repositório de p
 
 ## 8. Fases e critérios de aceite
 
-### Fase 0 — Fundação executável (P0)
+**Ordem de execução vigente:** E2 → E3 → E4 → E6. E0 e E1 estão adiados até decisão explícita do mantenedor. E5 só deve ser considerado após evidência de necessidade.
 
-Entregas: lockfile, Node 24+, Ajv estrito, node:test, schemas, fixtures e CLI.  
-Aceite: npm ci, npm test, npm run check e npm run validate:examples passam; CLI cobre arquivo inválido, caminho inexistente e argumentos incorretos; erros não imprimem conteúdo sensível.  
-Bloqueio: não iniciar features antes de validar em Node 24+.
+### Fase 2 — Investigação de tela e Inspector (E2; prioridade atual)
 
-### Fase 1 — Solicitação operacional e modelos de tela (P0)
-
-Entregas: schema da solicitação, fixture fictícia, validação de completude, relatório de lacunas, checklist de investigação, `docs/telas/README.md` e `docs/telas/_modelo.md`. O modelo estabelece um arquivo Markdown por tela, com status e origem rastreáveis em todas as linhas de tabela.
-
-Aceite: solicitação incompleta informa o que falta; dificuldade de mapeamento é descrita; fatos e hipóteses ficam separados; o mantenedor consegue copiar o modelo para criar um arquivo por tela e preenchê-lo com ajuda da IA a partir de relato já sanitizado; nenhum código é gerado.
-
-### Fase 2 — Investigação de tela e Inspector (P0)
+A execução começa pelo **mapeamento manual das telas em `docs/telas/`**. O Inspector read-only é ferramenta de apoio dentro da ADR-008; não substitui a observação manual de inserções, dependências e navegação.
 
 Entregas: guia de investigação; um arquivo em `docs/telas/` para cada tela investigada, derivado de `_modelo.md`; procedimento para mapear campos e tipos, ações de inserção, dependências, atalhos, navegação por colunas e entre telas, mensagens e sinais de sucesso; userscript de apoio read-only dentro da ADR-008; proposta ADR-013 avaliada separadamente.
 
 Aceite: cada tela relevante do fluxo tem seu arquivo de mapeamento revisado antes da especificação; cada linha de tabela tem Status (confirmado, inferido ou desconhecido) e Origem (captura, teste manual ou dedução); o mapeamento cobre campos de consulta/inserção/seleção, controles, atalhos, navegação por colunas, mensagens e sinal independente de sucesso; desconhecidos ficam explícitos; evidências e capturas seguem mascaramento; nenhum valor real entra no repositório. Qualquer alteração de escopo do Inspector exige decisão explícita sobre ADR-013 antes de codificar.
 
-### Fase 3 — Especificador (P0)
+### Fase 3 — Especificador (E3)
 
 Entregas: schema completo, referências de evidência, regras de risco, relatório de unknowns e exportação Markdown.  
 Aceite: cada passo tem evidência ou unknown; campos, inserções, dependências e transições relevantes estão mapeados; critérios de sucesso são observáveis; L2/L3 exigem controles adicionais; especificação incompleta não recebe estado aprovado.
 
-### Fase 4 — Gerador de contexto (P0)
+### Fase 4 — Gerador de contexto (E4)
 
 Entregas: manifesto allowlist, resolvedor seguro, limite de tamanho, deduplicação, sanitização e geração Markdown/JSON.  
 Aceite: arquivos existem e têm finalidade; versões/commits são registrados; traversal e arquivos privados são bloqueados; pacote é determinístico; nenhuma chamada de rede automática.
 
-### Fase 5 — Interface (P2, condicionada)
-
-Começar por CLI/arquivos. Avaliar UI estática, desktop ou servidor local somente após observar fricções reais e registrar ADR com custo, segurança e manutenção. Não escolher React/Electron antecipadamente.
-
-### Fase 6 — Validação assistida (P1)
+### Fase 6 — Validação assistida (E6)
 
 Entregas: checklists de revisão/homologação, execução do piloto L1 e métricas de esforço, lacunas e retrabalho.  
 Aceite: linha de base registrada; mapeamento da tela concluído antes da codificação; fluxo ponta a ponta concluído; script desenvolvido no repositório de produção indicado, testado e homologado; resultado comparado à linha de base.
 
+### Fase 0 — Fundação executável (E0; adiada)
+
+Entregas: lockfile, Node 24+, Ajv estrito, node:test, schemas, fixtures e CLI.  
+Aceite: npm ci, npm test, npm run check e npm run validate:examples passam; CLI cobre arquivo inválido, caminho inexistente e argumentos incorretos; erros não imprimem conteúdo sensível.  
+**Retomada:** esta fase permanece adiada e só deve ser iniciada após decisão explícita do mantenedor. Ela não é pré-condição para começar o mapeamento manual de telas.
+
+### Fase 1 — Solicitação operacional e modelos de tela (E1; adiada)
+
+Entregas: schema da solicitação, fixture fictícia, validação de completude, relatório de lacunas, checklist de investigação, `docs/telas/README.md` e `docs/telas/_modelo.md`. O modelo estabelece um arquivo Markdown por tela, com status e origem rastreáveis em todas as linhas de tabela.
+
+Aceite: solicitação incompleta informa o que falta; dificuldade de mapeamento é descrita; fatos e hipóteses ficam separados; o mantenedor consegue copiar o modelo para criar um arquivo por tela e preenchê-lo com ajuda da IA a partir de relato já sanitizado; nenhum código é gerado.
+
+**Retomada:** schema, fixture, CLI de solicitação e validadores permanecem adiados até decisão explícita do mantenedor. A existência atual dos documentos de modelo não autoriza antecipar a infraestrutura técnica.
+
+### Fase 5 — Interface (E5; condicionada)
+
+Avaliar interface somente após evidência de necessidade observada no uso do método. Registrar ADR com custo, segurança e manutenção antes de escolher entre CLI, UI estática, desktop ou servidor local. Não escolher React/Electron antecipadamente.
+
 ## 9. MVP e piloto
 
-O MVP cobre fases 0–4 sem UI obrigatória.
+O fluxo vigente do MVP prioriza E2 → E3 → E4 e a validação/piloto em E6. E0 e E1 permanecem adiados até decisão explícita do mantenedor; E5 só será considerado após evidência de necessidade.
 
 **Piloto escolhido:** consulta em lote de títulos, somente leitura. O escopo de leitura abrange título, cliente, código de barras e linha digitável. O piloto deve validar o fluxo de investigação e mapeamento da tela antes do desenvolvimento. O acesso, o ambiente e a massa de dados precisam ser autorizados; valores operacionais reais não entram neste repositório, em fixtures, capturas ou pacotes de contexto.
 
