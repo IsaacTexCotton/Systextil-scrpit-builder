@@ -2,7 +2,7 @@
 
 ## Finalidade da pasta
 
-Esta pasta guarda **um arquivo Markdown por tela** investigada do Systêxtil. Cada arquivo documenta o que o mantenedor observou sobre campos, controles, inserções, dependências, atalhos, mensagens e navegação.
+Esta pasta guarda **um arquivo Markdown por tela** investigada do Systêxtil. Cada arquivo documenta campos, controles, inserções, dependências, atalhos, mensagens, navegação e a sequência de comandos/eventos NXJ e sinais de confirmação por ação, quando observáveis. O mapa é o **contrato de conhecimento entre este repositório (método e telas) e o repositório Systextil-envio-mensagem (código do piloto e núcleo compartilhado)**; não contém código de produção.
 
 Para iniciar o mapa de uma tela:
 1. Copie [_modelo.md](_modelo.md) para um novo arquivo, usando um nome funcional e sanitizado, por exemplo `consulta-lote-titulos.md`.
@@ -49,6 +49,7 @@ Um status confirmado exige evidência rastreável. A IA não pode marcar algo co
 Use exatamente um dos valores abaixo na coluna **Origem**:
 
 - **captura** — informação extraída de captura de tela, imagem ou registro visual autorizado e sanitizado.
+- **captura de rede manual** — metadados mínimos de uma requisição/resposta observada manualmente nas ferramentas do navegador, fora do Inspector, conforme ADR-012, já sanitizados e sem payload ou valores.
 - **teste manual** — comportamento observado pelo mantenedor ao executar manualmente a ação em ambiente Systêxtil autorizado.
 - **dedução** — interpretação ou lacuna identificada a partir de outras informações, sem observação direta daquele comportamento.
 
@@ -63,6 +64,8 @@ Quando ainda não houver evidência para uma linha de cobertura, use **desconhec
 - Registre a origem com detalhe suficiente na descrição ou nas observações (data, tela, captura sanitizada ou teste manual), sem incluir dados reais.
 - Um mesmo atalho pode ter funções diferentes dependendo da tela, do foco ou do controle; registre a pré-condição.
 - F2, F7, F9, Enter, Tab, Esc e outras teclas devem ser investigadas, não presumidas.
+- Para cada ação, documente a sequência de comandos/eventos NXJ e a confirmação independente, ou registre a lacuna como desconhecida.
+- A captura de rede é sempre manual conforme ADR-012; o Inspector não captura rede e nenhuma evidência bruta entra no mapa.
 - Mensagens de erro e confirmação devem ter seus padrões sanitizados e indicar se bloqueiam a operação.
 - Pressionar uma tecla, clicar em um botão ou preencher um campo não é, isoladamente, sinal de sucesso.
 - Se o comportamento não puder ser confirmado com segurança, mantenha-o como desconhecido e liste-o na seção Desconhecidos.
