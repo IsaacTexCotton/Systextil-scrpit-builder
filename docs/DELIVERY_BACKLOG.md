@@ -2,6 +2,22 @@
 
 Os itens abaixo são propostas de entrega, não funcionalidades já implementadas. Cada item precisa de critérios de aceite, testes e PR própria ou escopo pequeno.
 
+## Piloto escolhido
+
+**Estado:** escolhido e confirmado pelo mantenedor.
+
+**Escopo:** consulta em lote de títulos, somente leitura, contemplando:
+- título;
+- cliente;
+- código de barras;
+- linha digitável.
+
+O piloto também deve validar o método de investigação e mapeamento da tela antes da codificação: campos e tipos, ações e sequência de inserção, dependências entre campos e navegação com o gatilho de tecla/botão. O piloto não autoriza escrita no ERP nem amplia automaticamente o escopo do Inspector.
+
+**Fora do piloto:** prorrogação, emissão de boleto, baixa, exclusão e qualquer outra operação de escrita.
+
+Antes de executar, confirmar ambiente e massa de dados autorizados. A verificação de dados sensíveis deve ser concluída antes de qualquer commit que adicione evidência de tela ou dado operacional. Nenhum valor real ou captura não sanitizada entra neste repositório.
+
 ## E0 — Fundação executável
 
 | ID | Prioridade | Entrega | Aceite |
@@ -22,19 +38,25 @@ Os itens abaixo são propostas de entrega, não funcionalidades já implementada
 | E1-04 | P1 | Relatório de completude | lacunas listadas sem inventar |
 | E1-05 | P1 | Checklist de investigação | itens rastreiam a solicitação |
 
-## E2 — Inspector
+## E2 — Investigação de tela e Inspector
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
-| E2-01 | P0 | Allowlist de metadados | valores de campos excluídos |
-| E2-02 | P0 | Userscript Inspector | @match/@grant mínimos, idempotente |
-| E2-03 | P0 | Inventário de views/forms/controles | metadados limitados |
-| E2-04 | P1 | Observações e certeza | confirmed/inferred/unknown |
-| E2-05 | P0 | Sanitização e revisão | dados sensíveis bloqueados |
-| E2-06 | P1 | Exportação JSON | contrato válido |
-| E2-07 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite humano |
+| E2-01 | P0 | Criar `docs/telas/README.md` e `docs/telas/_modelo.md` | regra de um arquivo por tela; status/origem em todas as tabelas; mascaramento documentado |
+| E2-02 | P0 | Guia de preenchimento assistido por IA | IA organiza apenas relato já sanitizado do mantenedor; não inventa evidências |
+| E2-03 | P0 | Mapa individual de cada tela relevante | campos/controles, inserções, dependências, atalhos, navegação por colunas/telas, mensagens e sinais de sucesso documentados |
+| E2-04 | P0 | Revisão dos mapas antes da especificação | todos os arquivos por tela revisados; cada linha tem Status e Origem |
+| E2-05 | P0 | Allowlist do Inspector atual | respeita ADR-008; sem valores de campos ou captura de rede |
+| E2-06 | P1 | Avaliar proposta ADR-013 | decisão explícita antes de qualquer ampliação |
+| E2-07 | P0 | Sanitização e revisão | valores reais substituídos por marcadores antes de qualquer commit com evidência |
+| E2-08 | P1 | Exportação de evidências aprovadas | contrato vigente validado |
+| E2-09 | P0 | Homologação | Chrome/Tampermonkey autorizado e aceite do mantenedor |
+
+**Dependência de E3:** a especificação só começa após existir um arquivo revisado em `docs/telas/` para cada tela relevante do fluxo. Os mapas são registros de investigação, não especificações aprovadas.
 
 ## E3 — Especificador
+
+Pré-condição: um arquivo por tela relevante em `docs/telas/`, derivado de `_modelo.md`, revisado pelo mantenedor. Itens desconhecidos permanecem visíveis e são avaliados como lacunas; não bloqueiam automaticamente quando explicitamente aceitos como fora do escopo.
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
@@ -68,16 +90,16 @@ Os itens abaixo são propostas de entrega, não funcionalidades já implementada
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
-| E6-01 | P0 | Checklist de revisão | segurança e risco NXJ cobertos |
-| E6-02 | P0 | Checklist de homologação | critérios por L0–L3 |
-| E6-03 | P1 | Piloto L0/L1 | fluxo ponta a ponta |
-| E6-04 | P1 | Medir retrabalho/tempo | baseline e resultado |
-| E6-05 | P2 | Revisar roadmap | ADR após piloto |
+| E6-01 | P0 | Checklist de auto-revisão do mantenedor | segurança, risco NXJ e diff cobertos |
+| E6-02 | P0 | Checklist de homologação | critérios por L0–L3; resultado registrado na PR |
+| E6-03 | P1 | Executar piloto escolhido | consulta em lote read-only dos quatro dados; ambiente e massa autorizados; PR e homologação registradas |
+| E6-04 | P1 | Medir dificuldade e resultado | linha de base e medidas comparáveis do processo apoiado |
+| E6-05 | P2 | Revisar roadmap | decisão registrada após evidência do piloto |
 
 ## Ordem
 
-E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade.
+E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A execução do piloto depende de ambiente autorizado e da investigação/mapa de tela necessários ao desenvolvimento seguro.
 
 ## Definition of Done
 
-Critérios atendidos; testes executados e reportados; docs/fixtures atualizados; diff revisado; nenhum dado real/segredo; limitações declaradas; PR focada; sem merge automático.
+Critérios atendidos; testes locais executados e reportados; docs/fixtures atualizados; um arquivo de mapeamento revisado por tela relevante antes da especificação; cada linha das tabelas dos mapas com Status e Origem; diff auto-revisado pelo mantenedor; nenhum dado real/segredo; verificação de dados sensíveis concluída antes de commit com evidência de tela ou dado; limitações declaradas; PR focada; homologação pelo mantenedor em Systêxtil autorizado quando aplicável, com resultado registrado na PR; sem merge automático.
