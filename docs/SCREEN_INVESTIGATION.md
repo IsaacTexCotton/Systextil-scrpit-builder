@@ -85,7 +85,25 @@ Para cada transição, registrar:
 
 Exemplo abstrato: "Tela A — botão de consulta — Tela B". Não substituir uma tecla ou botão desconhecido por uma suposição.
 
-## 6. Registrar evidências
+## 6. Mapear sequência de comandos/eventos e confirmação por ação
+
+O mapa deve descrever não apenas o que aparece na tela, mas também a sequência técnica observável que o script precisará respeitar. Para cada ação relevante, relacione a interação da interface ao estado e aos eventos/comandos do Systêxtil.
+
+Registrar em ordem temporal, separando cada passo:
+- estado inicial e pré-condições (tela, foco, campo ativo e estado do registro);
+- evento de interface (foco, blur, tecla, botão ou seleção);
+- comando/evento NXJ ou chamada de rede, somente quando observados;
+- resposta/retorno e mudança de estado observada;
+- sinal independente que confirma a conclusão da ação;
+- timeout, falha, perda de sincronismo e condição de parada, quando conhecidos.
+
+Não inferir nomes de comandos, parâmetros, payloads, temporizações ou confirmações. Uma requisição enviada, resposta genérica, preenchimento visual ou tecla pressionada não são prova isolada de conclusão.
+
+Quando a sequência exigir observação de rede, usar somente captura manual nas ferramentas de desenvolvimento do navegador, em separado do Inspector e conforme ADR-012. Registrar apenas metadados mínimos sanitizados. Não usar scripts, userscripts, extensões ou serviços para interceptação automática; não incluir payloads, headers com credenciais, cookies, tokens, sessões, HARs ou valores reais no mapa, PR ou repositório.
+
+A sequência por ação deve ter Status e Origem em cada linha. Use a origem **captura de rede manual** apenas para metadados de rede observados diretamente e já sanitizados; se não houver observação suficiente, mantenha o item como desconhecido. Em estado incerto, interromper e exigir conferência manual; não presumir que repetir o comando seja seguro.
+
+## 7. Registrar evidências
 
 Preferir notas estruturadas e diagramas simples sem valores reais. Capturas de tela são manuais e opcionais; podem conter campos preenchidos e, por isso, devem ser tratadas como dados sensíveis até serem sanitizadas.
 
@@ -103,18 +121,19 @@ Não manter prefixos, sufixos ou qualquer parte que permita reconstruir o conte�
 
 Se não for possível garantir a máscara, não compartilhar o artefato. Descartar a captura ou mantê-la fora do repositório, em local autorizado, somente pelo tempo estritamente necessário.
 
-## 7. Limites do Inspector
+## 8. Limites do Inspector
 
 A ADR-008 permanece vigente: o Inspector é read-only, limitado a metadados allowlisted, sem ler valores de campos, interceptar rede, preencher controles, acionar botões/teclas ou navegar registros.
 
 O mapeamento de inserções, dependências e navegação neste guia é feito por observação manual e anotação pelo investigador. A ADR-013 contém somente uma proposta para avaliar se metadados de controles editáveis podem ser incluídos em uma allowlist. Ela não foi aceita e não autoriza alterar ou implementar o Inspector.
 
-## 8. Critério de conclusão do mapa
+## 9. Critério de conclusão do mapa
 
 O mapa está pronto para revisão quando:
 - todas as telas relevantes do escopo estão listadas;
 - os campos relevantes têm tipo e metadados ou unknown explícito;
 - as ações e a sequência de inserção estão descritas;
+- a sequência de comandos/eventos NXJ e o sinal independente de confirmação estão documentados por ação, ou a lacuna está explicitamente desconhecida;
 - dependências observadas têm origem, efeito e evidência;
 - transições identificam origem, ação, tecla/botão e destino, ou marcam a lacuna;
 - evidências foram revisadas e sanitizadas;
