@@ -62,11 +62,26 @@ Os marcadores substituem o valor completo: não conservar prefixos, sufixos, dí
 
 A mesma regra vale para material encaminhado à IA: o mantenedor deve mascarar os valores antes de colar ou descrever a evidência. A IA não deve receber valores reais para depois mascará-los.
 
+## Piloto read-only em produção
+
+**Ambiente disponível:** o piloto não dispõe de ambiente de homologação/teste; a consulta em lote será avaliada somente em produção. Isso não equivale a autorização automática para executar. Antes da execução, a autorização operacional aplicável, o escopo exato, o responsável pela autorização e o intervalo entre consultas devem estar registrados na PR.
+
+Controles obrigatórios do piloto:
+- somente consulta/read-only; nenhuma gravação, prorrogação, emissão, baixa ou exclusão;
+- consultar um título por vez, sem paralelismo, mantendo uma pausa entre consultas;
+- definir e registrar na PR o intervalo operacional aprovado antes de iniciar; não presumir um intervalo padrão;
+- interromper imediatamente no primeiro timeout, resposta ambígua, divergência, perda de sincronismo ou outro estado incerto;
+- não repetir automaticamente uma consulta após estado incerto; conferir manualmente o estado antes de qualquer retomada;
+- registrar na PR o resultado, as interrupções e a decisão de continuar/parar, sem incluir dados reais;
+- manter valores operacionais dentro do ERP; não copiar títulos, clientes, códigos de barras ou linhas digitáveis reais para o repositório, logs versionados ou evidências compartilhadas.
+
+Sem autorização registrada e controles definidos na PR, o piloto não deve ser executado.
+
 ## Captura manual de rede — procedimento separado do Inspector
 
 O Inspector permanece estritamente read-only conforme a ADR-008. Ele não intercepta XHR/fetch, não observa payloads e não captura requisições. A captura de rede descrita aqui é uma atividade manual e independente, executada pelo mantenedor/investigador somente quando necessária e autorizada, conforme ADR-012.
 
-1. **Autorizar e limitar:** confirmar autorização para investigar o fluxo e usar ambiente de teste/homologação ou outro ambiente expressamente autorizado. Identificar a operação e a requisição mínima necessária.
+1. **Autorizar e limitar:** confirmar autorização para investigar o fluxo e usar ambiente expressamente autorizado. Para o piloto atual, que só dispõe de produção, aplicar também os controles da seção “Piloto read-only em produção”. Identificar a operação e a requisição mínima necessária.
 2. **Capturar manualmente:** abrir as ferramentas de desenvolvimento do navegador, acessar a aba de rede e observar a requisição escolhida durante a execução manual do fluxo. Não usar o Inspector, outro userscript, extensão, script ou serviço para capturar automaticamente. Não ativar coleta contínua.
 3. **Evitar exportação bruta:** não salvar nem anexar HAR, request/response bruto, screenshot ou arquivo de rede ao repositório, à PR ou ao pacote de IA. Se um arquivo temporário for indispensável à análise, mantê-lo localmente fora da pasta do repositório e não compartilhá-lo.
 4. **Mascarar valores antes de registrar:** substituir integralmente CPF/CNPJ por `[CPF_CNPJ]`, nomes de clientes por `[CLIENTE]`, títulos/duplicatas/documentos por `[TITULO]`, códigos de barras por `[CODIGO_BARRAS]`, linhas digitáveis por `[LINHA_DIGITAVEL]` e valores monetários por `[VALOR_MONETARIO]`. Usar também marcadores específicos para dados de contato, pessoas, credenciais, tokens, cookies e sessões. Não manter prefixos, sufixos ou fragmentos que permitam reconstrução.

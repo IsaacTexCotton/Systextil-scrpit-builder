@@ -12,13 +12,15 @@ Os itens abaixo são propostas de entrega, não funcionalidades já implementada
 - código de barras;
 - linha digitável.
 
-O piloto também deve validar o método de investigação e mapeamento da tela antes da codificação: campos e tipos, ações e sequência de inserção, dependências entre campos e navegação com o gatilho de tecla/botão. O piloto não autoriza escrita no ERP nem amplia automaticamente o escopo do Inspector.
+O primeiro entregável de E2 será **um único mapa da consulta de títulos** em `docs/telas/`, usado como teste prático do método. O mapa deve cobrir campos e tipos, inserções, dependências, navegação e, por ação, sequência de eventos/comandos NXJ e sinais independentes de confirmação. CLI, schemas e validadores só serão reconsiderados se o mapa revelar fricção concreta que justifique essas ferramentas e houver decisão explícita do mantenedor. O piloto de software continua estritamente read-only e não amplia automaticamente o escopo do Inspector.
 
-**Fora do piloto:** prorrogação, emissão de boleto, baixa, exclusão e qualquer outra operação de escrita.
+**Ambiente e execução:** não há ambiente de teste/homologação; a consulta read-only será feita somente em produção, após autorização aplicável registrada na PR. Executar um título por vez, sem paralelismo, com pausa entre consultas; registrar na PR o intervalo aprovado e interromper no primeiro timeout, resposta ambígua, divergência, perda de sincronismo ou estado incerto. Não repetir automaticamente.
+
+**Fora do piloto:** prorrogação, emissão de boleto, baixa, exclusão e qualquer outra operação de escrita. A prorrogação é a segunda automação pretendida, posterior ao piloto, com simulação sem persistência, lista de títulos aprovada previamente pelo mantenedor e log local mínimo por título alterado. A autoridade para autorizar prorrogação de títulos vencidos permanece pendente e deve ser definida antes de qualquer desenho executável dessa operação.
 
 Antes de executar, confirmar ambiente e massa de dados autorizados. A verificação de dados sensíveis deve ser concluída antes de qualquer commit que adicione evidência de tela ou dado operacional. Nenhum valor real ou captura não sanitizada entra neste repositório.
 
-## E0 — Fundação executável
+## E0 — Fundação executável (adiado)
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
@@ -28,7 +30,7 @@ Antes de executar, confirmar ambiente e massa de dados autorizados. A verificaç
 | E0-04 | P1 | Testar schema do prompt | fixture passa e casos inválidos falham |
 | E0-05 | P1 | Rever formatos | decisão sobre formatos documentada |
 
-## E1 — Solicitação
+## E1 — Solicitação (adiado)
 
 | ID | Prioridade | Entrega | Aceite |
 |---|---|---|---|
@@ -44,9 +46,9 @@ Antes de executar, confirmar ambiente e massa de dados autorizados. A verificaç
 |---|---|---|---|
 | E2-01 | P0 | Criar `docs/telas/README.md` e `docs/telas/_modelo.md` | regra de um arquivo por tela; status/origem em todas as tabelas; mascaramento documentado |
 | E2-02 | P0 | Guia de preenchimento assistido por IA | IA organiza apenas relato já sanitizado do mantenedor; não inventa evidências |
-| E2-03 | P0 | Mapa individual de cada tela relevante | campos/controles, inserções, dependências, atalhos, navegação por colunas/telas, mensagens e sinais de sucesso documentados |
-| E2-04 | P0 | Revisão dos mapas antes da especificação | todos os arquivos por tela revisados; cada linha tem Status e Origem |
-| E2-05 | P0 | Allowlist do Inspector atual | respeita ADR-008; sem valores de campos ou captura de rede |
+| E2-03 | P0 | Primeiro mapa: consulta de títulos | um mapa em docs/telas/ documenta campos/controles, inserções, dependências, atalhos, navegação, sequência de comandos/eventos NXJ e confirmação por ação |
+| E2-04 | P0 | Revisão do primeiro mapa antes da especificação | mapa da consulta de títulos revisado; cada linha tem Status e Origem; lacunas e fricções do método registradas |
+| E2-05 | P0 | Preservar o Inspector read-only atual | respeita ADR-008; sem valores de campos ou captura de rede; observação manual de rede segue ADR-012 |
 | E2-06 | P1 | Avaliar proposta ADR-013 | decisão explícita antes de qualquer ampliação |
 | E2-07 | P0 | Sanitização e revisão | valores reais substituídos por marcadores antes de qualquer commit com evidência |
 | E2-08 | P1 | Exportação de evidências aprovadas | contrato vigente validado |
@@ -92,13 +94,13 @@ Pré-condição: um arquivo por tela relevante em `docs/telas/`, derivado de `_m
 |---|---|---|---|
 | E6-01 | P0 | Checklist de auto-revisão do mantenedor | segurança, risco NXJ e diff cobertos |
 | E6-02 | P0 | Checklist de homologação | critérios por L0–L3; resultado registrado na PR |
-| E6-03 | P1 | Executar piloto escolhido | consulta em lote read-only dos quatro dados; ambiente e massa autorizados; PR e homologação registradas |
+| E6-03 | P1 | Executar piloto escolhido em produção | consulta read-only, um título por vez e com pausa; autorização e intervalo registrados na PR; aborto no primeiro estado incerto; sem repetição automática |
 | E6-04 | P1 | Medir dificuldade e resultado | linha de base e medidas comparáveis do processo apoiado |
 | E6-05 | P2 | Revisar roadmap | decisão registrada após evidência do piloto |
 
 ## Ordem
 
-E0 → E1 → E2 → E3 → E4 → E6. E5 só após evidência de necessidade. A execução do piloto depende de ambiente autorizado e da investigação/mapa de tela necessários ao desenvolvimento seguro.
+E2 (primeiro mapa da consulta de títulos) → E3 → E4 → E6. E0 e E1 ficam adiadas até o primeiro mapa estar pronto e só serão retomadas se ele revelar fricção concreta que CLI/schemas/validadores resolvam, mediante decisão do mantenedor. E5 só após evidência de necessidade. O piloto read-only depende de autorização registrada na PR e dos controles de produção definidos.
 
 ## Definition of Done
 

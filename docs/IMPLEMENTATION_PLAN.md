@@ -10,7 +10,7 @@ Construir um conjunto local de método, modelos, checklists e ferramentas de apo
 
 A dificuldade foi delimitada: antes de escrever código, o mantenedor precisa entender a tela, os campos, as inserções de dados e as transições entre telas. Ele precisa de apoio para mapear esse comportamento e registrar o que foi observado, o que foi inferido e o que ainda é desconhecido.
 
-Este repositório não armazena código de automações de produção. Userscripts de produção permanecem no repositório Systextil-envio-mensagem ou em outro repositório indicado pelo mantenedor. O Inspector é uma ferramenta de apoio separada e read-only, conforme a ADR-008.
+Este repositório armazena o método e o conhecimento das telas. O mapa de cada tela é o contrato com o repositório Systextil-envio-mensagem, onde ficam o userscript do piloto e o núcleo compartilhado. O Inspector é uma ferramenta de apoio separada e read-only, conforme a ADR-008.
 
 O produto não é um executor universal de comandos NXJ. A IA não substitui a decisão, a revisão ou a homologação do mantenedor.
 
@@ -23,6 +23,7 @@ O mapeamento inclui quatro dimensões:
 2. **Ações de inserção:** documentar como os dados são inseridos, em que sequência, por qual ação e qual é o resultado observável.
 3. **Dependências entre campos:** registrar qual campo/ação influencia outro campo, incluindo habilitação, obrigatoriedade, opções, preenchimento ou validação.
 4. **Navegação entre telas:** registrar tela de origem, ação que causa a transição, tecla ou botão que a dispara e tela de destino.
+5. **Sequência técnica e confirmação:** registrar por ação a ordem observada de eventos/comandos NXJ, respostas, mudanças de estado, timeout/condição de parada e sinal independente de confirmação.
 
 Objetivos:
 - **documentar campos, inserções e navegação entre telas antes de automatizar**;
@@ -81,7 +82,7 @@ Monta instruções, especificação aprovada, evidências sanitizadas, documento
 
 ### Código de produção
 
-Cada automação final permanece um userscript independente no repositório de produção indicado pelo mantenedor. Este repositório fornece o método e as ferramentas de apoio; não recebe cópias do código de produção.
+O userscript de consulta em lote do piloto e o núcleo compartilhado ficam no repositório Systextil-envio-mensagem. Este repositório fornece o método e o mapa de tela, que funciona como contrato de conhecimento entre os repositórios; não recebe cópias do código de produção.
 
 ## 7. Fluxo ponta a ponta
 
@@ -104,50 +105,56 @@ Cada automação final permanece um userscript independente no repositório de p
 
 ## 8. Fases e critérios de aceite
 
-### Fase 0 — Fundação executável (P0)
+**Ordem de execução vigente:** primeiro mapa da consulta de títulos em E2 → E3 → E4 → E6. E0/E1 só serão reconsideradas depois do primeiro mapa e se houver fricção concreta que essas ferramentas resolvam, mediante decisão explícita do mantenedor. E5 só deve ser considerado após evidência de necessidade.
+
+### Fase 2 — Investigação de tela e Inspector (E2; prioridade atual)
+
+A execução começa pelo **mapeamento manual das telas em `docs/telas/`**. O Inspector read-only é ferramenta de apoio dentro da ADR-008; não substitui a observação manual de inserções, dependências e navegação.
+
+Entregas: primeiro mapa da consulta de títulos em `docs/telas/`, derivado de `_modelo.md`; procedimento para mapear campos e tipos, ações de inserção, dependências, atalhos, navegação por colunas e entre telas, sequência de comandos/eventos NXJ e confirmação por ação; userscript de apoio read-only dentro da ADR-008; proposta ADR-013 avaliada separadamente.
+
+Aceite inicial: o mapa da consulta de títulos é revisado como teste do método; cada linha tem Status e Origem (captura, captura de rede manual, teste manual ou dedução); o mapeamento cobre campos, inserções, dependências, atalhos, navegação, sequência de comandos/eventos NXJ e sinal independente de confirmação por ação; desconhecidos ficam explícitos; evidências seguem mascaramento; nenhum valor real entra no repositório. Depois do primeiro mapa, decidir se o método precisa de CLI/schemas/validadores, somente diante de fricção concreta. Qualquer alteração de escopo do Inspector exige decisão explícita sobre ADR-013 antes de codificar.
+
+### Fase 3 — Especificador (E3)
+
+Entregas: schema completo, referências de evidência, regras de risco, relatório de unknowns e exportação Markdown.  
+Aceite: cada passo tem evidência ou unknown; campos, inserções, dependências e transições relevantes estão mapeados; critérios de sucesso são observáveis; L2/L3 exigem controles adicionais; especificação incompleta não recebe estado aprovado.
+
+### Fase 4 — Gerador de contexto (E4)
+
+Entregas: manifesto allowlist, resolvedor seguro, limite de tamanho, deduplicação, sanitização e geração Markdown/JSON.  
+Aceite: arquivos existem e têm finalidade; versões/commits são registrados; traversal e arquivos privados são bloqueados; pacote é determinístico; nenhuma chamada de rede automática.
+
+### Fase 6 — Validação assistida (E6)
+
+Entregas: checklists de revisão/homologação, execução do piloto L1 e métricas de esforço, lacunas e retrabalho.  
+Aceite: linha de base registrada; mapeamento da tela concluído antes da codificação; fluxo ponta a ponta concluído; script desenvolvido no repositório de produção indicado, testado e homologado; resultado comparado à linha de base.
+
+### Fase 0 — Fundação executável (E0; adiada)
 
 Entregas: lockfile, Node 24+, Ajv estrito, node:test, schemas, fixtures e CLI.  
 Aceite: npm ci, npm test, npm run check e npm run validate:examples passam; CLI cobre arquivo inválido, caminho inexistente e argumentos incorretos; erros não imprimem conteúdo sensível.  
-Bloqueio: não iniciar features antes de validar em Node 24+.
+**Retomada:** esta fase permanece adiada. Só deve ser iniciada depois que o primeiro mapa estiver pronto, se ele revelar fricção concreta que a fundação executável resolva, e após decisão explícita do mantenedor. Ela não é pré-condição para começar o mapeamento manual de telas.
 
-### Fase 1 — Solicitação operacional e modelos de tela (P0)
+### Fase 1 — Solicitação operacional e modelos de tela (E1; adiada)
 
 Entregas: schema da solicitação, fixture fictícia, validação de completude, relatório de lacunas, checklist de investigação, `docs/telas/README.md` e `docs/telas/_modelo.md`. O modelo estabelece um arquivo Markdown por tela, com status e origem rastreáveis em todas as linhas de tabela.
 
 Aceite: solicitação incompleta informa o que falta; dificuldade de mapeamento é descrita; fatos e hipóteses ficam separados; o mantenedor consegue copiar o modelo para criar um arquivo por tela e preenchê-lo com ajuda da IA a partir de relato já sanitizado; nenhum código é gerado.
 
-### Fase 2 — Investigação de tela e Inspector (P0)
+**Retomada:** schema, fixture, CLI de solicitação e validadores permanecem adiados até que o primeiro mapa esteja pronto e revele fricção concreta que justifique essas ferramentas, sempre mediante decisão explícita do mantenedor. Os documentos de mapa já existentes pertencem ao método E2 e não dependem da infraestrutura E1.
 
-Entregas: guia de investigação; um arquivo em `docs/telas/` para cada tela investigada, derivado de `_modelo.md`; procedimento para mapear campos e tipos, ações de inserção, dependências, atalhos, navegação por colunas e entre telas, mensagens e sinais de sucesso; userscript de apoio read-only dentro da ADR-008; proposta ADR-013 avaliada separadamente.
+### Fase 5 — Interface (E5; condicionada)
 
-Aceite: cada tela relevante do fluxo tem seu arquivo de mapeamento revisado antes da especificação; cada linha de tabela tem Status (confirmado, inferido ou desconhecido) e Origem (captura, teste manual ou dedução); o mapeamento cobre campos de consulta/inserção/seleção, controles, atalhos, navegação por colunas, mensagens e sinal independente de sucesso; desconhecidos ficam explícitos; evidências e capturas seguem mascaramento; nenhum valor real entra no repositório. Qualquer alteração de escopo do Inspector exige decisão explícita sobre ADR-013 antes de codificar.
-
-### Fase 3 — Especificador (P0)
-
-Entregas: schema completo, referências de evidência, regras de risco, relatório de unknowns e exportação Markdown.  
-Aceite: cada passo tem evidência ou unknown; campos, inserções, dependências e transições relevantes estão mapeados; critérios de sucesso são observáveis; L2/L3 exigem controles adicionais; especificação incompleta não recebe estado aprovado.
-
-### Fase 4 — Gerador de contexto (P0)
-
-Entregas: manifesto allowlist, resolvedor seguro, limite de tamanho, deduplicação, sanitização e geração Markdown/JSON.  
-Aceite: arquivos existem e têm finalidade; versões/commits são registrados; traversal e arquivos privados são bloqueados; pacote é determinístico; nenhuma chamada de rede automática.
-
-### Fase 5 — Interface (P2, condicionada)
-
-Começar por CLI/arquivos. Avaliar UI estática, desktop ou servidor local somente após observar fricções reais e registrar ADR com custo, segurança e manutenção. Não escolher React/Electron antecipadamente.
-
-### Fase 6 — Validação assistida (P1)
-
-Entregas: checklists de revisão/homologação, execução do piloto L1 e métricas de esforço, lacunas e retrabalho.  
-Aceite: linha de base registrada; mapeamento da tela concluído antes da codificação; fluxo ponta a ponta concluído; script desenvolvido no repositório de produção indicado, testado e homologado; resultado comparado à linha de base.
+Avaliar interface somente após evidência de necessidade observada no uso do método. Registrar ADR com custo, segurança e manutenção antes de escolher entre CLI, UI estática, desktop ou servidor local. Não escolher React/Electron antecipadamente.
 
 ## 9. MVP e piloto
 
-O MVP cobre fases 0–4 sem UI obrigatória.
+O fluxo vigente prioriza o primeiro mapa em E2, seguido de E3 → E4 → E6. E0 e E1 não precedem o primeiro mapa; só serão reconsideradas se ele revelar fricção concreta que CLI, schemas ou validadores resolvam e mediante decisão explícita do mantenedor. E5 só será considerado após evidência de necessidade.
 
-**Piloto escolhido:** consulta em lote de títulos, somente leitura. O escopo de leitura abrange título, cliente, código de barras e linha digitável. O piloto deve validar o fluxo de investigação e mapeamento da tela antes do desenvolvimento. O acesso, o ambiente e a massa de dados precisam ser autorizados; valores operacionais reais não entram neste repositório, em fixtures, capturas ou pacotes de contexto.
+**Piloto escolhido:** consulta em lote de títulos, somente leitura, abrangendo título, cliente, código de barras e linha digitável. Não há ambiente de teste/homologação, portanto a execução ocorrerá somente em produção após a autorização operacional aplicável e o intervalo entre consultas serem registrados na PR. Consultar um título por vez, com pausa, sem paralelismo; abortar no primeiro timeout, resposta ambígua, divergência, perda de sincronismo ou estado incerto; não repetir automaticamente. Nenhum dado operacional real entra neste repositório, fixtures, capturas, logs versionados ou pacotes de contexto.
 
-Prorrogação e emissão de boleto ficam fora do piloto. Baixa, exclusão e qualquer outra operação de escrita também ficam fora.
+Prorrogação é a segunda automação pretendida, somente após o piloto. Deverá ter modo de simulação sem persistência, lista de títulos aprovada pelo mantenedor antes da execução e log local mínimo por título efetivamente alterado. A autoridade para autorizar prorrogação de títulos vencidos ainda não foi definida; não implementar nem executar esse caso até registrar a regra e a evidência de autorização. Emissão de boleto, baixa, exclusão e as demais operações de escrita ficam fora do piloto.
 
 ## 10. Gestão de mudanças
 
@@ -177,16 +184,17 @@ A linha de base e metas quantitativas serão registradas durante a execução do
 | IA inventar comportamento | evidência por passo e status de certeza |
 | Schema inadequado | fixtures fictícias e versionamento |
 | Virar executor universal | fronteiras arquiteturais explícitas |
-| UI prematura | CLI-first e decisão por uso |
+| Infraestrutura técnica prematura | testar o método com o primeiro mapa e só então decidir se CLI/schemas/validadores resolvem fricção concreta |
 | Dependências desnecessárias | Node nativo e ADR |
 | Erro em L3 | confirmação, sinal independente e parada segura |
 | Exposição do repositório público | risco aberto, verificação de dados sensíveis antes de commits com evidências e nenhuma inclusão de dados reais |
 
 ## 13. Decisões pendentes
 
-- Confirmar ambiente autorizado e massa controlada para homologar Inspector e piloto.
+- Registrar na PR a autorização operacional aplicável e as condições/intervalo para o piloto read-only em produção.
 - Definir linha de base e metas quantitativas do piloto.
 - Avaliar e decidir a proposta ADR-013 antes de qualquer alteração no escopo do Inspector.
+- Definir quem pode autorizar prorrogação de títulos vencidos e como a autorização será registrada, antes de implementar a segunda automação.
 - Definir licença antes de distribuição.
 
 ## 14. Referências atualizadas
