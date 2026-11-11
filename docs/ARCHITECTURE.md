@@ -11,9 +11,10 @@ MVP local-first, com mapeamento manual de telas como primeira etapa. CLI, schema
 Este repositório não é o repositório de código de produção. Ele guarda os instrumentos usados para planejar, investigar, especificar, validar e apoiar o desenvolvimento.
 
 - `userscripts/` pode conter ferramentas de apoio deste projeto, como o Inspector read-only.
-- Userscripts de produção continuam no [Systextil-envio-mensagem](https://github.com/IsaacTexCotton/Systextil-envio-mensagem) ou em outro repositório indicado pelo mantenedor.
-- Não copiar, espelhar ou manter versões de userscripts de produção neste repositório.
-- A especificação e o pacote de contexto podem referenciar o código externo aprovado sem duplicá-lo.
+- O userscript do piloto e o núcleo compartilhado ficam no [Systextil-envio-mensagem](https://github.com/IsaacTexCotton/Systextil-envio-mensagem).
+- Os mapas em `docs/telas/` são o contrato de conhecimento entre este repositório (método/telas) e o repositório de código.
+- Não copiar, espelhar ou manter versões de userscripts ou do núcleo de produção neste repositório.
+- A especificação e o pacote de contexto podem referenciar o código externo aprovado sem duplicá-lo. O primeiro mapa da consulta de títulos será o teste do método; E0/E1 só voltam à pauta se esse mapa revelar fricção concreta que CLI/schemas/validadores resolvam.
 
 ## Componentes
 
@@ -37,7 +38,7 @@ Os componentes `core/`, `cli/`, `schemas/` e a dependência Ajv estão adiados. 
 
 ### Solicitação e especificador
 
-Representam o problema, processo, regras, exceções, inputs/outputs e critérios de aceite. A especificação só é iniciada após a revisão de um mapa por tela relevante em `docs/telas/`. Ela recebe campos e tipos, ações e sequência de inserção, dependências, navegação por colunas/telas, atalhos, mensagens e sinais independentes de sucesso. Cada linha de tabela do mapa preserva Status e Origem; cada afirmação técnica aponta evidência ou declara unknown.
+Representam o problema, processo, regras, exceções, inputs/outputs e critérios de aceite. A especificação só é iniciada após a revisão do mapa de cada tela relevante em `docs/telas/`. Ela recebe campos e tipos, ações e sequência de inserção, dependências, navegação por colunas/telas, atalhos, mensagens, sequência de comandos/eventos NXJ e sinais independentes de confirmação por ação. Cada linha de tabela do mapa preserva Status e Origem; cada afirmação técnica aponta evidência ou declara unknown.
 
 ### Gerador de pacote
 
@@ -45,7 +46,7 @@ Monta especificação, evidências sanitizadas, documentação selecionada, prom
 
 ### Userscripts de produção
 
-São desenvolvidos e mantidos fora deste repositório, em arquivos independentes e específicos, no repositório de produção indicado pelo mantenedor. Este projeto não distribui nem executa código de produção.
+O userscript de consulta em lote do piloto e o núcleo compartilhado são desenvolvidos e mantidos no repositório Systextil-envio-mensagem. Este projeto não distribui nem executa código de produção; fornece o método e o mapa de tela como contrato.
 
 ## Fluxo
 
