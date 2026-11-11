@@ -105,7 +105,7 @@ O userscript de consulta em lote do piloto e o núcleo compartilhado ficam no re
 
 ## 8. Fases e critérios de aceite
 
-**Ordem de execução vigente:** E2 → E3 → E4 → E6. E0 e E1 estão adiados até decisão explícita do mantenedor. E5 só deve ser considerado após evidência de necessidade.
+**Ordem de execução vigente:** primeiro mapa da consulta de títulos em E2 → E3 → E4 → E6. E0/E1 só serão reconsideradas depois do primeiro mapa e se houver fricção concreta que essas ferramentas resolvam, mediante decisão explícita do mantenedor. E5 só deve ser considerado após evidência de necessidade.
 
 ### Fase 2 — Investigação de tela e Inspector (E2; prioridade atual)
 
@@ -134,7 +134,7 @@ Aceite: linha de base registrada; mapeamento da tela concluído antes da codific
 
 Entregas: lockfile, Node 24+, Ajv estrito, node:test, schemas, fixtures e CLI.  
 Aceite: npm ci, npm test, npm run check e npm run validate:examples passam; CLI cobre arquivo inválido, caminho inexistente e argumentos incorretos; erros não imprimem conteúdo sensível.  
-**Retomada:** esta fase permanece adiada e só deve ser iniciada após decisão explícita do mantenedor. Ela não é pré-condição para começar o mapeamento manual de telas.
+**Retomada:** esta fase permanece adiada. Só deve ser iniciada depois que o primeiro mapa estiver pronto, se ele revelar fricção concreta que a fundação executável resolva, e após decisão explícita do mantenedor. Ela não é pré-condição para começar o mapeamento manual de telas.
 
 ### Fase 1 — Solicitação operacional e modelos de tela (E1; adiada)
 
@@ -142,7 +142,7 @@ Entregas: schema da solicitação, fixture fictícia, validação de completude,
 
 Aceite: solicitação incompleta informa o que falta; dificuldade de mapeamento é descrita; fatos e hipóteses ficam separados; o mantenedor consegue copiar o modelo para criar um arquivo por tela e preenchê-lo com ajuda da IA a partir de relato já sanitizado; nenhum código é gerado.
 
-**Retomada:** schema, fixture, CLI de solicitação e validadores permanecem adiados até decisão explícita do mantenedor. A existência atual dos documentos de modelo não autoriza antecipar a infraestrutura técnica.
+**Retomada:** schema, fixture, CLI de solicitação e validadores permanecem adiados até que o primeiro mapa esteja pronto e revele fricção concreta que justifique essas ferramentas, sempre mediante decisão explícita do mantenedor. Os documentos de mapa já existentes pertencem ao método E2 e não dependem da infraestrutura E1.
 
 ### Fase 5 — Interface (E5; condicionada)
 
@@ -184,7 +184,7 @@ A linha de base e metas quantitativas serão registradas durante a execução do
 | IA inventar comportamento | evidência por passo e status de certeza |
 | Schema inadequado | fixtures fictícias e versionamento |
 | Virar executor universal | fronteiras arquiteturais explícitas |
-| UI prematura | CLI-first e decisão por uso |
+| Infraestrutura técnica prematura | testar o método com o primeiro mapa e só então decidir se CLI/schemas/validadores resolvem fricção concreta |
 | Dependências desnecessárias | Node nativo e ADR |
 | Erro em L3 | confirmação, sinal independente e parada segura |
 | Exposição do repositório público | risco aberto, verificação de dados sensíveis antes de commits com evidências e nenhuma inclusão de dados reais |
