@@ -1,144 +1,88 @@
 # Plano mestre de implementação
 
-**Status:** plano proposto para execução incremental.  
+**Status:** plano organizacional sujeito à execução incremental.  
 **Produto:** Systextil Script Builder.  
 **Referência:** 2026-11-11.
 
 ## 1. Visão
 
-Construir uma ferramenta local de engenharia que transforme uma necessidade operacional em um pacote técnico verificável para desenvolvimento assistido de um userscript específico do Systextil NXJ.
+Construir um conjunto local de método, modelos, checklists e ferramentas de apoio para reduzir a dificuldade de criar automações no Systêxtil.
 
-O Studio não é executor universal de comandos NXJ. O Inspector é read-only. A IA não aprova regras de negócio nem homologação. Cada automação final permanece um userscript independente.
+A principal necessidade é entender a tela antes de escrever código: campos e tipos, ações de inserção, dependências e transições entre telas. O objetivo é apoiar o mantenedor a mapear esse comportamento e registrar o que foi observado ou ainda precisa ser confirmado.
+
+Os limites do produto, o piloto escolhido e as atividades fora do escopo têm uma única fonte em [DECISIONS.md](DECISIONS.md). Este plano descreve como organizar o trabalho, sem redefinir esses limites.
 
 ## 2. Objetivos
 
-- Reduzir redescoberta de telas e comportamento NXJ.
+- Documentar campos, inserções e navegação entre telas antes de automatizar.
+- Apoiar o mantenedor a compreender telas e fluxos antes de escrever código.
+- Reduzir redescoberta, tentativas e retrabalho na implementação.
 - Evitar invenção de campos, seletores, comandos e regras.
-- Separar fatos confirmados, inferências e desconhecidos.
-- Produzir especificações com entradas, pré-condições, passos, risco, falhas e sucesso.
-- Gerar pacotes de contexto pequenos, rastreáveis e sanitizados.
-- Padronizar revisão, testes e homologação.
-- Preservar automações existentes e minimizar risco operacional.
+- Produzir especificações verificáveis com entradas, pré-condições, passos e critérios de sucesso.
+- Gerar pacotes de contexto rastreáveis para assistência de IA.
+- Padronizar testes locais, auto-revisão e homologação pelo mantenedor.
 
-## 3. Fora do escopo do MVP
+Os critérios de evidência, os significados de status/origem e os níveis de risco são definidos em [SECURITY_MODEL.md](SECURITY_MODEL.md). A ordem das entregas é definida em [DELIVERY_BACKLOG.md](DELIVERY_BACKLOG.md).
 
-- Executor genérico de ações NXJ ou agente autônomo no ERP.
-- Escrita, emissão, baixa, prorrogação ou exclusão sem confirmação humana.
-- Captura indiscriminada de valores, tráfego de rede ou payloads.
-- Backend, banco remoto, autenticação própria ou sincronização em nuvem.
-- Integração paga de IA/API e upload automático.
-- Geração/publicação automática em produção.
-- GitHub Actions, CI/CD ou deploy automático.
+## 3. Limites do produto
 
-## 4. Papéis
+Consultar a seção **Escopo vigente — fonte canônica** e as ADRs em [DECISIONS.md](DECISIONS.md). Não duplicar neste plano a lista de inclusões e exclusões.
 
-Solicitante descreve problema e processo; especialista confirma regras; investigador opera a tela autorizada e revisa evidências; desenvolvedor/IA implementa; revisor técnico verifica código e segurança; responsável operacional homologa. Uma pessoa pode acumular papéis, mas a aprovação operacional deve ser explícita.
+## 4. Responsabilidade e aprovação
 
-## 5. Princípios
+O mantenedor é a única pessoa responsável e acumula os papéis do projeto. A governança, o registro de auto-revisão e o aceite das PRs estão definidos em [GITHUB_GOVERNANCE.md](GITHUB_GOVERNANCE.md). Não pressupor a existência de revisor separado.
 
-Local-first; human-in-the-loop; evidence-first; least privilege; fail-safe; pequenas mudanças; reprodutibilidade; privacidade por padrão; dados declarativos nunca executáveis; compatibilidade com userscripts independentes.
+## 5. Princípios de implementação
+
+Local-first; human-in-the-loop; evidence-first; least privilege; fail-safe; pequenas mudanças; reprodutibilidade; privacidade por padrão; dados declarativos nunca executáveis; separação entre apoio metodológico e código de produção.
+
+Para a definição operacional de evidência, certeza e risco, usar [SECURITY_MODEL.md](SECURITY_MODEL.md).
 
 ## 6. Arquitetura alvo
 
-### Inspector (Tampermonkey)
-Identifica view/forms e metadados de controles, registra observações com nível de certeza e exporta JSON sanitizado após ação explícita. Não lê valores de campos, intercepta XHR/fetch, aciona F7/Find, preenche filtros, navega registros ou grava dados.
+### Inspector
 
-### Núcleo local (Node.js)
-CLI e módulos coesos para validar schemas, gerenciar solicitações, verificar referências, selecionar contexto, sanitizar e gerar Markdown/JSON determinísticos. Sem servidor ou rede no MVP.
+Ferramenta de apoio read-only, dentro do escopo da ADR-008. Não ler valores de campos, interceptar rede, preencher filtros ou gravar dados. Qualquer revisão da allowlist deve ser decidida em ADR própria antes de implementação.
+
+### Núcleo local
+
+CLI e módulos para validar contratos, gerenciar solicitações, selecionar contexto, sanitizar e gerar Markdown/JSON determinísticos. Sem serviço remoto no MVP.
 
 ### Especificador
-Converte solicitação e evidências em objetivo, escopo, regras, inputs/outputs, pré-condições, passos, risco, critérios de sucesso, timeouts, recuperação e unknowns.
+
+Converte solicitação e evidências revisadas em objetivo, regras, inputs/outputs, pré-condições, passos, riscos, critérios de sucesso, timeouts, recuperação e pontos desconhecidos.
 
 ### Gerador de pacote
-Monta instruções, especificação aprovada, evidências sanitizadas, documentos técnicos, manifesto de fontes e checklist. Não envia pacote automaticamente para serviços externos.
 
-### Userscripts finais
-Arquivos independentes, específicos, com permissões mínimas, evidências, testes e homologação próprios.
+Monta instruções, especificação, evidências permitidas, documentos técnicos, manifesto de fontes e checklist. Não envia pacotes automaticamente a serviços externos.
 
-## 7. Fluxo ponta a ponta
+### Código operacional
 
-1. Criar projeto.
-2. Descrever objetivo, processo atual, regras e exceções.
-3. Registrar inputs, outputs e critérios de aceite.
-4. Classificar risco preliminar.
-5. Gerar checklist de investigação.
-6. Investigar tela manualmente com Inspector.
-7. Revisar e validar evidências sanitizadas.
-8. Completar e aprovar especificação.
-9. Gerar pacote local rastreável.
-10. Enviar manualmente à IA escolhida.
-11. Desenvolver userscript em branch.
-12. Executar testes e revisar diff.
-13. Homologar em ambiente autorizado.
-14. Abrir PR e obter aprovação.
-15. Registrar versão homologada.
+Desenvolvido e mantido no repositório de automações indicado pelo mantenedor, conforme ADR-012 em [DECISIONS.md](DECISIONS.md).
 
-## 8. Fases e critérios de aceite
+## 7. Fluxo de trabalho
 
-### Fase 0 — Fundação executável (P0)
-Entregas: lockfile, Node 24+, Ajv estrito, node:test, schemas, fixtures e CLI.
-Aceite: npm ci, npm test, npm run check e npm run validate:examples passam; CLI cobre arquivo inválido, caminho inexistente e argumentos incorretos; erros não imprimem conteúdo sensível.
-Bloqueio: não iniciar features antes de validar em Node 24+.
+O fluxo de investigação deve anteceder a especificação e a codificação. Cada etapa precisa das evidências e critérios aplicáveis definidos em [SECURITY_MODEL.md](SECURITY_MODEL.md).
 
-### Fase 1 — Solicitação operacional (P0)
-Entregas: schema da solicitação, fixture fictícia, validação de completude, relatório de lacunas e checklist de investigação.
-Aceite: solicitação incompleta informa o que falta; fatos e hipóteses ficam separados; risco é justificável; nenhum código é gerado.
+A sequência de fases, prioridades e dependências é mantida somente em [DELIVERY_BACKLOG.md](DELIVERY_BACKLOG.md).
 
-### Fase 2 — Inspector (P0)
-Entregas: userscript independente, allowlist DOM, catálogo de views/forms/controles, observações, sanitização, revisão e exportação JSON.
-Aceite: @match/@grant mínimos; idempotência; nenhum valor de campo ou tráfego exportado; ação explícita para exportar; schema válido; testes DOM e homologação Chrome/Tampermonkey.
+## 8. Critérios gerais de conclusão
 
-### Fase 3 — Especificador (P0)
-Entregas: schema completo, referências de evidência, regras de risco, relatório de unknowns e exportação Markdown.
-Aceite: cada passo tem evidência ou unknown; critérios de sucesso são observáveis; L2/L3 exigem controles adicionais; especificação incompleta não recebe estado aprovado.
+- A necessidade e o resultado esperado estão descritos.
+- As telas e interações relevantes foram investigadas antes de escrever código.
+- As evidências foram revisadas e classificadas segundo [SECURITY_MODEL.md](SECURITY_MODEL.md).
+- As regras de negócio e os pontos desconhecidos estão explícitos.
+- A especificação possui pré-condições, passos, critérios observáveis de sucesso, falhas e recuperação.
+- O pacote de contexto inclui somente fontes permitidas e rastreáveis.
+- Os testes locais aplicáveis foram executados e reportados honestamente.
+- A auto-revisão, o aceite e a homologação aplicável foram registrados conforme a governança do projeto.
 
-### Fase 4 — Gerador de contexto (P0)
-Entregas: manifesto allowlist, resolvedor seguro, limite de tamanho, deduplicação, sanitização e geração Markdown/JSON.
-Aceite: arquivos existem e têm finalidade; versões/commits são registrados; traversal e arquivos privados são bloqueados; pacote é determinístico; nenhuma chamada de rede automática.
+## 9. Métricas de sucesso
 
-### Fase 5 — Interface (P2, condicionada)
-Começar por CLI/arquivos. Avaliar UI estática, desktop ou servidor local somente após observar fricções reais e registrar ADR com custo, segurança e manutenção. Não escolher React/Electron antecipadamente.
+Avaliar o resultado pela redução observável do esforço de investigação e implementação, pela quantidade de lacunas descobertas antes da codificação, pelo retrabalho evitado e pelos defeitos encontrados na homologação. Metas quantitativas devem ser definidas no contexto do piloto aprovado.
 
-### Fase 6 — Validação assistida (P1)
-Entregas: checklists de revisão/homologação, piloto L0/L1 e métricas de tempo/lacunas/retrabalho.
-Aceite: fluxo ponta a ponta concluído; pacote suficiente e rastreável; script testado e homologado; benefício medido.
+Aumentar a quantidade de documentação ou o tamanho dos prompts, isoladamente, não demonstra sucesso.
 
-## 9. MVP e piloto
+## 10. Riscos e referências
 
-MVP cobre fases 0–4 sem UI obrigatória. Piloto inicial deve ser L0/L1, sem gravação. Não começar por emissão de boleto, baixa, prorrogação ou exclusão.
-
-## 10. Gestão de mudanças
-
-Uma fase por PR quando possível; PR pequena e focada; schema change atualiza fixtures, testes e docs; quebra de compatibilidade exige nova versão e migração; sem merge automático; sem CI/CD nesta etapa.
-
-## 11. Métricas de sucesso
-
-Tempo até especificação aprovada; lacunas encontradas antes da codificação; invenções NXJ corrigidas; retrabalho; defeitos na homologação; etapas com evidência; tempo de homologação; reprodutibilidade em outro computador.
-
-Gerar prompts maiores não é critério de sucesso: o Studio precisa reduzir redescoberta, ambiguidade e retrabalho.
-
-## 12. Riscos
-
-| Risco | Mitigação |
-|---|---|
-| Dados sensíveis na evidência | allowlist, sanitização e revisão humana |
-| IA inventar comportamento | evidência por passo e status de certeza |
-| Schema inadequado | fixtures reais sanitizadas e versionamento |
-| Virar executor universal | fronteiras arquiteturais explícitas |
-| UI prematura | CLI-first e decisão por uso |
-| Dependências desnecessárias | Node nativo e ADR |
-| Erro em L3 | confirmação, sinal independente e parada segura |
-| Contexto excessivo | allowlist, limites e manifesto |
-
-## 13. Decisões pendentes
-
-Confirmar ambiente autorizado para homologar Inspector; telas permitidas; validar metadados com tela sanitizada; escolher piloto L0/L1; definir licença antes de distribuição.
-
-## 14. Referências atualizadas
-
-Context7 consultado em 2026-11-11:
-- Node.js 24 packages/test: https://nodejs.org/docs/latest-v24.x/api/packages.html e https://nodejs.org/docs/latest-v24.x/api/test.html
-- Ajv 8.20.0 options/strict: https://github.com/ajv-validator/ajv/blob/v8.20.0/docs/options.md e https://github.com/ajv-validator/ajv/blob/v8.20.0/docs/strict-mode.md
-- GitHub Copilot custom instructions: https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions
-- GitHub branch protection: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches
-- GitHub issue forms: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms
+Os níveis de risco, controles por nível, regras de evidência e procedimento de verificação de dados sensíveis são definidos em [SECURITY_MODEL.md](SECURITY_MODEL.md). O escopo é definido em [DECISIONS.md](DECISIONS.md). A ordem de execução é definida em [DELIVERY_BACKLOG.md](DELIVERY_BACKLOG.md).

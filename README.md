@@ -1,56 +1,35 @@
 # Systextil Script Builder
 
-Ferramenta local de engenharia para investigar telas do Systextil NXJ e transformar necessidades operacionais em especificações técnicas e pacotes de contexto rastreáveis para desenvolvimento assistido de userscripts.
+Ferramenta local de método, modelos, checklists e apoio técnico para reduzir a dificuldade de criar automações no Systêxtil, com foco no mapeamento da tela antes da codificação.
 
-> **Estado atual:** fundação organizacional integrada à main. O planejamento completo está documentado em uma branch de planejamento e aguarda revisão. Solicitação operacional, Inspector, especificador e gerador de pacotes ainda não estão implementados.
+## Escopo e decisões
 
-## Objetivo
+O escopo vigente, o piloto e as exclusões estão definidos em [DECISIONS.md](docs/DECISIONS.md). Este README não duplica essas regras.
 
-Padronizar o ciclo de vida: entender a necessidade; confirmar regras; investigar telas; registrar evidências técnicas sanitizadas; produzir especificação verificável; gerar pacote de contexto para IA; desenvolver userscript específico; testar, revisar e homologar.
+O objetivo imediato é apoiar o mantenedor a entender a tela, os campos, as inserções e as transições antes de escrever código. O processo de investigação e a distribuição dos artefatos estão descritos na documentação de referência abaixo.
 
-O Studio não será executor universal do ERP. Cada automação final será um userscript independente, com escopo, risco e homologação próprios.
+## Fontes canônicas
 
-## Princípios
+- **Escopo do produto e decisões:** [DECISIONS.md](docs/DECISIONS.md).
+- **Evidências, status, origem, níveis de risco e proteção de dados:** [SECURITY_MODEL.md](docs/SECURITY_MODEL.md).
+- **Ordem, prioridades e estado das entregas:** [DELIVERY_BACKLOG.md](docs/DELIVERY_BACKLOG.md).
+- **Situação atual do projeto:** [PROJECT_STATUS.md](docs/PROJECT_STATUS.md).
+- **Arquitetura:** [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+- **Governança:** [GITHUB_GOVERNANCE.md](docs/GITHUB_GOVERNANCE.md).
 
-- Evidence-first: fatos, inferências e desconhecidos separados.
-- Human-in-the-loop: IA não aprova regras nem homologação.
-- Local-first e least privilege.
-- Fail-safe: estado incerto interrompe; não provoca repetição cega.
-- Privacy by default: metadados mínimos; sem valores de campos por padrão.
-- Código gerado por IA não é automaticamente aprovado.
-- Toda mudança passa por branch, testes locais, revisão e PR.
-- Sem GitHub Actions, CI/CD ou publicação automática nesta fase.
+## Repositório de userscripts
 
-## Planejamento
+**Este repositório não guarda userscripts de produção. Eles ficam no repositório de automações (Systextil-envio-mensagem ou outro indicado pelo mantenedor).**
 
-1. [Plano mestre](docs/IMPLEMENTATION_PLAN.md)
-2. [Backlog de entregas](docs/DELIVERY_BACKLOG.md)
-3. [Arquitetura](docs/ARCHITECTURE.md)
-4. [Ferramentas e versões](docs/TOOLING.md)
-5. [Quality Gates](docs/QUALITY_GATES.md)
-6. [Fluxo de uso](docs/UX_WORKFLOW.md)
-7. [Especificação do pacote de IA](docs/CONTEXT_PACKAGE_SPEC.md)
-8. [Release e homologação](docs/RELEASE_AND_HOMOLOGATION.md)
-9. [Estado do projeto](docs/PROJECT_STATUS.md)
-10. [Roadmap resumido](docs/ROADMAP.md)
+## Risco aberto — repositório público
 
-## Arquitetura prevista
+<badge-placeholder>RISCO ABERTO</badge-placeholder> O repositório está público. Os metadados dos commits públicos também expõem o e-mail de autoria. A exposição deve ser considerada ao publicar documentos, exemplos ou evidências. Não foi solicitada nem realizada alteração de visibilidade ou reescrita do histórico. Os achados e o procedimento de verificação estão em [SECURITY_MODEL.md](docs/SECURITY_MODEL.md).
 
-- userscripts/: Inspector e automações específicas independentes.
-- src/core/: modelos, validações e regras puras.
-- src/cli/: comandos locais.
-- src/context/: seleção e leitura segura de contexto.
-- src/generators/: geração determinística.
-- schemas/: contratos JSON versionados.
-- docs/: planejamento, segurança e decisões.
-- examples/: fixtures fictícias.
-- tests/: testes locais sem acesso ao ERP/rede.
+## Ferramentas previstas
 
-## Ferramentas do MVP
+Node.js 24+, npm, Ajv 8.20.0, node:test, Tampermonkey, Chrome, Git/GitHub e Context7 para consulta de documentação atualizada.
 
-Node.js 24+, npm, Ajv 8.20.0, node:test, Tampermonkey, Chrome, Git/GitHub e Context7 para documentação atualizada.
-
-React, Electron, Playwright, SQLite, backend e API paga de IA ficam adiados até necessidade comprovada e decisão registrada.
+Framework de UI, desktop, Playwright, SQLite, backend e API paga de IA não fazem parte da fundação atual; consultar as decisões arquiteturais antes de propor dependências.
 
 ## Preparação local
 
@@ -59,14 +38,12 @@ React, Electron, Playwright, SQLite, backend e API paga de IA ficam adiados até
     npm run check
     npm run validate:examples
 
-Após gerar e versionar package-lock.json, usar npm ci em instalações limpas.
+Após gerar e versionar `package-lock.json`, usar `npm ci` em instalações limpas.
 
 ## Contribuição
 
-Atualize main, crie branch, leia AGENTS.md e o plano, implemente um item do backlog, execute testes reais e abra PR focada. Sem merge automático.
-
-Consulte CONTRIBUTING.md, docs/AI_WORKFLOW.md e docs/GITHUB_GOVERNANCE.md.
+Siga [AGENTS.md](AGENTS.md) e [CONTRIBUTING.md](CONTRIBUTING.md). Use branch própria, commits Conventional Commits, testes locais e Pull Request. Não há merge automático. O rito de revisão separada não se aplica enquanto houver apenas um mantenedor; consulte [GITHUB_GOVERNANCE.md](docs/GITHUB_GOVERNANCE.md).
 
 ## Licença
 
-Ainda não definida. Não presuma autorização de redistribuição até a escolha e inclusão de uma licença.
+<badge-placeholder>PENDENTE</badge-placeholder> A licença ainda não foi definida. Não presuma autorização de redistribuição até a escolha e inclusão de uma licença.

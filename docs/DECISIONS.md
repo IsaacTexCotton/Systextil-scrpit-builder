@@ -1,6 +1,20 @@
 # Registro de decisões arquiteturais
 
-Decisões relevantes são registradas aqui para evitar redefinições sem contexto.
+Decisões relevantes são registradas aqui para evitar redefinições sem contexto. O escopo vigente abaixo é a fonte canônica para limites do produto e do piloto; decisões de evidência e risco ficam em [SECURITY_MODEL.md](SECURITY_MODEL.md), e a ordem das entregas fica em [DELIVERY_BACKLOG.md](DELIVERY_BACKLOG.md).
+
+## Escopo vigente — fonte canônica
+
+**Problema central:** dificuldade para criar automações no Systêxtil, principalmente por não compreender suficientemente a tela, os campos, as inserções de dados e a troca de telas antes de escrever código.
+
+**Objetivo do projeto:** fornecer método, modelos e ferramentas de apoio para mapear as telas antes da codificação, reduzindo redescoberta, tentativas e retrabalho. A investigação deve identificar campos e tipos, ações de inserção, dependências e navegação entre telas, sem presumir comportamentos não observados.
+
+**Conteúdo deste repositório:** método de trabalho, documentação, modelos, checklists e ferramentas de apoio. Não é o local de armazenamento das automações de produção.
+
+**Piloto escolhido:** consulta em lote de títulos, somente leitura, contemplando título, cliente, código de barras e linha digitável.
+
+**Fora do piloto:** prorrogação e emissão de boleto. Também ficam fora baixa, exclusão e qualquer outra operação de escrita ou alteração persistente no ERP.
+
+O piloto depende de ambiente e massa de dados autorizados. Esta decisão de escopo não autoriza publicar dados reais do ERP nem altera os controles de segurança definidos em [SECURITY_MODEL.md](SECURITY_MODEL.md).
 
 ## ADR-001 — Studio local antes de serviço remoto
 **Status:** aceita.  
@@ -55,3 +69,8 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 **Status:** aceita como requisito de projeto.  
 **Decisão:** incluir somente arquivos autorizados, com finalidade, confiança, versão/commit, hash e tamanho.  
 **Motivo:** reduzir vazamento, prompt injection por conteúdo externo e contexto excessivo.
+
+## ADR-012 — Userscripts de produção mantidos no repositório de automações
+**Status:** aceita.  
+**Decisão:** Este repositório não guarda userscripts de produção. Eles ficam no repositório de automações (Systextil-envio-mensagem ou outro indicado pelo mantenedor). A documentação e as ferramentas de apoio deste projeto podem orientar o desenvolvimento, mas não devem duplicar, espelhar ou manter cópias de automações de produção.  
+**Motivo:** separar o método e as ferramentas de engenharia do ciclo de vida e do código operacional, mantendo uma única fonte de verdade para cada userscript de produção.
