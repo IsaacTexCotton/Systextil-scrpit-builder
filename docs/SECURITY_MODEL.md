@@ -108,7 +108,7 @@ Nenhum valor real ou artefato bruto de rede entra neste repositório, PR, fixtur
 
 ### Risco de visibilidade pública
 
-<badge-placeholder>RISCO ABERTO</badge-placeholder> O repositório está público por decisão do mantenedor. Os metadados dos commits públicos também expõem o e-mail de autoria. O endereço não é reproduzido aqui.
+**RISCO ABERTO** O repositório está público por decisão do mantenedor. Os metadados dos commits públicos também expõem o e-mail de autoria. O endereço não é reproduzido aqui.
 
 A visibilidade pública não será alterada sem decisão explícita do mantenedor. Não reescrever o histórico como parte desta verificação. A existência de dados de autoria nos commits deve ser considerada risco de exposição mesmo que os arquivos versionados não contenham dados de clientes.
 

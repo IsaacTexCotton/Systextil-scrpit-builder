@@ -6,7 +6,7 @@ Ferramenta local de método, modelos, checklists e apoio técnico para reduzir a
 
 O escopo vigente, o piloto e as exclusões estão definidos em [DECISIONS.md](docs/DECISIONS.md). Este README não duplica essas regras.
 
-O objetivo imediato é apoiar o mantenedor a entender a tela, os campos, as inserções e as transições antes de escrever código. O processo de investigação e a distribuição dos artefatos estão descritos na documentação de referência abaixo.
+O objetivo imediato é apoiar o mantenedor a entender a tela, os campos, as inserções e as transições antes de escrever código.
 
 ## Fontes canônicas
 
@@ -23,7 +23,7 @@ O objetivo imediato é apoiar o mantenedor a entender a tela, os campos, as inse
 
 ## Risco aberto — repositório público
 
-<badge-placeholder>RISCO ABERTO</badge-placeholder> O repositório está público. Os metadados dos commits públicos também expõem o e-mail de autoria. A exposição deve ser considerada ao publicar documentos, exemplos ou evidências. Não foi solicitada nem realizada alteração de visibilidade ou reescrita do histórico. Os achados e o procedimento de verificação estão em [SECURITY_MODEL.md](docs/SECURITY_MODEL.md).
+**RISCO ABERTO:** o repositório está público. Os metadados dos commits públicos também expõem o e-mail de autoria. A exposição deve ser considerada ao publicar documentos, exemplos ou evidências. Não foi solicitada nem realizada alteração de visibilidade ou reescrita do histórico. Os achados e o procedimento de verificação estão em [SECURITY_MODEL.md](docs/SECURITY_MODEL.md).
 
 ## Ferramentas previstas
 
@@ -42,8 +42,8 @@ Após gerar e versionar `package-lock.json`, usar `npm ci` em instalações limp
 
 ## Contribuição
 
-Siga [AGENTS.md](AGENTS.md) e [CONTRIBUTING.md](CONTRIBUTING.md). Use branch própria, commits Conventional Commits, testes locais e Pull Request. Não há merge automático. O rito de revisão separada não se aplica enquanto houver apenas um mantenedor; consulte [GITHUB_GOVERNANCE.md](docs/GITHUB_GOVERNANCE.md).
+Siga [AGENTS.md](AGENTS.md) e [CONTRIBUTING.md](CONTRIBUTING.md). Use branch própria, commits Conventional Commits, testes locais e Pull Request. Não há merge automático. O rito de revisão separada não se aplica enquanto houver um mantenedor; consulte [GITHUB_GOVERNANCE.md](docs/GITHUB_GOVERNANCE.md).
 
 ## Licença
 
-<badge-placeholder>PENDENTE</badge-placeholder> A licença ainda não foi definida. Não presuma autorização de redistribuição até a escolha e inclusão de uma licença.
+**PENDENTE:** a licença ainda não foi definida. Não presuma autorização de redistribuição até a escolha e inclusão de uma licença.
