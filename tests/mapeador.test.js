@@ -262,3 +262,28 @@ test("funções puras não dependem dos métodos de Array proibidos", () => {
 
   assert.ifError(erro);
 });
+
+
+test("instalarGanchos só é chamado dentro de ativarQuadro", () => {
+  const chamadas = [...codigoScript.matchAll(/\binstalarGanchos\s*\(\s*\)\s*;/g)];
+  assert.equal(chamadas.length, 1, "instalarGanchos deve ser chamado somente por ativarQuadro");
+
+  const quadro = /function ativarQuadro\(on\)\s*\{([\s\S]*?)\n  \}/.exec(codigoScript);
+  assert.ok(quadro, "a função ativarQuadro deve continuar existindo");
+  const inicioQuadro = quadro.index;
+  const fimQuadro = inicioQuadro + quadro[0].length;
+  assert.ok(
+    chamadas[0].index >= inicioQuadro && chamadas[0].index < fimQuadro,
+    "a única chamada a instalarGanchos deve estar dentro de ativarQuadro"
+  );
+  assert.match(quadro[1], /if\s*\(on\)\s*\{\s*instalarGanchos\(\);\s*iniciarObservador\(\);/);
+  assert.match(quadro[1], /else\s*\{\s*pararObservador\(\);\s*removerGanchos\(\);/);
+
+  const inicioGravacao = /ui\.gravar\.onclick\s*=\s*function\s*\(\)\s*\{([\s\S]*?)\n    \};/.exec(codigoScript);
+  assert.ok(inicioGravacao, "o handler de gravação deve continuar existindo");
+  assert.match(inicioGravacao[1], /bus\.gravando\s*=\s*true;[\s\S]*?ativarQuadro\(true\);/);
+
+  const retomada = /aoPronto\(function\s*\(\)\s*\{([\s\S]*?)\n  \}\);/.exec(codigoScript);
+  assert.ok(retomada, "o callback aoPronto deve continuar existindo");
+  assert.match(retomada[1], /if\s*\(obterBus\(\)\.gravando\)\s*ativarQuadro\(true\);/);
+});

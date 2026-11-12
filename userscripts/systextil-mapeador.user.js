@@ -1363,7 +1363,6 @@
   }
 
   if (estaNoTopo) restaurarSessao();
-  instalarGanchos();
   instalarOuvintes();
   aoPronto(function () {
     if (obterBus().gravando) ativarQuadro(true);
