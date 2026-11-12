@@ -109,7 +109,7 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 **Motivo:** separar o piloto read-only de uma operação de escrita e exigir revisão explícita do conjunto de registros antes de qualquer alteração.  
 **Ponto em aberto obrigatório:** quem tem autoridade para autorizar a prorrogação de títulos vencidos e como essa autorização será comprovada/registrada ainda não foi definido. Não implementar nem executar prorrogação de título vencido até essa regra ser esclarecida e registrada. A regra operacional vigente de que títulos vencidos não são prorrogados no fluxo de cobrança deve ser respeitada.
 
-# ADR-019 — Conferência de valores digitados por comprimento e HMAC, sem registro de valores
+## ADR-019 — Conferência de valores digitados por comprimento e HMAC, sem registro de valores
 
 **Status:** aceita pelo mantenedor (2026-11-12).
 **Relação com outras ADRs:** altera parcialmente a ADR-008 e a ADR-015, somente para a leitura de comprimento e a comparação por HMAC de campos listados pelo operador durante a gravação. Mantém a proibição de registrar valores em texto claro. Não altera a ADR-012 (captura de rede manual) nem a ADR-016 (piloto em produção).
