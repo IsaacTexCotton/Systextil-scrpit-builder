@@ -38,6 +38,7 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 
 ## ADR-008 — Inspector read-only
 **Status:** aceita para o MVP.  
+**Alteração parcial:** ver ADR-019 (leitura de comprimento e comparação por HMAC de campos listados pelo operador).  
 **Decisão:** coletar metadados allowlisted, sem valores de campos nem interceptação de rede.  
 **Motivo:** reduzir exposição de dados e risco operacional.
 
@@ -89,6 +90,7 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 ## ADR-015 — Mapeamento de sequência de comandos/eventos NXJ e confirmação por ação
 
 **Status:** aceita.  
+**Alteração parcial:** ver ADR-019 (leitura de comprimento e comparação por HMAC de campos listados pelo operador).  
 **Decisão:** cada mapa de tela deve registrar, por ação e em ordem temporal, a sequência observável de eventos de interface, comandos/eventos NXJ, respostas, mudanças de estado e sinais independentes de confirmação. Quando necessário, a observação de rede será manual nas ferramentas do navegador, fora do Inspector, conforme ADR-012; somente metadados mínimos e sanitizados poderão ser documentados.  
 **Motivo:** o comportamento necessário à automação não se limita aos campos e teclas visíveis; depende também da ordem dos eventos/comandos e de como o ERP confirma cada etapa.  
 **Limites:** não introduzir interceptação automática, não ampliar o Inspector, não registrar payloads, credenciais, valores reais ou artefatos brutos. Comando enviado ou resposta genérica não equivalem a sucesso.
@@ -107,3 +109,64 @@ Decisões relevantes são registradas aqui para evitar redefinições sem contex
 **Motivo:** separar o piloto read-only de uma operação de escrita e exigir revisão explícita do conjunto de registros antes de qualquer alteração.  
 **Ponto em aberto obrigatório:** quem tem autoridade para autorizar a prorrogação de títulos vencidos e como essa autorização será comprovada/registrada ainda não foi definido. Não implementar nem executar prorrogação de título vencido até essa regra ser esclarecida e registrada. A regra operacional vigente de que títulos vencidos não são prorrogados no fluxo de cobrança deve ser respeitada.
 
+# ADR-019 — Conferência de valores digitados por comprimento e HMAC, sem registro de valores
+
+**Status:** aceita pelo mantenedor (2026-11-12).
+**Relação com outras ADRs:** altera parcialmente a ADR-008 e a ADR-015, somente para a leitura de comprimento e a comparação por HMAC de campos listados pelo operador durante a gravação. Mantém a proibição de registrar valores em texto claro. Não altera a ADR-012 (captura de rede manual) nem a ADR-016 (piloto em produção).
+
+## Contexto
+
+Uma gravação de pesquisa (consulta de títulos, F7) mostrou que o comando chegou ao Systêxtil e foi respondido (HTTP 200, marcador `nxjOnLoad`), mas não foi possível confirmar que o número do título e a parcela foram reconhecidos e usados no filtro. A causa é que, pela ADR-008 e pela ADR-015, o registro não guarda valores. A linha `texto(1-10)` informa apenas a classe de tamanho do conteúdo.
+
+Sem alguma forma de conferência, a automação não pode afirmar que a pesquisa executada corresponde ao título solicitado.
+
+## Decisão
+
+Durante a gravação, o Mapeador pode conferir campos de entrada, e só estes:
+
+1. **Campos listados.** Antes de gravar, o operador informa no painel o identificador (`id` ou `name`) de até dois campos. Só esses campos são lidos.
+2. **Comprimento.** Ao pressionar F7 ou Enter no campo listado, e ao alterá-lo, o script registra o número de caracteres do valor. O conteúdo não é guardado.
+3. **Comparação por HMAC-SHA-256 (opcional).** Se o operador informar também o valor esperado, o script calcula o HMAC desse valor com uma chave local, guarda só o digest, apaga o valor digitado do painel e registra apenas se o valor atual do campo é igual ao esperado (`igual: true|false`).
+
+Os campos lidos são somente dos tipos texto, busca, telefone, número, data e e-mail. Campos ocultos (`hidden`), seleções, senhas, caixas de seleção, botões e arquivos nunca são lidos.
+
+Regras:
+
+- A chave é gerada no primeiro uso, guardada no `localStorage` do próprio navegador e nunca enviada a lugar algum. Ela fica acessível a qualquer script que rode na mesma origem, inclusive o do próprio Systêxtil. Esse risco é aceito: se a origem for comprometida, os digests podem ser testados contra valores candidatos.
+- O repositório e o JSON exportado não contêm chave, digest, nem valor digitado. O JSON só contém comprimentos, booleanos de igualdade e marcadores.
+- A conferência manual do operador é registrada por dois botões (`OK` e `divergente`), sem texto livre.
+- O resultado da pesquisa é aferido pela contagem de linhas da grade em faixas (`0`, `1`, `2-10`, `11-50`, `>50`), e só é registrado quando a contagem muda.
+
+## Consequências
+
+- A gravação passa a provar, com um mecanismo verificável, que o campo conferido tinha o valor esperado no momento do F7, sem expor o valor.
+- O JSON continua sem dados de cliente, mas agora inclui comprimentos dos campos listados pelo operador. Esses comprimentos são dados estruturais, e o operador deve revisá-los antes de versionar.
+- O HMAC é reversível apenas por quem tiver a chave local. Um arquivo copiado para outro navegador não pode ser conferido contra os digests, porque a chave muda.
+- Se o `localStorage` estiver bloqueado, a chave existe só na memória da aba. Nesse caso, a conferência funciona na própria gravação, mas não entre sessões.
+- Em quadros diferentes (iframes), a chave é compartilhada pela origem. Quadros de origens diferentes não participam da conferência.
+
+## Limites e não-objetivos
+
+- Esta ADR não autoriza leitura de valores de campos fora da lista informada pelo operador.
+- O campo do marcador de passo (texto livre) não deve receber valores de clientes, títulos ou parcelas. Use-o só para nomes de etapa.
+- Esta ADR não autoriza envio de nenhum dado a serviços externos.
+- A conferência verifica que o valor está no campo e que a pesquisa foi disparada. Ela não prova que o Systêxtil interpretou o valor como filtro. Essa prova continua exigindo a conferência humana do resultado na tela, registrada pelos botões de conferência manual.
+- Qualquer mudança para registro de valores em texto claro exige nova ADR, revisão de privacidade e aprovação expressa do mantenedor.
+
+## Alternativas consideradas
+
+- **Registrar o valor mascarado** (por exemplo, só os últimos dígitos): rejeitado, porque ainda expõe parte do dado e não prova a igualdade completa.
+- **Hash sem chave (SHA-256 puro ou hash de 53 bits):** rejeitado. CPF, número de título e parcela têm espaço de busca pequeno, e um hash sem chave pode ser revertido por força bruta.
+- **`crypto.subtle`:** rejeitado como única opção, porque o ERP roda em `http://`, que não é contexto seguro, e a API não estaria disponível.
+
+## Verificação
+
+- SHA-256 e HMAC-SHA-256 implementados em JavaScript puro e comparados com a implementação do Node em 60 casos (mensagens de 0 a 199 bytes, chaves de 1 a 150 bytes).
+- Não há teste automatizado da captura no DOM real. Deve ser feita uma gravação de controle no Systêxtil (ver procedimento abaixo).
+
+## Procedimento de gravação de controle (obrigatório antes de usar em produção)
+
+1. Gravar a pesquisa com os campos **vazios** e F7. Registrar a sequência de alterações de `readonly`.
+2. Gravar a pesquisa com o título e a parcela corretos, informando-os como valores esperados. Conferir se os eventos `campo` aparecem com `igual: true`.
+3. Gravar a pesquisa com um valor esperado errado de propósito. Conferir se aparece `igual: false`.
+4. Só depois disso usar a conferência como evidência de uma ação.
